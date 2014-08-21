@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title%}
+User Profile
+{% endblock %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+  {% crispy form %}
+{% endblock content %}

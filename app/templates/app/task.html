@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block customcss %}
+<!-- For bootstrap-datetimepicker -->
+<link rel="stylesheet" href="{% static "bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %}">
+{% endblock customcss %}
+
+{% block title %}Task details...{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-12">
+        {% crispy form %}
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block morejs %}
+<!-- For bootstrap-datetimepicker http://eonasdan.github.io/bootstrap-datetimepicker/ -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}"></script>
+<!-- end bootstrap-datetimepicker requirements -->
+
+<script src="{% static "app/js/task.js" %}"></script>
+{% endblock morejs %}

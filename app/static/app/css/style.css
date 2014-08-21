@@ -1,0 +1,408 @@
+/* Style for just added rows */
+
+#messages {
+  width: 15%;
+  position:absolute;
+  position:fixed;
+  bottom:0;
+  right:0;
+}
+
+
+/* Below specific customizations */
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  background-color: #ececec;
+}
+
+
+.sheldonize-content {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 1px 1px #d9d9d9;
+  padding-bottom: 50px;
+  padding-left: 20px;
+  padding-right:20px;
+  padding-top: 20px;
+}
+
+.company {
+  padding-top: 40px;
+  font-weight: 300;
+}
+
+
+.navbar-sheldonize {
+  background-color: #444444;
+  background-image: -moz-linear-gradient(top, #565656, #444444);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#565656), to(#444444));
+  background-image: -webkit-linear-gradient(top, #565656, #444444);
+  background-image: -o-linear-gradient(top, #565656, #444444);
+  background-image: linear-gradient(to bottom, #565656, #444444);
+  border: 0px;
+  /* border-radius influences rounder corners */
+  border-radius: 0px;
+  /* margin-bottom creates space below navbar before content starts, default is
+   * 20px.
+   */
+  margin-bottom: 40px;
+} 
+
+
+
+.navbar-sheldonize .navbar-header {
+  color: #444444;
+  text-shadow: none;
+}
+
+
+/* Make sure that when the menu item gets collapsed, it displays in a visible
+ * color.
+ */
+.navbar-sheldonize .navbar-toggle {
+  border-color: #ecf0f1;
+}
+.navbar-sheldonize .navbar-toggle > .icon-bar {
+  background-color: #e67e22; 
+}
+
+.navbar-sheldonize .nav li a {
+  color: #ecf0f1;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-shadow: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: background 0.1s linear ,opacity 0.1s linear;
+  -moz-transition: background 0.1s linear, opacity 0.1s linear;
+  -ms-transition: background 0.1s linear, opacity 0.1s linear;
+  -o-transition: background 0.1s linear, opacity 0.1s linear;
+  transition: background 0.1s linear, opacity 0.1s linear;
+  -webkit-font-smoothing: antialiased;  
+  opacity: .9;
+  font-weight: 300;
+}
+
+/* Set a max-width for the logo.
+ */
+
+.logo {
+  max-width: 150px;
+  opacity: .9;
+}
+
+.logo:hover {
+  opacity:1;
+}
+
+
+.nav .dropdown-menu {
+  background: #444444;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: #ecf0f1;
+  opacity: 1;
+}
+
+/* Hover and Focus of menu items (go full opacity and white color instead of
+ * broken white)
+ */
+.navbar-sheldonize .navbar-nav > li > a:hover, .navbar-sheldonize .navbar-nav > li > a:focus {
+  color: white;
+  opacity: 1;
+  filter: none;
+}
+
+/* The menu item that is .active (as set by Sheldonize) or when scrolling to
+ * menu options. */
+.nav > li.dropdown > a.dropdown-toggle:focus,
+.navbar-sheldonize .navbar-nav > .active > a {
+  background: #e67e22;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: #ecf0f1;
+  opacity: 0.9;
+}
+
+/* Hovering over that Active menu item , just gives you a bit more opacity. */
+.navbar-sheldonize .navbar-nav > .active > a:hover, .navbar-sheldonize .navbar-nav > .active > a:focus  {
+  background: #e67e22;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  color: white;
+  opacity: 1;
+  box-shadow: none;
+  filter: none;
+}
+
+/* Hovering over a list item in a menu item */
+.navbar-sheldonize .dropdown-menu > li > a:hover {
+  background: #e67e22;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: #ecf0f1;
+  opacity: 1;
+  filter: none;
+}
+
+
+/* Changing the blue glare on input boxes to something else: */
+.sheldonize-form textarea:focus,
+.sheldonize-form input[type="text"]:focus,
+.sheldonize-form input[type="email"]:focus,
+.sheldonize-form input[type="number"]:focus,
+.sheldonize-form input[type="select"]:focus,
+.sheldonize-form input[type="password"]:focus,
+.sheldonize-form select:focus,
+.sheldonize-form form-control:focus,
+.sheldonize-form .uneditable-input:focus {   
+  border-color: #e67e22; 
+  box-shadow: none;
+}
+
+/* Buttons; generated with http://blog.koalite.com/bbg/ */
+
+.btn-sheldonize {
+  font-weight: 300;
+}
+
+
+.btn-sheldonize-default { 
+  color: #444444; 
+  background-color: #ECF0F1; 
+  border-color: #ecf0f1; 
+} 
+
+.btn-sheldonize-default:hover, 
+.btn-sheldonize-default:focus, 
+.btn-sheldonize-default:active, 
+.btn-sheldonize-default.active, 
+.open .dropdown-toggle.btn-sheldonize-default { 
+  color: #444444; 
+  background-color: #FFFFFF; 
+  border-color: #ecf0f1; 
+} 
+
+.btn-sheldonize-default:active, 
+.btn-sheldonize-default.active, 
+.open .dropdown-toggle.btn-sheldonize-default { 
+  background-image: none; 
+} 
+
+.btn-sheldonize-default.disabled, 
+.btn-sheldonize-default[disabled], 
+fieldset[disabled] .btn-sheldonize-default, 
+.btn-sheldonize-default.disabled:hover, 
+.btn-sheldonize-default[disabled]:hover, 
+fieldset[disabled] .btn-sheldonize-default:hover, 
+.btn-sheldonize-default.disabled:focus, 
+.btn-sheldonize-default[disabled]:focus, 
+fieldset[disabled] .btn-sheldonize-default:focus, 
+.btn-sheldonize-default.disabled:active, 
+.btn-sheldonize-default[disabled]:active, 
+fieldset[disabled] .btn-sheldonize-default:active, 
+.btn-sheldonize-default.disabled.active, 
+.btn-sheldonize-default[disabled].active, 
+fieldset[disabled] .btn-sheldonize-default.active { 
+  background-color: #ECF0F1; 
+  border-color: #ecf0f1; 
+} 
+
+.btn-sheldonize-default .badge { 
+  color: #ECF0F1; 
+  background-color: #444444; 
+}
+
+.btn-sheldonize-primary { 
+  color: #ECF0F1; 
+  background-color: #444444; 
+  border-color: #444444; 
+} 
+
+.btn-sheldonize-primary:hover, 
+.btn-sheldonize-primary:focus, 
+.btn-sheldonize-primary:active, 
+.btn-sheldonize-primary.active, 
+.open .dropdown-toggle.btn-sheldonize-primary { 
+  color: #444444; 
+  background-color: #FFFFFF; 
+  border-color: #ecf0f1; 
+} 
+
+.btn-sheldonize-primary:active, 
+.btn-sheldonize-primary.active, 
+.open .dropdown-toggle.btn-sheldonize-primary { 
+  background-image: none; 
+} 
+
+.btn-sheldonize-primary.disabled, 
+.btn-sheldonize-primary[disabled], 
+fieldset[disabled] .btn-sheldonize-primary, 
+.btn-sheldonize-primary.disabled:hover, 
+.btn-sheldonize-primary[disabled]:hover, 
+fieldset[disabled] .btn-sheldonize-primary:hover, 
+.btn-sheldonize-primary.disabled:focus, 
+.btn-sheldonize-primary[disabled]:focus, 
+fieldset[disabled] .btn-sheldonize-primary:focus, 
+.btn-sheldonize-primary.disabled:active, 
+.btn-sheldonize-primary[disabled]:active, 
+fieldset[disabled] .btn-sheldonize-primary:active, 
+.btn-sheldonize-primary.disabled.active, 
+.btn-sheldonize-primary[disabled].active, 
+fieldset[disabled] .btn-sheldonize-primary.active { 
+  color: #ECF0F1; 
+  background-color: #444444; 
+  border-color: #444444; 
+} 
+
+.btn-sheldonize-primary .badge { 
+  color: #444444; 
+  background-color: #ECF0F1; 
+}
+
+.btn-sheldonize-link:hover, .btn-sheldonize-link:focus {
+  text-decoration: none;
+  color: #000;
+}
+
+.btn-sheldonize-link {
+  color: #444444;
+}
+
+
+
+/* Exceptions for certain buttons */
+
+/* The "add task" button on tasks page */
+.input-group-btn > .btn-sheldonize-default {
+  border: 1px solid #CCC
+}
+
+
+/* Pills */
+
+.nav-pills > li.active > a {
+  color: #ecf0f1;
+  background: #444444;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  color: #ecf0f1;
+  background: #444444;
+  font-weight: 300;
+  opacity: 1;
+}
+
+.nav-pills > li > a {
+  color: #444444;
+  font-weight: 300;
+  margin-bottom: 15px;
+}
+
+.nav-pills > li > a:hover, .nav-pills > li > a:focus {
+  color: black;
+  font-weight: 300;
+  opacity: 1;
+}
+
+/* Labels for example when typing in text. */
+
+.label {
+  font-weight: 300;
+}
+
+/* Alerts for messages */
+.alert {
+  font-weight: 300;
+}
+
+/* Float delete button on details page left */
+.details-delete-button {
+  float: right;
+}
+
+.preference-add-button {
+  margin-bottom: 15px;
+}
+
+
+/* Help blocks (like on erroneous forms) */
+.help-block > strong {
+  font-weight: 300;
+}
+
+
+
+/* labels for forms */
+label.control-label {
+  font-weight: 300;
+}
+
+/* Circle button */
+
+.btn-countdown h1 {
+  font-weight: 300;
+}
+.btn-countdown h3 {
+  font-weight: 300;
+}
+
+.btn-countdown p {
+  font-weight: 300;
+}
+
+
+.btn-countdown div {
+  display: inline-block;
+  margin: 0 5px 1em;
+  font-size: 30px;
+  font-weight: 100;
+  line-height: 1;
+  text-align: right;
+  background-color: #444444;
+
+  /* IE7 inline-block hack */
+  *display: inline;
+  *zoom: 1;
+}
+
+.btn-countdown div:first-child {
+  margin-left: 0;
+}
+
+.btn-countdown div:last-child {
+  margin-right: 0;
+}
+
+.btn-countdown div span {
+  display: block;
+  border-top: 1px solid #cecece;
+  padding-top: 3px;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+blockquote {
+  font-weight: 300;
+  border-left: none;
+  margin: 0;
+  padding: 0 10px 30px 10px;
+}
+
+blockquote p:before {
+  content: "\f10d";
+  font-family: 'Fontawesome';
+  float: left;
+  margin-right: 10px;
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+{% load tz %}
+
+<html>
+  <head profile="http://www.w3.org/2005/10/profile">
+    <link rel="icon" type="image/x-icon" href="{% static "app/img/favicon.ico" %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Sheldonize is the automated task management application that helps you schedule time for your tasks, respecting your meetings and deadlines.">
+    <meta name="keywords" content="todo, to-do, time management, task management, schedule, scheduling, automatic, planning, tasks, meetings, organize, plan, automated"/>
+    <meta name="author" content="Sheldonize, LLC">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Sheldonize{% endblock %}</title>
+
+    <!-- It seems that Jquery needs to be loaded in the head (for datetimepicker to work in forms otherwise $ not recognized) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <!-- Common CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+
+    <!-- Lato fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,400,300' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="{% static "app/css/style.css" %}">
+
+    {% block customcss %}{% endblock %}
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-sheldonize" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/app/">
+            <img class="logo" src="{% static "app/img/sheldonize_header.png" %}" alt="sheldonize"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          {% if user.is_authenticated %}
+          <ul class="nav navbar-nav">
+            <li id="tasks-nav"><a href="/app/tasks/incomplete/">Tasks</a></li>
+            <li id="meetings-nav"><a href="/app/meetings/future/">Meetings</a></li>
+            <li id="schedule-nav"><a href="/app/schedule/">Schedule</a></li>
+            <li id="preferences-nav"><a href="/app/preferences/">Preferences</a></li>
+
+            <!-- Archive -->
+            <li id="archive-nav" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Archive <b class="caret"></b></a> 
+            <ul class="dropdown-menu">
+              <li><a href="/app/tasks/done/">Tasks</a></li>
+              <li><a href="/app/meetings/past/">Meetings</a></li>
+            </ul>
+            </li>
+
+          </ul>
+          {% endif %}
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-user"></span>
+              <sup>{{ user.userprofile.get_usertype_display }}
+                {% if user.userprofile.usertype == 1 %}
+                / {{ user.userprofile.daysleft }} days left
+                {% endif %}
+              </sup>
+              &nbsp;
+              {{ user }}
+              <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'userprofile' %}">Settings</a></li>
+              <li><a href="{% url 'support' %}">Get Help</a></li>
+              <li><a href="{% url 'password_change' %}">Change Password</a></li>
+              {% if user.userprofile.is_pro_user %}
+              <li><a href="{% url 'change_subscription' %}">Your Pro Subscription</a></li>
+              {% endif %}
+              {% if user.userprofile.is_trial_user or user.userprofile.is_undecided_user %}
+              <li><a href="{% url 'signup_subscription' %}">Upgrade to Pro</a></li>
+              {% endif %}
+              <li class="divider"></li>
+              <li><a href="{% url 'logout_v' %}">Log Out</a></li>
+            </ul>
+            </li>
+           {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+    {% block root %}
+    <div class="container sheldonize-container">
+      <div class="row">
+        {% block beforecontent %}{% endblock %}
+      </div>
+      <div class="row">
+        {% block filtercontent %}{% endblock %}
+      </div>
+      <div class="sheldonize-content">
+        {% block content %}{% endblock %}
+      </div>
+      <div class="row">
+        <div class="col-xs-12 text-center">
+
+          <div class="company">Sheldonize, LLC.  &copy; 2014 | <a href="/app/terms/">Terms of Use</a> | <a href="/app/privacy/">Privacy Policy</a></div>
+        </div>
+      </div>
+
+
+      {% endblock root %}
+
+      <!-- Common JS -->
+
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+      <!-- For detecting the timezone, see http://pellepim.bitbucket.org/jstz/ -->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js"></script>
+
+      <!-- For counter on fields -->
+      <script src="{% static "app/js/bootstrap-maxlength.min.js" %}"></script>
+      <!-- for growl-like notifications; https://github.com/ifightcrime/bootstrap-growl; added 18 July 2014 -->
+      <script src="{% static "app/js/jquery.bootstrap-growl.min.js" %}"></script>
+
+      <script src="{% static "app/js/sheldonize.js" %}"></script>
+
+
+      {% block morejs %}{% endblock %}
+
+      <!-- And Local stuff -->
+      {% if messages %}
+      {% for message in messages %}
+      <script type="text/javascript"> 
+        $( document ).ready(function() {
+            var msg =  "{{ message }}"
+            var t = "{{ message.tags }}"
+            $.bootstrapGrowl(msg, {
+type: t,
+ele: ".sheldonize-container",
+offset: {from: 'bottom', amount: 0},
+align: 'center',
+width: 'auto',
+allow_dismiss: false,
+});
+            });
+      </script>
+      {% endfor %}
+      {% endif %}
+
+
+    </body>
+  </html>
+
+
+
+
+
+

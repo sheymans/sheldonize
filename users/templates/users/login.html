@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static "users/css/signin.css" %}">
+{% endblock %}
+
+{% block title%}
+Sign In
+{% endblock %}
+
+{% block header %}
+<h3>Sign In</h3>
+{% endblock header %}
+
+{% block content %}
+<form class="form-signin sheldonize-form" name="loginform" action="{% url 'login_v' %}" method="post">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% csrf_token %}
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            <input type="hidden" name="next" value="{{next}}">
+            {% if bad_login %}
+            <p class="text-danger">Username/password combination not known to us. Please try again or sign up if you haven't already.</p>
+            {% endif %}
+            <input type="submit" name="submit" value="Sign In" class="btn btn-lg btn-sheldonize btn-sheldonize-primary btn-block"/>
+            <br>
+            <p class="text-right">
+            <a href="{% url 'password_reset' %}">Forgot Password/Username?</a>
+            </p>
+            <br/>
+            <br/>
+        </div>
+        <div class="panel-footer">
+            <p class="text-center">You do not have an account yet? Get yourself a free Trial account for 31 days.</br> No payment information required.</br> No strings attached.</p>
+            </br>
+            <button id="signupbutton" type="button" class="btn btn-lg btn-sheldonize btn-sheldonize-default btn-block"
+                onclick="location.href=&quot;{% url 'signup' %}?timezone=&quot; + this.value ;">
+                Sign Up for Trial</button></p>
+
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block morejs %}
+<!-- Google Analytics -->
+<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53163078-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+{% endblock %}

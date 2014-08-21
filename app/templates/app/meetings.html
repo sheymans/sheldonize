@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static "app/css/table.css" %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block beforecontent %}
+{% if addmeetingform %}
+<!-- Make sure that from tablets on (sm), the form is filling the full row -->
+<div class="col-sm-12">
+{% crispy addmeetingform %}
+<div class="col-sm-12">
+{% endif %}
+{% endblock beforecontent %}
+
+{% block title %}
+Meetings
+{% endblock %}
+
+{% block header %}
+<h3>Meetings</h3>
+{% endblock header %}
+
+
+{% block content %}
+{% if table.data %}
+
+<!-- Table -->
+<form action="." method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            {% include "app/sheldonize_table.html" %}
+        </div>
+    </div>
+
+    <div class="row">
+        <br/>
+        <br/>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-3 text-right">
+            <button type="submit" name="delete-marked-meetings" class="btn btn-sheldonize btn-sheldonize-default" id="delete-marked-meetings">Delete</button>
+        </div>
+    </div>
+</form>
+{% else %}
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        (no meetings)
+    </div>
+</div>
+
+
+{% endif %}
+{% endblock %}
+
+{% block morejs %}
+{% if what_meetings == 'future' %}
+<script src="{% static "app/js/meetings.js" %}"></script>
+{% else %}
+<script src="{% static "app/js/archive-meetings.js" %}"></script>
+{% endif %}
+{% endblock morejs %}

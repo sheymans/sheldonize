@@ -1,0 +1,15 @@
+Django==1.6.2
+MySQL-python==1.2.5
+South==0.8.4
+argparse==1.2.1
+arrow==0.4.2
+django-braces==1.4.0
+django-crispy-forms==1.4.0
+django-tables2==0.15.0
+django-timezone-field==1.0
+python-dateutil==2.2
+pytz==2014.4
+requests==0.13.2
+six==1.5.2
+stripe==1.18.0
+wsgiref==0.1.2

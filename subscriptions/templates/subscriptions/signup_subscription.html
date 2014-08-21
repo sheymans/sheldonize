@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title%}
+Sign Up for a Pro Account
+{% endblock %}
+
+{% block header %}
+<h3>Sign Up for a Pro Account</h3>
+{% endblock header %}
+
+{% block content %}
+
+{% if user.userprofile.is_undecided_user or user.userprofile.is_trial_user %}
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-xs-12 col-md-4">
+
+        {% if user.userprofile.is_trial_user %}
+        <p>So, you decided to check out how to become a pro! Great!</p>
+        {% elif user.userprofile.is_undecided_user %}
+        <p>Unfortunately, your trial is over now. The good news is that you can
+        immediately continue where you left off by becoming a pro user.</p>
+        {% endif %}
+
+        <h3>Why Not For Free?</h3>
+        <p>In these times, web applications that ask for money are rare.
+        However, as we believe in putting the users first, we believe that
+        we can ask those users to support this business in the best
+        possible way. And that's not by "likes", retweets, or "+1"s, but by money.
+        Money that will go straight to supporting us in order to provide
+        the best possible service, for you.
+        </p>
+        <p>If you want to know more on why free applications are not good for
+        you, <a
+            href="https://blog.pinboard.in/2011/12/don_t_be_a_free_user/">this
+            articulates it well</a>.
+        </p>
+
+        <h3>How Much and What do I get?</h3> 
+        <p>For a <b>3.99$</b> subscription <b>per month</b>, you will get: 
+        <ul>
+            <li>Unlimited use of <a href="https://sheldonize.com">sheldonize.com</a> (yes, this means no limits on the amount of tasks or meetings)
+            <li>Unlimited support from our developers, to help you resolve any difficulties you may experience
+        </ul>
+        <p>Of course you can cancel your account at any point in time.</p>
+
+        <h3>Is this Safe?</h3> 
+        <p>We handle payments using <a
+            href="http://stripe.com">stripe</a>. This means that your credit
+        card data is handled according to the highest security standards in the
+        industry and that we (Sheldonize) do <strong>not</strong> store any of
+        your credit card data. For more information about <a
+            href="http://stripe.com">stripe</a>, check out their page on <a
+            href="https://support.stripe.com/topics/security-and-fraud-prevention">security
+            and fraud prevention</a>.
+
+        <h3>``OK I'm convinced, Sign me Up!''</h3> 
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-xs-12 col-md-4 text-center">
+        <form action="/subscriptions/signup/" method="POST">
+            {% csrf_token %}
+            <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key={{ stripe_public_key }}
+                data-amount="399"
+                data-name="Sheldonize"
+                data-description="Get a Pro Account"
+                data-image="{% static "app/img/profile.png" %}"
+                data-panel-label="Pay per Month:"
+                data-email={{ user.email }}
+                data-label="Subscribe Now"
+                data-allow-remember-me=false>
+            </script>
+        </form>
+    </div>
+</div>
+
+
+<div class="row">
+    <br/>
+    <br/>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12 text-right">
+        <a href="http://stripe.com"><img src="{% static "app/img/stripe_small.png" %}" alt="Powered by Stripe"/></a>
+    </div>
+</div>
+
+{% elif user.userprofile.is_cancelled_user %}
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <p>Your pro subscription was cancelled, either by you or by us (for
+        example, due to failed payment attempts). If you feel this is an error,
+        please contact <a
+            href="mailto:sheldonizellc@gmail.com">sheldonizellc@gmail.com</a> and we'll
+        solve this for you!</p>
+    </div>
+</div>
+
+{% else %}
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <p>Thanks; all is good! Dive right back in with your <a href="/app/tasks/">Tasks</a>.</p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block morejs %}
+<!-- Google Analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-53163078-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+{% endblock %}

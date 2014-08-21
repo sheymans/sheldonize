@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title%}
+Your Subscription Information
+{% endblock %}
+
+{% block header %}
+<h3>Your Subscription Information</h3>
+{% endblock header %}
+
+{% block content %}
+
+{% if user.userprofile.is_pro_user %}
+<div class="row">
+    <div class="col-md-4">
+    </div>
+
+    <div class="col-xs-12 col-md-4">
+        <h3>Current Account Info</h3>
+        <p>
+        You currently have a subscription running on a <b>{{ customer.cards.data.0.brand }}</b> card that ends with digits
+        <b>{{ customer.cards.data.0.last4 }}</b>.</p>
+
+        <p>Your last payment is valid
+        until {{ valid_until }}, after which we will automatically book the subscription fee of 3.99$ for the following month.
+        </p>
+
+        <h3>Change Payment Information</h3>
+        <p>To change your payment information (without cancelling your account and without extra charges), press this button and add your new data:</p>
+        <form action="/subscriptions/change/" method="POST">
+            {% csrf_token %}
+            <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key={{ stripe_public_key }}
+                data-amount="399"
+                data-name="Sheldonize"
+                data-description="Update your Pro Account"
+                data-image="{% static "app/img/profile.png" %}"
+                data-panel-label="Update"
+                data-email={{ user.email }}
+                data-label="Change your Payment Information"
+                data-allow-remember-me=false>
+            </script>
+        </form>
+
+        <h3>Cancel</h3>
+
+        When you cancel your account, we will <b>refund</b> you your last
+        payment in full. You will, however, lose immediate access to all
+        Sheldonize data (so now might be a good time to check whether you took
+        note of any important tasks or meetings). 
+
+        <p>When you are ready to cancel, press the following button (<b>this is final</b>):</p>
+        <form action="/subscriptions/change/" method="post">
+            {% csrf_token %}
+            <button type="submit" name="cancel-subscription" class="btn btn-danger confirm-with-user" id="cancel-subscription">Cancel Subscription</button>
+        </form>
+
+    </div>
+</div>
+
+<div class="row">
+    <br/>
+    <br/>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 text-right">
+        <a href="http://stripe.com"><img src="{% static "app/img/stripe_small.png" %}" alt="Powered by Stripe"/></a>
+    </div>
+</div>
+
+
+{% else %}
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <p>
+        You no longer have a subscription with Sheldonize.
+        </p>
+    </div>
+</div>
+{% endif %}
+</div>
+{% endblock %}
+
+

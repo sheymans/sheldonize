@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block customcss %}
+<!-- For bootstrap-datetimepicker -->
+<link rel="stylesheet" href="{% static "bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %}">
+<link rel="stylesheet" href="{% static "app/css/table.css" %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Preferences
+{% endblock %}
+
+{% block beforecontent %}
+<div class="col-sm-12">
+    {% crispy addpreferenceform %}
+</div>
+{% endblock beforecontent %}
+
+{% block header %}
+<h3>Preferences</h3>
+{% endblock header %}
+
+
+{% block content %}
+
+{% if table.data %}
+<!-- Table -->
+<div class="row">
+    <div class="col-xs-12">
+        {% include "app/sheldonize_table.html" %}
+    </div>
+</div>
+
+{% else %}
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        (no preferences)
+    </div>
+</div>
+
+
+{% endif %}
+
+
+{% endblock %}
+
+{% block morejs %}
+<!-- For bootstrap-datetimepicker http://eonasdan.github.io/bootstrap-datetimepicker/ -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}"></script>
+<!-- end bootstrap-datetimepicker requirements -->
+<script src="{% static "app/js/preferences.js" %}"></script>
+{% endblock morejs %}
+

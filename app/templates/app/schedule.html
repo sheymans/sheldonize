@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block customcss %}
+<link rel='stylesheet' href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.2/fullcalendar.css">
+<link rel="stylesheet" href="{% static "app/css/schedule.css" %}">
+{% endblock %}
+
+{% block title %}
+Schedule
+{% endblock %}
+
+{% block header %}
+<h3>Schedule</h3>
+{% endblock header %}
+
+<!-- For the schedule we are rewriting the root --> 
+{% block root %}
+<div class="container-fluid sheldonize-container">
+    <div class="sheldonize-content">
+
+        <div class="row calculate-schedule-container">
+            <form action="." method="post">
+                <div class="col-md-2 col-xs-5">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-refresh" name="calculate-schedule" id="calculate-schedule">&nbsp;Calculate</button>
+                </div>
+
+                <div class="col-md-8 col-xs-2">
+                </div>
+                <div class="col-md-2 col-xs-5 text-right">
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-default glyphicon glyphicon-trash" name="delete-schedule" id="delete-schedule">&nbsp;Clear</button>
+                </div>
+            </form>
+        </div>
+
+
+        {% if device_type == 'mobile' %}
+
+        {% if current %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Next Up</h3>
+                    <div class="current-item {{ current.type }}">
+                        <a href="{{ current.url }}"><i>{{ current.from }} - {{ current.to }}</i></br>
+                            <h4>{{ current.name }}</h4></a>
+                    </div>
+                </div>
+            </div>
+                {% if next_up %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Followed By</h3>
+                        <div class="next-item {{ next_up.type }}">
+                            <a href="{{ next_up.url }}">
+                            <i>{{ next_up.from }} - {{ next_up.to }}</i></br>
+                            <h4>{{ next_up.name }}</h4></a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% else %}
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    (no upcoming schedule items - try to calculate)
+                </div>
+            </div>
+            {% endif %}
+
+        {% else %}
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <div id='calendar'></div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+
+          <div class="company">Sheldonize, LLC.  &copy; 2014 | <a href="/app/terms/">Terms of Use</a> | <a href="/app/privacy/">Privacy Policy</a></div>
+        </div>
+    </div>
+</div>
+{% endblock root %}
+
+{% block morejs %}
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.2/fullcalendar.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="{% static "app/js/schedule.js" %}"></script>
+<!-- now call the function in schedule.js that passes the right event feedurl
+     to the function in schedule.js -->
+<script>
+    setup_schedule("{{ eventfeed_url }}");
+</script>
+{% endblock morejs %}
+

@@ -1,0 +1,95 @@
+#calendar {
+}
+
+.calculate-schedule-container {
+  margin-bottom: 20px;
+}
+
+/* Header on top  of calendar indicating period. */
+.fc-header-title > h2 {
+  font-weight: 300;
+}
+
+/* Day header */
+th.fc-widget-header {
+  font-weight: 300;
+}
+
+/* Day number on months */
+.fc-day-number {
+  font-weight: 300;
+}
+
+
+.fc-agenda th.fc-agenda-axis {
+  font-weight: 300;
+}
+
+/* The buttons */
+.fc-button {
+  font-weight: 300;
+  color: #444;
+  font-weight: 300;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  background: none repeat scroll 0px 0px transparent;
+  margin-right: none;
+}
+
+.fc-button:hover, .fc-button:focus {
+  color: #000000;
+}
+
+table.fc-header .fc-state-default {
+  border-color: white;
+  text-shadow: none;
+  box-shadow: none;
+}
+table.fc-header .fc-state-active {
+  color: #ecf0f1;
+  border-color: white;
+  background: none repeat scroll 0% 0% #444;
+}
+
+
+/* today highlight (yellow normally) */
+.fc-state-highlight { 
+  background: #ecf0f1;
+}
+
+/* height of slots is by default 20px */
+.fc-agenda-slots td div {
+  height:23px;
+}
+
+
+h3, h4, h5, h6 {
+  font-weight: 300
+}
+
+div.meeting {
+  color: #ecf0f1;
+  background-color: #e67e22;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+div.scheduleitem {
+  color: #ecf0f1;
+  background-color: #428BCA;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.meeting  a, .scheduleitem a {
+  color: #ecf0f1;
+}
+
+.meeting  a:hover, .scheduleitem a:hover, 
+.meeting  a:focus, .scheduleitem a:focus {
+  text-decoration: none;
+}
+
+
+

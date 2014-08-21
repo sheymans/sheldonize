@@ -1,0 +1,128 @@
+td.id, th.id {
+  display:none;
+}
+
+/* do not show certain column headers */
+th.delete, th.done, th.name, th.selection  {
+  visibility:hidden;
+}
+
+/*
+.label {
+  display: none;
+}
+*/
+
+.asteriskField {
+  display: none;
+}
+
+
+/*
+ From https://github.com/bradleyayers/django-tables2/issues/141
+ For pagination:
+ */
+
+.table-container  ul.pagination {
+  font-weight: 300;
+}
+
+.table-container  div.total_items {
+  font-weight: 300;
+}
+
+.table-container ul.pagination li.active a {
+  background-color: #444444; 
+  border-color: #444444;
+  color: #ecf0f1;
+}
+
+
+.table-container ul.pagination li a {
+  color: #444444;
+  border-color: #ecf0f1;
+}
+
+.table-container ul.pagination li:not(.active) a:hover {
+  background-color: #ecf0f1;
+  border-color: #ecf0f1;
+  color: #444444;
+}
+
+
+  /*
+.table-container ul.pagination > li > a {
+  padding: 5px 14px;
+  background-color: #fff;
+  border: 1px solid #e67e22;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.table-container ul.pagination > li > a:hover {
+  text-decoration: none;
+  background-color: #ecf0f1;
+}
+
+.table-container ul.pagination li.next {
+  display:table-cell;
+  float:right;
+}
+
+.table-container ul.pagination  li.previous {
+  display:table-cell;
+  float:left;
+}
+
+.table-container ul.pagination li.cardinality {
+  font-weight: 300;
+  padding: 5px 14px;
+}
+*/
+
+
+/* The color of the stripes in a table: */
+.table-striped > tbody > tr:not(.info):nth-child(2n+1), .table-striped > tbody > tr:not(.info):nth-child(2n+1) {
+  background-color: #fcf2e8;
+}
+
+
+.table-hover > tbody > tr:hover > td {
+  background-color: #fcf2e8;
+  cursor: pointer;
+}
+
+/* The edit links */
+/* They have been replaced by a hover:
+a.table_edit {
+  color: #444444; 
+  font-weight: 300;
+}
+
+a.table_edit:hover, a.table_edit:focus {
+  color: #000; 
+}
+*/
+
+/* The trash links */
+a.table_trash {
+  color: #444444; 
+  font-weight: 300;
+}
+
+a.table_trash:hover, a.table_trash:focus {
+  color: #000; 
+}
+
+
+th > a {
+  color: #444444; 
+  font-weight: 300;
+}
+
+th > a:hover, th:focus {
+  color: #000;
+  text-decoration: none;
+}
+

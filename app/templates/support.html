@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static "app/css/table.css" %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Support
+{% endblock %}
+
+{% block beforecontent %}
+{% if addtaskform %}
+<!-- Make sure that from tablets on (sm), the form is filling the full row -->
+<div class="col-sm-12">
+    {% crispy addtaskform %}
+</div>
+{% endif %}
+{% endblock beforecontent %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <p>
+        Please add a task above for our developers. We'll have a look as soon as possible!
+        </p>
+        <p>Or, get a quick overview of how you can use Sheldonize:</p>
+    </div>
+</div>
+
+<div class="row">
+    <br/>
+    </br>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        {% if device_type == 'mobile' or device_type == 'tablet' %}
+        <a href="//fast.wistia.net/embed/iframe/kajgrymlz3?popover=true" class="wistia-popover[height=720,playerColor=7b796a,width=1280]"><img src="https://embed-ssl.wistia.com/deliveries/de596da3732bb1b28a57011d97524d89db80999b.jpg?image_play_button=true&image_play_button_color=7b796ae0&image_crop_resized=150x84" alt="" /></a>
+        {% else %}
+        <a href="//fast.wistia.net/embed/iframe/kajgrymlz3?popover=true" class="wistia-popover[height=720,playerColor=7b796a,width=1280]"><img src="https://embed-ssl.wistia.com/deliveries/de596da3732bb1b28a57011d97524d89db80999b.jpg?image_play_button=true&image_play_button_color=7b796ae0&image_crop_resized=300x168" alt="" /></a>
+        <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/popover-v1.js"></script>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
+
+
+{% block morejs %}
+<script src="{% static "app/js/tasks.js" %}"></script>
+{% endblock %}
+
