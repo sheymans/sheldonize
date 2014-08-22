@@ -401,8 +401,11 @@ blockquote {
 }
 
 blockquote p:before {
-  content: "\f10d";
-  font-family: 'Fontawesome';
+  content: ',,';
+  display: block;
   float: left;
-  margin-right: 10px;
+  font-size: 3em;
+  line-height: 1;
+  margin-left: -.6em;
+  transform: rotate(180deg);
 }
