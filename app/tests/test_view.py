@@ -77,7 +77,9 @@ class ViewTest(TestCase):
         self.client_stub.logout()
         response = self.client_stub.get("/app/")
         # -1 for the trial user paul
-        self.assertEqual(response.context['trial_registrations_left'], app.parameters.TOTAL_ALLOWED_TRIAL_USERS - 1)
+        # UPDATE: 24 August, we no longer show the trial registrations to the
+        # users
+        #self.assertEqual(response.context['trial_registrations_left'], app.parameters.TOTAL_ALLOWED_TRIAL_USERS - 1)
 
     def test_home_with_user_authenticated(self):
         # if a logged in person goes to the home page, he should be directed to

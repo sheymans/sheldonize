@@ -39,19 +39,21 @@
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+          {% if user.is_authenticated %}
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          {% endif %}
           <a class="navbar-brand" href="/app/">
             <img class="logo" src="{% static "app/img/sheldonize_header.png" %}" alt="sheldonize"/>
           </a>
         </div>
 
+        {% if user.is_authenticated %}
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          {% if user.is_authenticated %}
           <ul class="nav navbar-nav">
             <li id="tasks-nav"><a href="/app/tasks/incomplete/">Tasks</a></li>
             <li id="meetings-nav"><a href="/app/meetings/future/">Meetings</a></li>
@@ -68,11 +70,9 @@
             </li>
 
           </ul>
-          {% endif %}
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <ul class="nav navbar-nav navbar-right">
-            {% if user.is_authenticated %}
             <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="glyphicon glyphicon-user"></span>
@@ -98,9 +98,9 @@
               <li><a href="{% url 'logout_v' %}">Log Out</a></li>
             </ul>
             </li>
-           {% endif %}
           </ul>
         </div><!-- /.navbar-collapse -->
+        {% endif %}
       </div><!-- /.container -->
     </nav>
 

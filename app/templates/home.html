@@ -18,28 +18,8 @@ Sheldonize
 </div>
 
 <div class="row">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-6 col-xs-12 text-center">
-            <blockquote>
-                <p>Automatically scheduling {{ tasks_count }} tasks and {{ meetings_count }} meetings for {{ users_count }} people since 2014</p>
-            <small>Sheldonize (when asked &quot;what have you been up to?&quot;)</small>
-        </blockquote>
-    </div>
-</div>
-
-<div class="row">
-    <br/>
-    <br/>
-</div>
-
-<div class="row">
     <div class="col-xs-12 text-center">
-        {% if trial_registrations_left > 0 %}
-        <button id="signupbutton" type="button" onclick="location.href=&quot;{% url 'signup' %}?timezone=&quot; + this.value ;" class="btn btn-sheldonize-primary btn-countdown"><h1>{{ trial_registrations_left }}</h1><p>places open</p><h3>Sign Up</h3><h3>Free 31-Day Trial</h3></button>
-        {% else %}
-        <button type="button" onclick="location.href=&quot;/users/wait/&quot;" class="btn btn-sheldonize-primary btn-countdown"><h1>{{ trial_registrations_left }}</h1><p>places open</p><h3>Get On</h3><h3>The</h3><h3>Waiting List</h3></button>
-        {% endif %}
+        <button id="signupbutton" type="button" onclick="location.href=&quot;{% url 'signup' %}?timezone=&quot; + this.value ;" class="btn btn-sheldonize-primary btn-countdown"><h1>Sign Up</h1><h3>Free 31-Day Trial</h3></button>
     </div>
 </div>
 

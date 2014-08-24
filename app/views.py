@@ -29,15 +29,16 @@ def home(request):
     if request.user.is_authenticated():
         return redirect(tasks)
     else:
-        trial_registrations_left = service.trial_registrations_left()
-        tasks_count = Task.objects.count()
-        meetings_count = Meeting.objects.count()
-        user_count = User.objects.count()
-        return render(request, "home.html", {'device_type': request.device_type, 'trial_registrations_left': trial_registrations_left, 'tasks_count': tasks_count, 'meetings_count': meetings_count, 'users_count': user_count})
+        #return render(request, "home.html", {'device_type': request.device_type, 'trial_registrations_left': trial_registrations_left, 'tasks_count': tasks_count, 'meetings_count': meetings_count, 'users_count': user_count})
+        return render(request, "home.html", {'device_type': request.device_type})
 
 # ELB needs a healthcheck returning 200
 def healthcheck(request):
-    return HttpResponse('OK')
+    trial_registrations_left = service.trial_registrations_left()
+    #tasks_count = Task.objects.count()
+    #meetings_count = Meeting.objects.count()
+    user_count = User.objects.count()
+    return HttpResponse('<ul><li>users in system: ' + str(user_count) + '</li><li>trials left: ' + str(trial_registrations_left) + '</li></ul>')
 
 # The terms of use
 def terms(request):
