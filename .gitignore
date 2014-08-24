@@ -1,2 +1,3 @@
 ./fabfile/
 *.pyc
+app.log
