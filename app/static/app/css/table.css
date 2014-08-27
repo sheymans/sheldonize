@@ -126,3 +126,7 @@ th > a:hover, th:focus {
   text-decoration: none;
 }
 
+tr > th > a > span.caret {
+  font-weight: 250;
+  color: #D4D8D9;
+}
