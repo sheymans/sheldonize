@@ -23,6 +23,34 @@ Support
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
+        {% if  current_support_requests  %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <h3 class="panel-title">Your Support Requests</h3>
+            </div>  
+            <div class="panel-body">
+                <ul>
+                    {% for task in current_support_requests %}
+                    {% if task.done %}
+                    <li>{{ task.name }} (<b>DONE</b>)</li>
+                    {% else %}
+                        {% if task.when == 'T' or task.when == 'W' %}
+                        <li>{{ task.name }} (<b>IN PROGRESS</b>)</li>
+                        {% else %}
+                        <li>{{ task.name }} (<b>PENDING</b>)</li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+       {% endif %}
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
         <p>
         Please add a task above for our developers. We'll have a look as soon as possible!
         </p>

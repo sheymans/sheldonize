@@ -55,7 +55,14 @@ def privacy(request):
 def support(request):
     if request.method == "GET":
         form = AddTaskForm()
-        return render(request, "support.html", {'device_type': request.device_type, 'addtaskform': form,})
+        try:
+            superuser = User.objects.get(username='support')
+            # get the tasks of the support user that have as a topic this users
+            # email (that's the support tasks of this user)
+            current = list(Task.objects.filter(user=superuser, topic=request.user.email))
+        except:
+            current = None
+        return render(request, "support.html", {'device_type': request.device_type, 'addtaskform': form, 'current_support_requests': current})
 
     elif request.method == "POST":
         success = ""
