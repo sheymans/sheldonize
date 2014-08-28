@@ -42,5 +42,10 @@ urlpatterns = patterns('',
     url(r'^privacy/$', views.privacy, name='privacy'),
     # /support/
     url(r'^support/$', views.support, name='support'),
+    # /google/authentication/; the Google Developer Console contains
+    # https://localhost:8000/app/oauth2callback TODO: also add sheldonize.com
+    url(r'^oauth2callback', views.auth_return, name='auth_return'),
+    url(r'^googlecalendar', views.googlecalendar, name='googlecalendar'),
+
 )
 

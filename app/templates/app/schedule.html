@@ -30,7 +30,11 @@ Schedule
                 <div class="col-md-8 col-xs-2">
                 </div>
                 <div class="col-md-2 col-xs-5 text-right">
-                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-default glyphicon glyphicon-trash" name="delete-schedule" id="delete-schedule">&nbsp;Clear</button>
+                    {% if device_type == 'mobile' %}
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-cloud-download" name="get-google-calendar" id="get-google-calendar">&nbsp;GCal</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-cloud-download" name="get-google-calendar" id="get-google-calendar">&nbsp;Google Calendar</button>
+                    {% endif %}
                 </div>
             </form>
         </div>
@@ -80,12 +84,30 @@ Schedule
                 </div>
             </div>
         {% endif %}
+
+        <div class="row">
+            <br/>
+            <br/>
+        </div>
+        <div class="row">
+            <form action="." method="post">
+                <div class="col-md-10 col-xs-7">
+                </div>
+                <div class="col-md-2 col-xs-5 text-right">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-default glyphicon glyphicon-trash" name="delete-schedule" id="delete-schedule">&nbsp;Clear</button>
+                </div>
+            </form>
+        </div>
+
+
+
     </div>
 
     <div class="row">
         <div class="col-xs-12 text-center">
 
-          <div class="company">Sheldonize, LLC.  &copy; 2014 | <a href="/app/terms/">Terms of Use</a> | <a href="/app/privacy/">Privacy Policy</a></div>
+            <div class="company">Sheldonize, LLC.  &copy; 2014 | <a href="/app/terms/">Terms of Use</a> | <a href="/app/privacy/">Privacy Policy</a></div>
         </div>
     </div>
 </div>

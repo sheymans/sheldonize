@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import FormView
 from django.contrib.auth import authenticate
 from django.contrib import messages
-from app.views import tasks, home
+from app.views import tasks, home, clean_up_authentication
 from subscriptions.views import signup_subscription
 from app.service import create_default_preferences
 from forms import SignUpForm, UserProfileForm, WaitForm
@@ -52,6 +52,7 @@ def login_v(request):
     return render(request, 'users/login.html', {'bad_login': bad_login, 'next': next})
 
 def logout_v(request):
+    clean_up_authentication(request.user)
     logout(request)
     return redirect(home)
 

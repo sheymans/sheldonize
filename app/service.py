@@ -84,6 +84,10 @@ def meetings_2_dict(meetings, user_timezone):
             jso["title"] = "<span class=\"glyphicon glyphicon-repeat\"></span>&nbsp;&nbsp;" + meeting.name 
         else:
             jso["title"] = meeting.name
+        if meeting.foreign is not None:
+            jso["title"] = "<span class=\"glyphicon glyphicon-cloud-download\"></span>&nbsp;&nbsp;" + meeting.name 
+        else:
+            jso["title"] = meeting.name
         jso["url"] = "/app/meetings/" + str(meeting.id) + "/"
         # send ISO08601 back to front-end
         jso["start"] = start.datetime.isoformat()
@@ -416,6 +420,12 @@ def clear_scheduleditems(user):
     """
     ScheduleItem.objects.filter(user=user).delete()
 
+def clear_externalitems(user):
+    """
+    Deletes all foreign (google) items
+    """
+    Meeting.objects.filter(user=user, foreign=0).delete()
+
 
 
 def get_arrow_datetime(weekday, t, start_arrow, user_timezone, workweek_done):
@@ -647,5 +657,31 @@ def trial_registrations_left():
         return result
  
 
+## Google
 
+# Save Google Calendar Events to our Meetings
+def save_google_events(user, events, calendar_name):
+    user_timezone = get_timezone(user)
+    for event in events['items']:
+        s = event['start']
+        e = event['end']
+
+        if 'date' in s:
+            start = arrow.get(s['date']).replace(tzinfo=user_timezone)
+        if 'date' in e:
+            end = arrow.get(e['date']).replace(tzinfo=user_timezone)
+
+        if 'dateTime' in s:
+            start = arrow.get(s['dateTime'])
+        if 'dateTime' in e:
+            end = arrow.get(e['dateTime'])
+
+        if 'timeZone' in s:
+            start = start.to(s['timeZone'])
+        if 'timeZone' in e:
+            end = end.to(e['timeZone'])
+
+        meeting = Meeting.objects.create(user=user, name=str(event['summary']) + " (" + str(calendar_name) + ")", start=start.datetime, end=end.datetime, foreign=0)
+        meeting.save()
+        saved = Meeting.objects.get(user=user, start=start.datetime)
 

@@ -157,12 +157,18 @@ class MeetingTable(tables.Table):
         else:
             return ""
 
+    def render_external(self, value, record):
+        if value:
+            return value
+        else:
+            return ""
+
 
 
     class Meta:
         model = Meeting
-        fields = ('selection', 'name', 'start', 'end', 'repeat')
-        sequence = ('selection', 'name', 'start', 'end', 'repeat')
+        fields = ('selection', 'name', 'start', 'end', 'repeat', 'foreign')
+        sequence = ('selection', 'name', 'start', 'end', 'repeat', 'foreign')
         exclude = ('user',)
         order_by = ('start')
         attrs = {"class": "table table-striped table-hover"}

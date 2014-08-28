@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django_tables2 import RequestConfig
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -10,7 +10,7 @@ from django.conf import settings
 from users.models import UserProfile
 
 from django.contrib.auth.models import User
-from models import Task, ScheduleItem, Preference, Meeting
+from models import Task, ScheduleItem, Preference, Meeting, CredentialsModel, FlowModel
 from tables import TaskTable, PreferenceTable, MeetingTable
 from forms import TaskForm, AddTaskForm, AddPreferenceForm, MeetingForm, AddMeetingForm
 import service
@@ -22,6 +22,16 @@ import requests
 from dateutil.parser import parse
 
 from django.contrib.auth.decorators import login_required, user_passes_test
+
+
+# Google Authentication
+import httplib2
+from apiclient.discovery import build
+from oauth2client import xsrfutil
+from oauth2client.client import OAuth2WebServerFlow
+from oauth2client.django_orm import Storage
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -314,12 +324,17 @@ def calculate_schedule(request):
         elif 'delete-schedule' in request.POST:
             # trash complete schedule
             service.clear_scheduleditems(request.user)
+            service.clear_externalitems(request.user)
             messages.add_message(request, messages.SUCCESS, "Schedule cleared.")
     return info
                 
 @login_required
 @user_passes_test(lambda user: user.userprofile.all_permissions_granted(), login_url="/subscriptions/signup/")
 def schedule(request):
+    # Did someone ask for the google calendar?
+    if request.method == "POST" and 'get-google-calendar' in request.POST:
+             return redirect ('/app/googlecalendar/')
+
     info = calculate_schedule(request)
     messages.add_message(request, messages.ERROR, info[0])
     messages.add_message(request, messages.WARNING, info[1])
@@ -599,4 +614,79 @@ def redirect_to_current(request, default_view):
     if request.session and 'current_url' in request.session: # pragma: no cover
         current_url = request.session['current_url']
     return redirect(current_url)
+
+
+
+### Google Authentication
+
+@login_required
+def googlecalendar(request):
+    storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+    credential = storage.get()
+    if credential is None or credential.invalid == True:
+        if FlowModel.objects.filter(id=request.user).exists():
+            # there is already a flow model for this user
+            # get it
+            flow_model = FlowModel.objects.get(id=request.user)
+        else:
+            # create it
+            flow = OAuth2WebServerFlow(client_id=settings.GOOGLE_CLIENT_ID,
+                                       client_secret=settings.GOOGLE_CLIENT_SECRET,
+                                       scope=settings.GOOGLE_SCOPE,
+                                       redirect_uri=settings.GOOGLE_REDIRECT_URI)
+            flow_model = FlowModel.objects.create(id=request.user, flow=flow)
+
+        flow_model.flow.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY, request.user)
+        flow_model.save()
+
+        authorize_url = flow_model.flow.step1_get_authorize_url()
+        return HttpResponseRedirect(authorize_url)
+    else:
+        http = httplib2.Http()
+        http = credential.authorize(http)
+        cal_service = build('calendar', 'v3', http=http)
+
+        calendar_list = cal_service.calendarList().list().execute()
+        chosen_calendars = []
+        for calendar_list_entry in calendar_list['items']:
+            if 'selected' in calendar_list_entry:
+                chosen_calendars.append((calendar_list_entry['id'], calendar_list_entry['summary']))
+
+        events = []
+        now = arrow.utcnow()
+        past8 = now.replace(days=-8)
+        next8=now.replace(days=+8)
+        # First Remove all foreign events for that user
+        Meeting.objects.filter(user=request.user, foreign=0).delete()
+        for item in chosen_calendars:
+            calendar_id = item[0] 
+            summary = item[1]
+            events = cal_service.events().list(calendarId=calendar_id, singleEvents=True, timeMin=past8.datetime.isoformat(), timeMax=next8.datetime.isoformat()).execute()
+            service.save_google_events(request.user, events, summary)
+
+    return redirect('/app/schedule/')
+
+@login_required
+def auth_return(request):
+    if not xsrfutil.validate_token(settings.SECRET_KEY, request.REQUEST['state'], request.user):
+        return  HttpResponseBadRequest()
+    try:
+        flow = FlowModel.objects.get(id=request.user).flow
+    except:
+        return HttpResponseBadRequest()
+
+    credential = flow.step2_exchange(request.REQUEST)
+    storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+    storage.put(credential)
+    # go back to google calendar to then get the google calendar data
+    return redirect('/app/googlecalendar/')
+
+
+def clean_up_authentication(user):
+    # we do this at logout
+    storage = Storage(CredentialsModel, 'id', user, 'credential')
+    storage.delete()
+    FlowModel.objects.filter(id=user).delete()
+    CredentialsModel.objects.filter(id=user).delete()
+
 

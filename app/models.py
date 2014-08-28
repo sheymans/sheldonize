@@ -7,6 +7,11 @@ from django.contrib.auth.models import User
 # for limiting values of the integers:
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+# Google Authentication
+from oauth2client.django_orm import FlowField
+from oauth2client.django_orm import CredentialsField
+from oauth2client.django_orm import FlowField
+
 size = models.IntegerField()
 
 class Task(models.Model):
@@ -117,7 +122,12 @@ class Meeting(models.Model):
             (3, 'Every other week'),
             )
 
+    FOREIGN = (
+            (0, 'Google'),
+            )
+
     repeat = models.PositiveIntegerField(verbose_name='repeat?', choices=REPEAT, null=True, blank=True)
+    foreign = models.PositiveIntegerField(verbose_name='external?', choices=FOREIGN, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -125,5 +135,24 @@ class Meeting(models.Model):
     # to be able to check for class name in django templates
     def get_cname(self):
         return 'meeting'
+
+
+# Google Authentication
+
+# South does not now these fields (we have to add introspection):
+
+from south.modelsinspector import add_introspection_rules
+
+add_introspection_rules([], ["^oauth2client\.django_orm\.CredentialsField"])
+add_introspection_rules([], ["^oauth2client\.django_orm\.FlowField"])
+
+class CredentialsModel(models.Model):
+      id = models.ForeignKey(User, primary_key=True)
+      credential = CredentialsField()
+
+class FlowModel(models.Model):
+      id = models.ForeignKey(User, primary_key=True)
+      flow = FlowField()
+
 
 
