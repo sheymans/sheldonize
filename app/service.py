@@ -662,14 +662,21 @@ def trial_registrations_left():
 # Save Google Calendar Events to our Meetings
 def save_google_events(user, events, calendar_name):
     user_timezone = get_timezone(user)
+
+    error = ""
+    warning = ""
+    success = ""
+
     for event in events['items']:
         s = event['start']
         e = event['end']
 
         if 'date' in s:
-            start = arrow.get(s['date']).replace(tzinfo=user_timezone)
+            # Do not take all-day events into account
+            continue
         if 'date' in e:
-            end = arrow.get(e['date']).replace(tzinfo=user_timezone)
+            # Do not take all-day events into account
+            continue
 
         if 'dateTime' in s:
             start = arrow.get(s['dateTime'])
@@ -681,7 +688,10 @@ def save_google_events(user, events, calendar_name):
         if 'timeZone' in e:
             end = end.to(e['timeZone'])
 
-        meeting = Meeting.objects.create(user=user, name=str(event['summary']) + " (" + str(calendar_name) + ")", start=start.datetime, end=end.datetime, foreign=0)
-        meeting.save()
-        saved = Meeting.objects.get(user=user, start=start.datetime)
+        if start and end:
+            meeting = Meeting.objects.create(user=user, name=str(event['summary']) + " (" + str(calendar_name) + ")", start=start.datetime, end=end.datetime, foreign=0)
+            meeting.save()
+            
+    success = calendar_name + ": Imported this week's items for scheduling."
+    return (error, warning, success)
 

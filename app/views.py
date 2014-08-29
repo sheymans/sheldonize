@@ -333,7 +333,7 @@ def calculate_schedule(request):
 def schedule(request):
     # Did someone ask for the google calendar?
     if request.method == "POST" and 'get-google-calendar' in request.POST:
-             return redirect ('/app/googlecalendar/')
+             return redirect('/app/googlecalendar/')
 
     info = calculate_schedule(request)
     messages.add_message(request, messages.ERROR, info[0])
@@ -662,7 +662,10 @@ def googlecalendar(request):
             calendar_id = item[0] 
             summary = item[1]
             events = cal_service.events().list(calendarId=calendar_id, singleEvents=True, timeMin=past8.datetime.isoformat(), timeMax=next8.datetime.isoformat()).execute()
-            service.save_google_events(request.user, events, summary)
+            info = service.save_google_events(request.user, events, summary)
+            messages.add_message(request, messages.ERROR, info[0])
+            messages.add_message(request, messages.WARNING, info[1])
+            messages.add_message(request, messages.SUCCESS, info[2])
 
     return redirect('/app/schedule/')
 
