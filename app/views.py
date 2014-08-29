@@ -669,18 +669,24 @@ def googlecalendar(request):
 @login_required
 def auth_return(request):
     if not xsrfutil.validate_token(settings.SECRET_KEY, request.REQUEST['state'], request.user):
-        return  HttpResponseBadRequest()
+        return auth_error(request)
     try:
         flow = FlowModel.objects.get(id=request.user).flow
     except:
-        return HttpResponseBadRequest()
+        return auth_error(request)
 
-    credential = flow.step2_exchange(request.REQUEST)
-    storage = Storage(CredentialsModel, 'id', request.user, 'credential')
-    storage.put(credential)
+    try:
+        credential = flow.step2_exchange(request.REQUEST)
+        storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+        storage.put(credential)
+    except:
+        return auth_error(request)
     # go back to google calendar to then get the google calendar data
     return redirect('/app/googlecalendar/')
 
+@login_required
+def auth_error(request):
+    return render(request, "auth_error.html")
 
 def clean_up_authentication(user):
     # we do this at logout

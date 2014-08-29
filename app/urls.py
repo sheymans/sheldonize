@@ -46,6 +46,7 @@ urlpatterns = patterns('',
     # https://localhost:8000/app/oauth2callback TODO: also add sheldonize.com
     url(r'^oauth2callback', views.auth_return, name='auth_return'),
     url(r'^googlecalendar', views.googlecalendar, name='googlecalendar'),
+    url(r'^autherror', views.auth_error, name='auth_return'),
 
 )
 
