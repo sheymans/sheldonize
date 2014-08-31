@@ -409,3 +409,7 @@ blockquote p:before {
   margin-left: -.6em;
   transform: rotate(180deg);
 }
+
+#signupbutton h3 {
+  font-weight: 300;
+}

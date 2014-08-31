@@ -21,19 +21,47 @@ Sign Up For A Free Trial
                     href="{% url 'terms' %}">Terms of Use</a> and <a href="{% url 'privacy' %}">Privacy Policy</a>.</small></i></p>
     </div>
 </div>
-{% endblock content %}
 
-{% block morejs %}
-<!-- Google Analytics -->
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<div class="row">
+    </br>
+    </br>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Pricing</h3>
+            </div>  
+            <div class="panel-body">
+                <p>
+                The trial period of 31 days is free. No payment information required.
+                No strings attached. If you want to continue using Sheldonize after the
+                31-day trial period, we'll ask for <b>$3.99</b> per month.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+            {% endblock content %}
+
+            {% block morejs %}
+            <!-- Google Analytics -->
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-53163078-1', 'auto');
 ga('send', 'pageview');
 
-</script>
-{% endblock %}
+            </script>
+            {% endblock %}
 

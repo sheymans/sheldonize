@@ -11,6 +11,7 @@ $( document ).ready(function() {
     // set the value for the signup button
     var timezone = jstz.determine();
     $('#signupbutton').val(timezone.name());
+    document.getElementById("signuplink").setAttribute("href","/users/signup/?timezone=" + timezone.name());
     
     // Counter on adding name:
     // using bootstrap-maxlength https://github.com/mimo84/bootstrap-maxlength/
