@@ -13,7 +13,9 @@ Sheldonize
 {% block content %}
 <div class="row">
     <div class="col-xs-12 text-right">
-        <a id="signuplink" href="/users/signup/">Sign-up for free trial and see pricing</a>
+        <a id="signuplink" href="/users/signup/">Sign-up for free trial</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a id="signuplink" href="/app/pricing/">Pricing</a>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="/users/login/" rel="nofollow">Log in</a> 
     </div>
@@ -21,40 +23,20 @@ Sheldonize
 
 <div class="row">
     <br/>
-    <br/>
+</div>
+
+<div class="jumbotron" style="background-color: #ecf0f1">
+    <img class="img-responsive" style="width:30%; height:auto;" align="right" src="{% static "app/img/mobile_view.png" %}"/>
+    <h1 style="color: #444444">Sheldonize</h1>
+    <p style="color: #444444; font-weight:300">Let Sheldonize plan your work such that you can focus on gettings things done.
+    </p>
+    <p><button id="signupbutton" type="button" onclick="location.href=&quot;{% url 'signup' %}?timezone=&quot; + this.value ;" class="btn btn-primary">Start Planning &raquo;</button>
+    <a href="//fast.wistia.net/embed/iframe/kajgrymlz3?popover=true" class="wistia-popover[height=720,playerColor=7b796a,width=1280]"><button class="btn btn-default">Watch Video &raquo;</button></a>
+    <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/popover-v1.js"></script>
+    </p>
 </div>
 
 <div class="row">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-6 col-xs-12 text-center">
-        <h1>Sheldonize Schedules your Tasks</h1>
-    </div>
-    <div class="col-xs-4">
-    </div>
-</div>
-
-<div class="row">
-    <br/>
-</div>
-
-
-
-<div class="row">
-    <div class="col-xs-12 text-center">
-        <button id="signupbutton" type="button" onclick="location.href=&quot;{% url 'signup' %}?timezone=&quot; + this.value ;" class="btn btn-primary"><h3>Start with</h3><h3> Free 31-day Trial</h3></button>
-    </div>
-</div>
-
-<div class="row">
-    <br/>
-    <br/>
-</div>
-
-
-<div class="row">
-    <div class="col-md-3">
-    </div>
     <div class="col-xs-12 col-md-6">
         <h3>What is this?</h3>
         <p>
@@ -65,19 +47,15 @@ Sheldonize
         </p>
         <p>If you like the sound of that, check
         out our 3-minute <a
-        href="http://iwokeupthismorning.net/scheduling/tutorial/2014/08/29/sheldonize-an-overview/"/>overview
-    video</a> on our sister blog, <a
-href="http://iwokeupthismorning.net">I Woke Up This Morning</a>.
-</p>
-</div>
+            href="http://iwokeupthismorning.net/scheduling/tutorial/2014/08/29/sheldonize-an-overview/"/>overview
+            video</a> on our sister blog, <a
+            href="http://iwokeupthismorning.net">I Woke Up This Morning</a>.
+        </p>
+    </div>
 </div>
 
 <div class="row">
-    <div class="col-md-3">
-    </div>
     <div class="col-xs-12 col-md-6">
-
-
         <h3>Who is this?</h3>
         <p>
         This is a 2-person shop based in San Francisco by way of an Austrian

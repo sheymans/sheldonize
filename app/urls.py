@@ -37,9 +37,10 @@ urlpatterns = patterns('',
     url(r'^scheduleitems/(?P<scheduleitem_id>\d+)/$', views.scheduleitem, name='scheduleitem'),
     # ajax access from schedule
     url(r'^meetings/ajax/$', views.meetings_ajax, name='meetings_ajax'),
-    # /app/terms and /app/privacy
+    # /app/terms and /app/privacy and /app/pricing
     url(r'^terms/$', views.terms, name='terms'),
     url(r'^privacy/$', views.privacy, name='privacy'),
+    url(r'^pricing/$', views.pricing, name='pricing'),
     # /support/
     url(r'^support/$', views.support, name='support'),
     # /google/authentication/; the Google Developer Console contains

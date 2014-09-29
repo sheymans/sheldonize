@@ -58,6 +58,9 @@ def terms(request):
 def privacy(request):
     return render(request, "privacy.html")
 
+# The pricing
+def pricing(request):
+    return render(request, "pricing.html")
 
 # The support
 @login_required
