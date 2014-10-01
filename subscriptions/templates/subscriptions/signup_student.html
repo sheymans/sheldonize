@@ -3,11 +3,11 @@
 {% load staticfiles %}
 
 {% block title%}
-Sign Up for a Pro Account
+Sign Up for a Student or Teacher Account
 {% endblock %}
 
 {% block header %}
-<h3>Sign Up for a Pro Account</h3>
+<h3>Sign Up for a Student or Teacher Account</h3>
 {% endblock header %}
 
 {% block content %}
@@ -15,51 +15,19 @@ Sign Up for a Pro Account
 {% if user.userprofile.is_undecided_user or user.userprofile.is_trial_user %}
 <div class="row">
     <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Student or Teacher?</h3>
-            </div>  
-            <div class="panel-body">
-                <p><i>
-                    Are you a <b>student</b> or <b>teacher</b>: please check out our <a
-                        href="/subscriptions/signup_student/">Special Rate</a> for you.
-                    Instead of $3.99 per month, you get Sheldonize for only a <b>$9.99 one-time payment</b>!
-                </i>
-                </p>
-            </div>
-        </div>
-
     </div>
     <div class="col-xs-12 col-md-4">
 
-        {% if user.userprofile.is_trial_user %}
-        <p>So, you decided to check out how to become a pro! Great!</p>
-        {% elif user.userprofile.is_undecided_user %}
-        <p>Unfortunately, your trial is over now. The good news is that you can
-        immediately continue where you left off by becoming a pro user.</p>
-        {% endif %}
-
-        <h3>Why Not For Free?</h3>
-        <p>In these times, web applications that ask for money are rare.
-        However, as we believe in putting the users first, we believe that
-        we can ask those users to support this business in the best
-        possible way. And that's not by "likes", retweets, or "+1"s, but by money.
-        Money that will go straight to supporting us in order to provide
-        the best possible service, for you.
-        </p>
-        <p>If you want to know more on why free applications are not good for
-        you, <a
-            href="https://blog.pinboard.in/2011/12/don_t_be_a_free_user/">this
-            articulates it well</a>.
-        </p>
+        <h3>Who gets this Special Rate?</h3>
+        <p> If you are a student or teacher at any high-school, college,
+        university or other educational facility you can get our reduced rate
+        for an unlimited use of Sheldonize.  </p>
 
         <h3>How Much and What do I get?</h3> 
-        <p>For a <b>3.99$</b> subscription <b>per month</b>, you will get: 
+        <p>For a <b>9.99$</b> <b>one-time payment</b>, you will get: 
         <ul>
-            <li>Unlimited use of <a href="https://sheldonize.com">sheldonize.com</a> (yes, this means no limits on the amount of tasks or meetings)
-            <li>Unlimited support from our developers, to help you resolve any difficulties you may experience
+            <li>Unlimited use of this version of <a href="https://sheldonize.com">sheldonize.com</a> 
         </ul>
-        <p>Of course you can cancel your account at any point in time.</p>
 
         <h3>Is this Safe?</h3> 
         <p>We handle payments using <a
@@ -71,7 +39,7 @@ Sign Up for a Pro Account
             href="https://support.stripe.com/topics/security-and-fraud-prevention">security
             and fraud prevention</a>.
 
-        <h3>``OK I'm convinced, Sign me Up!''</h3> 
+        <h3>``OK I'm convinced, I wanna have it!''</h3> 
     </div>
 </div>
 
@@ -79,18 +47,18 @@ Sign Up for a Pro Account
     <div class="col-md-4">
     </div>
     <div class="col-xs-12 col-md-4 text-center">
-        <form action="/subscriptions/signup/" method="POST">
+        <form action="/subscriptions/signup_student/" method="POST">
             {% csrf_token %}
             <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key={{ stripe_public_key }}
-                data-amount="399"
+                data-amount="999"
                 data-name="Sheldonize"
-                data-description="Get a Pro Account"
+                data-description="Get a Student or Teacher Account"
                 data-image="http://sheldy-s3-us-west-1.s3.amazonaws.com/app/img/profile.png"
-                data-panel-label="Pay per Month:"
+                data-panel-label="Pay Once:"
                 data-email={{ user.email }}
-                data-label="Subscribe Now"
+                data-label="Pay Special Rate Now"
                 data-allow-remember-me=false>
             </script>
         </form>

@@ -86,6 +86,69 @@ def signup_subscription(request):
     else:
         raise Http404
 
+@login_required
+@user_passes_test(lambda user: user.userprofile.is_undecided_user() or user.userprofile.is_trial_user() or user.userprofile.is_cancelled_user(), login_url="/app/tasks")
+def signup_student(request):
+    if request.method == "GET":
+        return render(request, 'subscriptions/signup_student.html', {'stripe_public_key': settings.STRIPE_PUBLIC_KEY}) 
+    # Extra test on userprofile as cancelled users will not be shown the
+    # subscribe buttons, but malicious users could try to post to the page
+    # without that they  see it.
+    elif request.method == "POST" and (request.user.userprofile.is_undecided_user() or request.user.userprofile.is_trial_user()):
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        if 'stripeToken' in request.POST and 'stripeEmail' in request.POST:
+            token = request.POST['stripeToken']
+            email = request.POST['stripeEmail']
+            try:
+                # one time charge
+                charge = stripe.Charge.create(amount=999, currency="usd", card=token, description=email)
+
+                profile = request.user.userprofile
+                profile.go_edu()
+                success = "Your teacher and student account has been created. Congratulations!"
+                messages.add_message(request, messages.SUCCESS, success)
+                return render(request, 'subscriptions/signup_student.html') 
+                
+            # see API: https://stripe.com/docs/api#errors
+            except stripe.error.CardError, e: 
+                # Since it's a decline, stripe.error.CardError will be caught
+                body = e.json_body 
+                err = body['error']
+                error =  err['message']
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_student.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY}) 
+        
+            except stripe.error.InvalidRequestError, e:
+                error = "Stripe: Invalid request."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_student.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+            except stripe.error.AuthenticationError, e:
+                error = "Stripe: Authentication Error."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_student.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+            except stripe.error.APIConnectionError, e: # pragma: no cover
+                error = "Stripe: Connection Error."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_student.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+            except stripe.error.StripeError, e: # pragma: no cover
+                error = "Stripe: Error."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_student.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+            except Exception, e: # pragma: no cover
+                error = "Uknown problem; if this problem persists contact support." + str(e)
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_student.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+
+        else:
+            error="Error: No token or email obtained from Stripe."
+            messages.add_message(request, messages.ERROR, error)
+            return render(request, 'subscriptions/signup_student.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+
+    # not get or post
+    else:
+        raise Http404
+
+
 
 
 

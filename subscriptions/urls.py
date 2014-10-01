@@ -5,6 +5,8 @@ from subscriptions import views
 urlpatterns = patterns('',
     # /subscriptions/signup/
     url(r'^signup/$', views.signup_subscription, name='signup_subscription'),
+    # /subscriptions/signup_student/
+    url(r'^signup_student/$', views.signup_student, name='signup_student'),
     # /subscriptions/change/
     url(r'^change/$', views.change_subscription, name='change_subscription'),
     # /subscriptions/webhook/

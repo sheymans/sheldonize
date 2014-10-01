@@ -12,6 +12,7 @@ class UserProfile(models.Model):
             (2, 'pro'),
             (3, 'undecided'),
             (4, 'cancelled'),
+            (5, 'edu'),
             )
 
 
@@ -26,6 +27,14 @@ class UserProfile(models.Model):
     def go_pro(self):
         self.user.is_active = True
         self.usertype = 2
+        self.daysleft = 31
+        self.user.save()
+        self.save()
+
+
+    def go_edu(self):
+        self.user.is_active = True
+        self.usertype = 5
         self.daysleft = 31
         self.user.save()
         self.save()
@@ -49,7 +58,7 @@ class UserProfile(models.Model):
     def all_permissions_granted(self):
         # make sure a trial goes to undecided if longer than a month
         self.evaluate_trial()
-        return self.user.is_active and (self.usertype == 0 or self.usertype == 1 or self.usertype == 2)
+        return self.user.is_active and (self.usertype == 0 or self.usertype == 1 or self.usertype == 2 or self.usertype == 5)
 
     def is_cancelled_user(self):
         return self.usertype == 4
@@ -63,6 +72,8 @@ class UserProfile(models.Model):
     def is_pro_user(self):
         return self.usertype == 2
 
+    def is_edu_user(self):
+        return self.usertype == 5
 
     def evaluate_trial(self):
         if self.is_trial_user():
