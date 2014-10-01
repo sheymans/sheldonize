@@ -68,6 +68,11 @@ class UserProfileTest(TestCase):
         self.trialuserprofile.go_pro()
         self.assertTrue(self.trialuserprofile.is_pro_user())
 
+    def test_go_edu(self):
+        self.trialuserprofile.go_edu()
+        self.assertTrue(self.trialuserprofile.is_edu_user())
+
+
     def test_go_cancelled(self):
         self.trialuserprofile.go_pro()
         self.trialuserprofile.go_cancelled()
@@ -76,6 +81,8 @@ class UserProfileTest(TestCase):
     def test_all_permissions_granted(self):
         self.assertTrue(self.trialuserprofile.all_permissions_granted())
 
-
+    def test_all_permissions_granted_edu_user(self):
+        self.trialuserprofile.go_edu()
+        self.assertTrue(self.trialuserprofile.all_permissions_granted())
 
         
