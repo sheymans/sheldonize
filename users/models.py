@@ -23,6 +23,9 @@ class UserProfile(models.Model):
     daysleft = models.PositiveIntegerField(default=31)
     # ENDPERIOD DEPRECATED; we are doing a refund instead
     endperiod = models.DateTimeField(null=True, blank=True)
+    # how many successful invites did this user do (how people sign up that
+    # this user invited)
+    success_invites = models.PositiveIntegerField(default=0)
 
     def go_pro(self):
         self.user.is_active = True
@@ -81,10 +84,11 @@ class UserProfile(models.Model):
             now = arrow.utcnow().to(zone)
             joined = arrow.get(self.user.date_joined).to(zone)
             thirtyonedaysago = now.replace(days=-31)
-            if joined < thirtyonedaysago:
+            actualdaysleft = (joined - thirtyonedaysago).days + 1
+            if actualdaysleft + self.success_invites < 0:
                 self.go_undecided()
             else:
-                self.daysleft = (joined - thirtyonedaysago).days + 1
+                self.daysleft = actualdaysleft + self.success_invites
                 self.save()
 
 # DEPRECATEDD
@@ -110,3 +114,10 @@ class Wait(models.Model):
 
     def __unicode__(self):
         return self.email # pragma: no cover
+
+
+### Invites
+
+class Invite(models.Model):
+    inviter = models.ForeignKey(User)
+    invited = models.CharField(verbose_name='email', max_length=140)

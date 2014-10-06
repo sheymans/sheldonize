@@ -9,6 +9,8 @@ from django.core.exceptions import ValidationError
 
 from django.conf import settings
 
+from models import Invite
+
 import app.service
 
 ###############################################################################################
@@ -25,6 +27,18 @@ def unique_email_check(value):
     current = User.objects.filter(email__iexact=value)
     if current:
         raise ValidationError('This email address is already in use. Try another one please.')
+
+def email_already_invited(value):
+    # this ensures each email gets invited only once by one person
+    if Invite.objects.filter(invited__iexact=value).exists():
+        raise ValidationError('This email address was already invited. Try another friend!')
+
+def friend_already_signed_up(value):
+    current = User.objects.filter(email__iexact=value)
+    if current:
+        raise ValidationError('Your friend already signed up for Sheldonize. Try another friend!')
+
+
 
 def unique_username_check(value):
     current = User.objects.filter(username__iexact=value)
@@ -97,6 +111,24 @@ class WaitForm(forms.Form):
                 Field('email', placeholder='youremail@example.com', autofocus=True),
             FormActions(
                 SubmitButton('submit', 'Add to Waiting List', css_class='btn-sheldonize btn-sheldonize-primary'),
+                ),
+            )
+
+class InviteForm(forms.Form):
+
+    # Similar as signup form but without max users reached check
+    email = forms.EmailField(max_length=70, validators=[friend_already_signed_up, allowed_email_check, email_already_invited])
+
+    helper = FormHelper()
+    helper.form_class='form-horizontal sheldonize-form'
+    helper.label_class = 'col-sm-2'
+    helper.field_class = 'col-sm-10'
+    helper.form_method = 'POST'
+
+    helper.layout = Layout(
+                Field('email', placeholder='person_to_invite@example.com', autofocus=True),
+            FormActions(
+                SubmitButton('submit', 'Invite to Sheldonize', css_class='btn-sheldonize btn-sheldonize-primary'),
                 ),
             )
 

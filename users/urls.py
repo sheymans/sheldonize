@@ -25,6 +25,9 @@ urlpatterns = patterns('',
     # /users/wait/
     url(r'^wait/$', views.WaitView.as_view(), name='wait'),
     url(r'^wait/thanks/$', views.thanks, name='thanks'),
+    # /users/invite/
+    url(r'^invite/$', views.InviteView.as_view(), name='invite'),
+    url(r'^invite/thanks/$', views.invite_thanks, name='invite_thanks'),
     # password stuff:
     url(r'^password/change/$', view=password_change, name='password_change'),
     url(r'^password/change/done/$', view=password_change_done, name='password_change_done'),

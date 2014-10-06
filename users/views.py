@@ -5,9 +5,9 @@ from django.contrib import messages
 from app.views import tasks, home, clean_up_authentication
 from subscriptions.views import signup_subscription
 from app.service import create_default_preferences
-from forms import SignUpForm, UserProfileForm, WaitForm
+from forms import SignUpForm, UserProfileForm, WaitForm, InviteForm
 from django.contrib.auth.models import User
-from models import UserProfile, Wait
+from models import UserProfile, Wait, Invite
 from django.contrib.auth import authenticate, login, logout
 import arrow
 
@@ -15,6 +15,8 @@ import hashlib
 
 # this simulates login_required keyword
 from braces.views import LoginRequiredMixin
+
+from django.core.mail import send_mail
 
 def login_v(request):
 
@@ -59,6 +61,10 @@ def logout_v(request):
 
 def thanks(request):
     return render(request, 'users/thanks.html')
+
+def invite_thanks(request):
+    return render(request, 'users/invite_thanks.html')
+
 
 # this is a class-based view
 class SignupView(FormView):
@@ -105,6 +111,19 @@ class SignupView(FormView):
             # cross check waiting list and remove the email from the waiting
             # list (we signed up that user)
             Wait.objects.filter(email=email).delete()
+
+            # cross-check the invite (if there is an invite for you, there will
+            # be only 1 invite -- cause we check in the form, so the inviter
+            # can get your credit there):
+            if Invite.objects.filter(invited__iexact=email).exists():
+                invite = Invite.objects.filter(invited__iexact=email)[0]
+                inviter = invite.inviter
+                inviter.userprofile.success_invites += 1
+                # also evaluate trial of that inviter to make sure he gets his
+                # daysleft immediately correct (without that he has to press
+                # preferences or so)
+                inviter.userprofile.evaluate_trial()
+                inviter.userprofile.save()
             
             return self.form_valid(form)
 
@@ -160,6 +179,36 @@ class WaitView(FormView):
 
         if form.is_valid():
             w = Wait.objects.create(email=form.cleaned_data['email'], on_list_date=arrow.utcnow().datetime)
+            w.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+class InviteView(FormView):
+    success_url = '/users/invite/thanks/'
+    form_class = InviteForm
+    template_name = 'users/invite.html'
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, 'Email added on to the invite list.')
+        return super(InviteView, self).form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        form.full_clean()
+
+        if form.is_valid():
+            w = Invite.objects.create(inviter=self.request.user, invited=form.cleaned_data['email'])
+            # send email!
+            admin_email = 'admin@sheldonize.com'
+            message = "Hi!\n\n" + self.request.user.username + " (" + self.request.user.email + ")" + \
+                    " just invited you to join https://sheldonize.com, a smart task manager.\n\nNot only would you get the chance to try out Sheldonize for free for 31 days, in addition you'd help your friend as he/she gets extra trial days if you sign-up.\n\n" + \
+                    "So, please consider joining at https://sheldonize.com. We are waiting for you!\n\n" + \
+                    "Stijn Heymans\nCo-Founder of Sheldonize"
+            send_mail(self.request.user.username + ' invited you to ' + ' Sheldonize', message, admin_email, [form.cleaned_data['email']], fail_silently=True)
+    
             w.save()
             return self.form_valid(form)
         else:

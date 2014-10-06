@@ -78,7 +78,7 @@
               <span class="glyphicon glyphicon-user"></span>
               <sup>{{ user.userprofile.get_usertype_display }}
                 {% if user.userprofile.usertype == 1 %}
-                / {{ user.userprofile.daysleft }} days left
+                / {{ user.userprofile.daysleft }} days left / {{ user.userprofile.success_invites }} success invites
                 {% endif %}
               </sup>
               &nbsp;
@@ -92,6 +92,7 @@
               <li><a href="{% url 'change_subscription' %}">Your Pro Subscription</a></li>
               {% endif %}
               {% if user.userprofile.is_trial_user or user.userprofile.is_undecided_user %}
+              <li><a href="{% url 'invite' %}">Win More Free Trial Days</a></li>
               <li><a href="{% url 'signup_subscription' %}">Upgrade to Pro</a></li>
               {% endif %}
               <li class="divider"></li>
