@@ -59,7 +59,9 @@
             <li id="meetings-nav"><a href="/app/meetings/future/">Meetings</a></li>
             <li id="schedule-nav"><a href="/app/schedule/">Schedule</a></li>
             <li id="preferences-nav"><a href="/app/preferences/">Preferences</a></li>
-
+            {% if user.userprofile.is_trial_user %}
+            <li id="winmore-nav"><a href="/users/invite/"><strong>Win More Trial Days</strong></a></li>
+            {% endif %}
             <!-- Archive -->
             <li id="archive-nav" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Archive <b class="caret"></b></a> 
