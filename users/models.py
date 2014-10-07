@@ -85,10 +85,10 @@ class UserProfile(models.Model):
             joined = arrow.get(self.user.date_joined).to(zone)
             thirtyonedaysago = now.replace(days=-31)
             actualdaysleft = (joined - thirtyonedaysago).days + 1
-            if actualdaysleft + self.success_invites < 0:
+            if actualdaysleft + (self.success_invites * 7) < 0:
                 self.go_undecided()
             else:
-                self.daysleft = actualdaysleft + self.success_invites
+                self.daysleft = actualdaysleft + ( self.success_invites * 7 )
                 self.save()
 
 # DEPRECATEDD

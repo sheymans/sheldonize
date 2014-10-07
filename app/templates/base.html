@@ -93,8 +93,10 @@
               {% if user.userprofile.is_pro_user %}
               <li><a href="{% url 'change_subscription' %}">Your Pro Subscription</a></li>
               {% endif %}
+              {% if user.userprofile.is_trial_user %}
+              <li><a href="{% url 'invite' %}">Up your Trial Days</a></li>
+              {% endif %}
               {% if user.userprofile.is_trial_user or user.userprofile.is_undecided_user %}
-              <li><a href="{% url 'invite' %}">Win More Free Trial Days</a></li>
               <li><a href="{% url 'signup_subscription' %}">Upgrade to Pro</a></li>
               {% endif %}
               <li class="divider"></li>
