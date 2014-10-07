@@ -60,7 +60,7 @@
             <li id="schedule-nav"><a href="/app/schedule/">Schedule</a></li>
             <li id="preferences-nav"><a href="/app/preferences/">Preferences</a></li>
             {% if user.userprofile.is_trial_user %}
-            <li id="winmore-nav"><a href="/users/invite/"><strong>Win More Trial Days</strong></a></li>
+            <li id="winmore-nav"><a href="/users/invite/"><strong>Up your Trial Days</strong></a></li>
             {% endif %}
             <!-- Archive -->
             <li id="archive-nav" class="dropdown">
@@ -80,7 +80,7 @@
               <span class="glyphicon glyphicon-user"></span>
               <sup>{{ user.userprofile.get_usertype_display }}
                 {% if user.userprofile.usertype == 1 %}
-                / {{ user.userprofile.daysleft }} days left / {{ user.userprofile.success_invites }} success invites
+                / {{ user.userprofile.daysleft }} days left / {{ user.userprofile.success_invites }} accepted invites
                 {% endif %}
               </sup>
               &nbsp;
