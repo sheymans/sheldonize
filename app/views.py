@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
-from users.models import UserProfile
+from users.models import UserProfile, Invite
 
 from django.contrib.auth.models import User
 from models import Task, ScheduleItem, Preference, Meeting, CredentialsModel, FlowModel
@@ -48,7 +48,8 @@ def healthcheck(request):
     #tasks_count = Task.objects.count()
     #meetings_count = Meeting.objects.count()
     user_count = User.objects.count()
-    return HttpResponse('<ul><li>users in system: ' + str(user_count) + '</li><li>trials left: ' + str(trial_registrations_left) + '</li></ul>')
+    invite_count = Invite.objects.count()
+    return HttpResponse('<ul><li>users in system: ' + str(user_count) + '</li><li>trials left: ' + str(trial_registrations_left) +'</li><li>invites sent: ' + str(invite_count) + '</li></ul>')
 
 # The terms of use
 def terms(request):
