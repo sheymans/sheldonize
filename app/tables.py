@@ -124,7 +124,7 @@ class TaskTable(tables.Table):
         # we removed the ordering for Tasks as we are doing it via the raw SQL
         # see redefinition of order_by
         order_by = ('-created')
-        attrs = {"class": "table table-striped table-hover"}
+        attrs = {"class": "table table-hover"}
 
 class MeetingTable(tables.Table):
     selection = tables.CheckBoxColumn(accessor="pk", attrs = { "th__input": 
@@ -171,7 +171,7 @@ class MeetingTable(tables.Table):
         sequence = ('selection', 'name', 'start', 'end', 'repeat', 'foreign')
         exclude = ('user',)
         order_by = ('start')
-        attrs = {"class": "table table-striped table-hover"}
+        attrs = {"class": "table table-hover"}
 
 
 

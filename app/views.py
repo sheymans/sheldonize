@@ -123,25 +123,42 @@ def support(request):
 @login_required
 @user_passes_test(lambda user: user.is_active, login_url="/subscriptions/signup/")
 def tasks_generic(request, tasks_view, schedule_view, show_tasks):
+    
     if request.method == "GET":
         if show_tasks['incomplete']:
+            # First calculate whether we are on mobile and some stuff we need
+            # for the schedule:
+            current = ""
+            next_up = ""
+            if request.device_type == 'mobile': # pragma: no cover
+                to_show = service.get_current_and_next_up_in_schedule(request.user)
+                to_show_dict = service.get_dict_from_meetings_scheduleitems(to_show, service.get_timezone(request.user))
+                current = None
+                next_up = None
+                if len(to_show_dict) == 2:
+                    current = to_show_dict[0]
+                    next_up = to_show_dict[1]
+                elif len(to_show_dict) == 1:
+                    current = to_show_dict[0]
+
+            # now start testing
             if show_tasks['when'] and show_tasks['when'] == 'T':
                 # today
                 table = TaskTable(Task.objects.filter(user=request.user, done=False, when='T'))
                 form = AddTaskForm()
                 RequestConfig(request, paginate={"per_page": 10}).configure(table)
-                return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks})
+                return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks,'device_type': request.device_type, 'current': current, 'next_up': next_up, 'eventfeed_url': "/app/eventfeed/"})
             elif show_tasks['when'] and show_tasks['when'] == 'W':
                 table = TaskTable(Task.objects.filter(user=request.user, done=False, when='W'))
                 form = AddTaskForm()
                 RequestConfig(request, paginate={"per_page": 10}).configure(table)
-                return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks})
+                return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks,'device_type': request.device_type, 'current': current, 'next_up': next_up, 'eventfeed_url': "/app/eventfeed/"})
             #elif show_tasks['when'] and show_tasks['when'] == 'NoTNoW':
             else:
                 table = TaskTable(Task.objects.filter(user=request.user, done=False, when__isnull=True))
                 form = AddTaskForm()
                 RequestConfig(request, paginate={"per_page": 10}).configure(table)
-                return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks})
+                return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks,'device_type': request.device_type, 'current': current, 'next_up': next_up, 'eventfeed_url': "/app/eventfeed/"})
         #elif show_tasks['done']:
         else:
             table = TaskTable(Task.objects.filter(user=request.user, done=True))
@@ -150,6 +167,19 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
             return render(request, "app/tasks.html", {'table': table,'pages': [i+1 for i in range(table.paginator.num_pages)], 'what_tasks' : show_tasks})
 
     elif request.method == "POST":
+        if 'get-google-calendar' in request.POST:
+            return redirect('/app/googlecalendar/')
+        if 'calculate-schedule' in request.POST:
+            # perform the actual scheduling
+            quick_schedule(request)
+            return redirect_to_current(request, tasks_view)
+        if 'delete-schedule' in request.POST:
+            # trash complete schedule
+            service.clear_scheduleditems(request.user)
+            service.clear_externalitems(request.user)
+            messages.add_message(request, messages.SUCCESS, "Schedule cleared.")
+            return redirect_to_current(request, tasks_view)
+
         pks = request.POST.getlist("selection")
         selected_tasks = Task.objects.filter(user=request.user, pk__in=pks)
         success = ""
@@ -203,6 +233,9 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                     success = "Task added."
                 # don't forget to save then
                 task_instance.save()
+                if 'when' in show_tasks and (show_tasks['when'] == 'T' or show_tasks['when'] == 'W'):
+                    quick_schedule(request)
+                    return redirect_to_current(request, tasks_view)
             else:
                 error = "Task could not be added."
         elif 'go-to-schedule' in request.POST:
@@ -220,7 +253,15 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
 
     else:
         raise Http404
- 
+
+@login_required
+def quick_schedule(request):
+    user_timezone = service.get_timezone(request.user)
+    info = service.schedule(request.user, user_timezone)
+    messages.add_message(request, messages.ERROR, info[0])
+    messages.add_message(request, messages.WARNING, info[1])
+    messages.add_message(request, messages.SUCCESS, info[2])
+
 @login_required
 def tasks_incomplete(request):
     # relay this to tasks_incomplete_notnow
@@ -249,9 +290,9 @@ def tasks_done(request):
 
 @login_required
 def tasks(request):
-    # we just relay tasks to tasks_incomplete (we do not wish to show all
+    # we just relay tasks to tasks_incomplete_today (we do not wish to show all
     # tasks)
-    return tasks_incomplete_notnow(request)
+    return tasks_incomplete_today(request)
 
 
 # Single Task
@@ -281,6 +322,8 @@ def task_generic(request, task_id, task_list_view, task_link):
                 # commit defaults to True which means it normally saves.
                 task_instance = form.save(commit=True)
                 messages.add_message(request, messages.SUCCESS, "Updated task.")
+                if task_instance.when == 'T' or task_instance.when == 'W':
+                    quick_schedule(request)
                 return go_back_to_previous(request, task_list_view)
             else:
                 messages.add_message(request, messages.ERROR, "The task you tried to update is not valid. Please correct the indicated error.")
@@ -671,7 +714,7 @@ def googlecalendar(request):
             messages.add_message(request, messages.WARNING, info[1])
             messages.add_message(request, messages.SUCCESS, info[2])
 
-    return redirect('/app/schedule/')
+    return redirect_to_current(request, '/app/tasks/incomplete/')
 
 @login_required
 def auth_return(request):

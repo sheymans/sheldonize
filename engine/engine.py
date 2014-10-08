@@ -342,6 +342,8 @@ def go_plan(tasks, preferences):
 def plan(tasks, preferences):
 
     (tasks_today , tasks_thisweek) = get_tasks_divided_up(tasks)
+
+
     #print "tasks today ", tasks_today
     (preferences_today , preferences_thisweek) = get_preferences_divided_up(preferences)
     #print "preferences today ", preferences_today
@@ -349,6 +351,7 @@ def plan(tasks, preferences):
     schedule_today = go_plan(tasks_today, preferences_today)
     #print "schedule today ", schedule_today
     schedule_thisweek = go_plan(tasks_thisweek, preferences_thisweek)
+
 
     # merge the found schedules
     schedule = schedule_today.copy()

@@ -13,7 +13,6 @@ class PreviousURLMiddleware(object):
             else:
                 old_current = False
 
-            request.session['current_url'] = visiting_url
 
             # only update previous when old_current is OK though:
             forbidden_terms = ["eventfeed", "ajax" ]
@@ -21,6 +20,9 @@ class PreviousURLMiddleware(object):
                 matching_forbidden_terms = filter(lambda term: term in old_current, forbidden_terms)
             else:
                 matching_forbidden_terms = []
+
+            if not "eventfeed" in visiting_url and not "ajax" in visiting_url:
+                request.session['current_url'] = visiting_url
 
             # also when the current has numbers, it is not OK (that's task
             # details, we don't want to go back there)

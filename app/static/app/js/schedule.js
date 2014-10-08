@@ -1,10 +1,11 @@
-function setup_schedule(eventfeed_url) {
+function setup_schedule(eventfeed_url, viewtype) {
 
     $(document).ready(function() {
 
-        // set the navigation right:
-        $(".navbar-sheldonize .nav li").removeClass("active");
-        $('#schedule-nav').addClass('active');
+        // set the navigation right: (removed Oct 8 as we load this together
+        // with task)
+        //$(".navbar-sheldonize .nav li").removeClass("active");
+        //$('#schedule-nav').addClass('active');
 
         // we want the token when we send pure ajax (this works because schedule.html has a form with the token):
         // See https://docs.djangoproject.com/en/dev/ref/contrib/csrf/
@@ -50,7 +51,7 @@ function setup_schedule(eventfeed_url) {
             eventRender: function(event, element, view) {                                          
                 element.find('.fc-event-title').html(element.find('.fc-event-title').text());
             },
-            defaultView: 'agendaWeek',
+            defaultView: viewtype,
             // What day to show first (Monday=1)
             firstDay: 1,
             // do not display all day slot on top
@@ -116,10 +117,10 @@ function setup_schedule(eventfeed_url) {
 
         // In mobile version of schedule, we have table of scheduleitems; we
         // need to be able to go to these tasks.
-        $('.table-hover tr > td').not('.selection').click(function() {
-        var rowId = $(this).parent().data("rowKey");
-        window.location = "/app/scheduleitems/" + rowId + "/";
-    });
+        //$('.table-hover tr > td').not('.selection').click(function() {
+        //var rowId = $(this).parent().data("rowKey");
+        //window.location = "/app/scheduleitems/" + rowId + "/";
+        //});
 
 
 

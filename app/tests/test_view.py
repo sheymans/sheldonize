@@ -64,7 +64,7 @@ class ViewTest(TestCase):
         task1 = Task.objects.create(user=self.user, name="random", done=False)
         task1.save()
         response = self.client_stub.post('/users/login/', {'username': 'lennon', 'password': 'johnpassword'})
-        response = self.client_stub.get('/app/tasks/')
+        response = self.client_stub.get('/app/tasks/incomplete/')
         self.assertTrue(response.content.startswith(b'<!DOCTYPE html>'))
         self.assertIn(b'Apply', response.content)
 
