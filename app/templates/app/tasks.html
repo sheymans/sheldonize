@@ -3,8 +3,6 @@
 
 {% block customcss %}
 <link rel="stylesheet" href="{% static "app/css/table.css" %}">
-<link rel='stylesheet' href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.2/fullcalendar.css">
-<link rel="stylesheet" href="{% static "app/css/schedule.css" %}">
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -13,224 +11,127 @@
 Tasks
 {% endblock %}
 
-{% block root %}
-<div class="container-fluid sheldonize-container">
-    <div class="row">
-        {% if addtaskform %}
-        <!-- Make sure that from tablets on (sm), the form is filling the full row -->
-        <div class="col-sm-12">
-            {% crispy addtaskform %}
-        </div>
-        {% endif %}
-    </div>
+{% block beforecontent %}
+{% if addtaskform %}
+<!-- Make sure that from tablets on (sm), the form is filling the full row -->
+<div class="col-sm-12">
+    {% crispy addtaskform %}
+</div>
+{% endif %}
+{% endblock beforecontent %}
 
-    <div class="row">
-        {% if what_tasks.incomplete %}
-        <div class="col-md-6 col-xs-12">
-            <ul class="nav nav-pills">
-                {% if what_tasks.when = 'NoTNoW' %}
-                <li class="active"><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
-                <li><a href="/app/tasks/incomplete/today/">Today</a></li>
-                <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
-                {% elif what_tasks.when = 'T' %}
-                <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
-                <li class="active"><a href="/app/tasks/incomplete/today/">Today</a></li>
-                <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
-                {% elif what_tasks.when = 'W' %}
-                <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
-                <li><a href="/app/tasks/incomplete/today/">Today</a></li>
-                <li class="active"><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
-                {% endif %}
-            </ul>
-        </div>
-        <div class="col-md-6 col-xs-12 text-right">
-            <form action="." method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-refresh" name="calculate-schedule" id="calculate-schedule">&nbsp;Calculate</button>
-
-                {% if device_type == 'mobile' %}
-                <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-cloud-download" name="get-google-calendar" id="get-google-calendar">&nbsp;GCal</button>
-                {% else %}
-                <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-cloud-download" name="get-google-calendar" id="get-google-calendar">&nbsp;Google Calendar</button>
-                {% endif %}
-                <button type="submit" class="btn btn-sheldonize btn-sheldonize-default glyphicon glyphicon-trash" name="delete-schedule" id="delete-schedule">&nbsp;Clear</button>
-            </form>
-        </div>
-        {% endif %}
-    </div>
-
-
-    <div class="sheldonize-content">
-
-        {% if what_tasks.incomplete %}
-        <div class="row">
-            <div class="col-md-6 col-xs-12 table-special">
-                {% endif %}
-
-                {% if table.data %}
-
-                <form action="." method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <!-- Table -->
-                        <div class="col-xs-12">
-                            {% include "app/sheldonize_table.html" %}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2 col-xs-5">
-                            <div class="dropup">
-                                <button class="btn btn-sheldonize btn-sheldonize-primary dropdown-toggle" type="button" id="dropdown-markedactions" data-toggle="dropdown">
-                                    Apply
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-markedactions">
-                                    {% if what_tasks.incomplete %}
-                                    <!-- Non-Archived stuff --> 
-                                    {% if what_tasks.when = 'NoTNoW' %}
-                                    <!-- Inbox -->
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
-                                    {% elif what_tasks.when = 'T' %}
-                                    <!-- Today -->
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> Today</button></li>
-                                    {% elif what_tasks.when = 'W' %}
-                                    <!-- This Week -->
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> This Week</button></li>
-                                    {% endif %}
-                                    {% else %}
-                                    <!-- Archive -->
-                                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="uncomplete-marked-tasks" name="uncomplete-marked-tasks"><b>Not</b> Done</button></li>
-
-                                    {% endif %}
-                                </ul>
-                            </div>
-
-                        </div>
-                        <div class="col-md-8 col-xs-2">
-
-                        </div>
-                        <div class="col-md-2 col-xs-5 text-right">
-                            <button type="submit" name="delete-marked-tasks" class="btn btn-sheldonize btn-sheldonize-default" id="delete-marked-tasks">Delete</button>
-                        </div>
-                    </div>
-                </form>
-
-                {% else %}
-
-                <div class="row">
-                    <div class="col-xs-12 text-center">
-                        <span class="glyphicon glyphicon-arrow-up"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 text-center">
-                        (no tasks)
-                    </div>
-                </div>
-
-
-                {% endif %}
-
-                {% if what_tasks.incomplete %}
-            </div>
-
-            <div class="col-md-6 col-xs-12">
-                {% if device_type == 'mobile' %}
-
-                {% if current %}
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Next Up</h3>
-                        <div class="current-item {{ current.type }}">
-                            <a href="{{ current.url }}"><i>{{ current.from }} - {{ current.to }}</i></br>
-                                <h4>{{ current.name }}</h4></a>
-                        </div>
-                    </div>
-                </div>
-                {% if next_up %}
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Followed By</h3>
-                        <div class="next-item {{ next_up.type }}">
-                            <a href="{{ next_up.url }}">
-                                <i>{{ next_up.from }} - {{ next_up.to }}</i></br>
-                                <h4>{{ next_up.name }}</h4></a>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-                {% else %}
-                <div class="row">
-                    <div class="col-xs-12 text-center">
-                        <span class="glyphicon glyphicon-arrow-up"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 text-center">
-                        (no upcoming schedule items - try to calculate)
-                    </div>
-                </div>
-                {% endif %}
-
-                {% else %}
-                <div id='calendar'></div>
-                {% endif %}
-            </div>
-            {% endif %}
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-xs-12 text-center">
-
-            <div class="company">Sheldonize, LLC.  &copy; 2014 | <a href="/app/terms/">Terms of Use</a> | <a href="/app/privacy/">Privacy Policy</a></div>
-        </div>
-
-
-        {% endblock root %}
-
-
-
-        {% block morejs %}
-        {% if what_tasks.incomplete %}
-        <script src="{% static "app/js/tasks.js" %}"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.2/fullcalendar.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script src="{% static "app/js/schedule.js" %}"></script>
-        <!-- now call the function in schedule.js that passes the right event feedurl
-     to the function in schedule.js -->
-
+{% block filtercontent %}
+<div class="col-xs-12">
+    {% if what_tasks.incomplete %}
+    <ul class="nav nav-pills">
         {% if what_tasks.when = 'NoTNoW' %}
-        <script>
-            setup_schedule("/app/eventfeed/", 'month');
-        </script>
+        <li class="active"><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
+        <li><a href="/app/tasks/incomplete/today/">Today</a></li>
+        <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         {% elif what_tasks.when = 'T' %}
-        <script>
-            setup_schedule("/app/eventfeed/", 'agendaDay');
-        </script>
+        <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
+        <li class="active"><a href="/app/tasks/incomplete/today/">Today</a></li>
+        <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         {% elif what_tasks.when = 'W' %}
-        <script>
-            setup_schedule("/app/eventfeed/", 'agendaWeek');
-        </script>
+        <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
+        <li><a href="/app/tasks/incomplete/today/">Today</a></li>
+        <li class="active"><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         {% endif %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock filtercontent %}
 
 
-        {% else %}
-        <script src="{% static "app/js/archive-tasks.js" %}"></script>
-        {% endif %}
-        {% endblock %}
+{% block header %}
+<h3>Tasks</h3>
+{% endblock header %}
+
+
+{% block content %}
+{% if table.data %}
+
+<form action="." method="post">
+    {% csrf_token %}
+    <div class="row">
+        <!-- Table -->
+        <div class="col-xs-12">
+            {% include "app/sheldonize_table.html" %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-xs-5">
+            <div class="dropup">
+                <button class="btn btn-sheldonize btn-sheldonize-primary dropdown-toggle" type="button" id="dropdown-markedactions" data-toggle="dropdown">
+                    Apply
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-markedactions">
+                    {% if what_tasks.incomplete %}
+                    <!-- Non-Archived stuff --> 
+                            {% if what_tasks.when = 'NoTNoW' %}
+                            <!-- Inbox -->
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
+                            {% elif what_tasks.when = 'T' %}
+                            <!-- Today -->
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> Today</button></li>
+                            {% elif what_tasks.when = 'W' %}
+                            <!-- This Week -->
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> This Week</button></li>
+                            {% endif %}
+                    {% else %}
+                    <!-- Archive -->
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="uncomplete-marked-tasks" name="uncomplete-marked-tasks"><b>Not</b> Done</button></li>
+
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-8 col-xs-2">
+
+        </div>
+        <div class="col-md-2 col-xs-5 text-right">
+            <button type="submit" name="delete-marked-tasks" class="btn btn-sheldonize btn-sheldonize-default" id="delete-marked-tasks">Delete</button>
+        </div>
+    </div>
+</form>
+
+{% else %}
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        (no tasks)
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endblock %}
+
+{% block morejs %}
+{% if what_tasks.incomplete %}
+<script src="{% static "app/js/tasks.js" %}"></script>
+{% else %}
+<script src="{% static "app/js/archive-tasks.js" %}"></script>
+{% endif %}
+{% endblock %}
 
