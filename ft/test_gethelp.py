@@ -40,7 +40,7 @@ class GetHelpTest(LiveServerTestCase):
       # not just submit() cause the button sends new_task in form (which submit
       # does not do)
       self.browser.find_element_by_name("new_task").click()
-      self.browser.implicitly_wait(5)
+      self.browser.implicitly_wait(10)
 
       # Now check whether the support account contains that item:
       support = User.objects.get(username='support')

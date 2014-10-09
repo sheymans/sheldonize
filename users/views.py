@@ -69,7 +69,7 @@ def invite_thanks(request):
 # this is a class-based view
 class SignupView(FormView):
     # form_valid redirects automatically to this url
-    success_url = '/app/tasks/'
+    success_url = '/app/tasks/firsttime/'
     form_class = SignUpForm
     template_name = 'users/signup.html'
 

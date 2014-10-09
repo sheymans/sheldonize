@@ -31,5 +31,13 @@ $( document ).ready(function() {
     });
 
 
+    // click wistia link when present
+    //$("#wwistialink")[0].click();
+    //
+    wistiaJQuery(document).ready( function() {
+          wistiaJQuery('a[class^=wistia-popover]').first().click();
+    });
+
+
 
 });

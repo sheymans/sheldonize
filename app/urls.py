@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^tasks/incomplete/today/$', views.tasks_incomplete_today, name='tasks_incomplete_today'),
     url(r'^tasks/incomplete/thisweek/$', views.tasks_incomplete_thisweek, name='tasks_incomplete_thisweek'),
     url(r'^tasks/incomplete/inbox/$', views.tasks_incomplete_notnow, name='tasks_incomplete_notnow'),
+    url(r'^tasks/firsttime/$', views.tasks_firstvisit, name='tasks_firstvisit'),
     url(r'^tasks/done/$', views.tasks_done, name='tasks_done'),
     # ex: /app/tasks/5/
     url(r'^tasks/(?P<task_id>\d+)/$', views.task, name='task'),

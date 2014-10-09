@@ -253,6 +253,10 @@ def tasks(request):
     # tasks)
     return tasks_incomplete_notnow(request)
 
+@login_required
+def tasks_firstvisit(request):
+    show_tasks = {'incomplete': True, 'done': False, 'when': 'NoTNoW', 'first': True }
+    return tasks_generic(request, tasks_incomplete_notnow, schedule, show_tasks)
 
 # Single Task
 

@@ -45,10 +45,14 @@ Tasks
 
 {% block header %}
 <h3>Tasks</h3>
+
 {% endblock header %}
 
 
 {% block content %}
+
+
+
 {% if table.data %}
 
 <form action="." method="post">
@@ -125,6 +129,12 @@ Tasks
 
 {% endif %}
 
+{% if what_tasks.first %}
+<a href="//fast.wistia.net/embed/iframe/kajgrymlz3?popover=true" class="wistia-popover[height=720,playerColor=7b796a,width=1280]"></a>
+<script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/popover-v1.js"></script>
+{% endif %}
+
+
 {% endblock %}
 
 {% block morejs %}
@@ -133,5 +143,6 @@ Tasks
 {% else %}
 <script src="{% static "app/js/archive-tasks.js" %}"></script>
 {% endif %}
+
 {% endblock %}
 
