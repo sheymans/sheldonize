@@ -327,7 +327,7 @@ class ViewTest(TestCase):
 
     def test_post_go_to_schedule(self):
         self.client_stub.login(username='lennon', password='johnpassword')
-        post_data = { 'go-to-schedule': '' }
+        post_data = { 'calculate-schedule': '' }
         response = self.client_stub.post('/app/tasks/incomplete/', post_data, follow=True)
         self.assertEqual(response.redirect_chain, [('http://testserver/app/schedule/', 302)])
 

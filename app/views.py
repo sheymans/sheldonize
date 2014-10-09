@@ -205,8 +205,9 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 task_instance.save()
             else:
                 error = "Task could not be added."
-        elif 'go-to-schedule' in request.POST:
+        elif 'calculate-schedule' in request.POST:
             warning = ""
+            quick_schedule(request)
             return redirect(schedule_view)
             
         if success:
@@ -320,6 +321,15 @@ def task(request, task_id):
 
 
 ### Schedule
+
+
+@login_required
+def quick_schedule(request):
+    user_timezone = service.get_timezone(request.user)
+    info = service.schedule(request.user, user_timezone)
+    messages.add_message(request, messages.ERROR, info[0])
+    messages.add_message(request, messages.WARNING, info[1])
+    messages.add_message(request, messages.SUCCESS, info[2])
 
 @login_required
 def calculate_schedule(request):

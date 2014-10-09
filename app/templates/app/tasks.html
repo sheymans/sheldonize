@@ -37,8 +37,22 @@ Tasks
         <li><a href="/app/tasks/incomplete/today/">Today</a></li>
         <li class="active"><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         {% endif %}
+        {% if table.data %}
+        {% if what_tasks.when = 'T' or what_tasks.when = 'W' %}
+        <li class="pull-right"><form action="." method="post">
+            {% csrf_token %}
+            {% if request.device_type = 'mobile' %}
+            <button type="submit" class="btn btn-sheldonize btn-sheldonize-orange" name="calculate-schedule" id="calculate-schedule">&nbsp;Schedule!</button>
+            {% else %}
+            <button type="submit" class="btn btn-sheldonize btn-sheldonize-orange" name="calculate-schedule" id="calculate-schedule">&nbsp;Schedule This!</button>
+            {% endif %}
+        </form></li>
+        {% endif %}
+        {% endif %}
     </ul>
     {% endif %}
+
+
 </div>
 {% endblock filtercontent %}
 
@@ -74,27 +88,27 @@ Tasks
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-markedactions">
                     {% if what_tasks.incomplete %}
                     <!-- Non-Archived stuff --> 
-                            {% if what_tasks.when = 'NoTNoW' %}
-                            <!-- Inbox -->
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
-                            {% elif what_tasks.when = 'T' %}
-                            <!-- Today -->
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> Today</button></li>
-                            {% elif what_tasks.when = 'W' %}
-                            <!-- This Week -->
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> This Week</button></li>
-                            {% endif %}
+                    {% if what_tasks.when = 'NoTNoW' %}
+                    <!-- Inbox -->
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
+                    {% elif what_tasks.when = 'T' %}
+                    <!-- Today -->
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> Today</button></li>
+                    {% elif what_tasks.when = 'W' %}
+                    <!-- This Week -->
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> This Week</button></li>
+                    {% endif %}
                     {% else %}
                     <!-- Archive -->
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="uncomplete-marked-tasks" name="uncomplete-marked-tasks"><b>Not</b> Done</button></li>

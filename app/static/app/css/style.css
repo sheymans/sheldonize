@@ -413,3 +413,50 @@ blockquote p:before {
 #signupbutton h3 {
   font-weight: 300;
 }
+
+
+.btn-sheldonize-orange { 
+  background-color: #e67e22;
+  color: #ecf0f1; 
+  border-color: #e67e22;
+} 
+
+.btn-sheldonize-orange:hover, 
+.btn-sheldonize-orange:focus, 
+.btn-sheldonize-orange:active, 
+.btn-sheldonize-orange.active, 
+.open .dropdown-toggle.btn-sheldonize-orange { 
+  color: #444444; 
+  background-color: #FFFFFF; 
+  border-color: #ecf0f1; 
+} 
+
+.btn-sheldonize-orange:active, 
+.btn-sheldonize-orange.active, 
+.open .dropdown-toggle.btn-sheldonize-orange { 
+  background-image: none; 
+} 
+
+.btn-sheldonize-orange.disabled, 
+.btn-sheldonize-orange[disabled], 
+fieldset[disabled] .btn-sheldonize-orange, 
+.btn-sheldonize-orange.disabled:hover, 
+.btn-sheldonize-orange[disabled]:hover, 
+fieldset[disabled] .btn-sheldonize-orange:hover, 
+.btn-sheldonize-orange.disabled:focus, 
+.btn-sheldonize-orange[disabled]:focus, 
+fieldset[disabled] .btn-sheldonize-orange:focus, 
+.btn-sheldonize-orange.disabled:active, 
+.btn-sheldonize-orange[disabled]:active, 
+fieldset[disabled] .btn-sheldonize-orange:active, 
+.btn-sheldonize-orange.disabled.active, 
+.btn-sheldonize-orange[disabled].active, 
+fieldset[disabled] .btn-sheldonize-orange.active { 
+  color: #ECF0F1; 
+  background-color: #444444; 
+  border-color: #444444; 
+} 
+
+
+
+
