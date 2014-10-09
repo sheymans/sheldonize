@@ -130,3 +130,10 @@ tr > th > a > span.caret {
   font-weight: 250;
   color: #D4D8D9;
 }
+
+.table>tbody>tr>th, .table>tbody>tr>td {
+      border-top: none;
+}
+.table>thead>tr>th, .table>thead>tr>td {
+      border-bottom: none;
+}
