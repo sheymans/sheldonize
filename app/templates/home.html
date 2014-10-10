@@ -26,15 +26,26 @@ Sheldonize
 </div>
 
 <div class="jumbotron" style="background-color: #ecf0f1">
-    <img class="img-responsive" style="width:30%; height:auto;" align="right" src="{% static "app/img/mobile_view.png" %}"/>
+
     <h1 style="color: #444444">Sheldonize</h1>
-    <p style="color: #444444; font-weight:300">Let Sheldonize plan your work so you can focus on gettings things done.
+    <p style="color: #444444; font-weight:300">Let Sheldonize plan your work so you can focus on getting things done.
     </p>
+    {% if request.device_type = 'desktop' or request.device_type = 'tablet' %}
+    <img class="img-responsive" style="width:45%; height:auto;" align="right" src="{% static "app/img/desktop_view.png" %}"/>
+    {% endif %}
     <p><button id="signupbutton" type="button" onclick="location.href=&quot;{% url 'signup' %}?timezone=&quot; + this.value ;" class="btn btn-primary">Start Planning &raquo;</button>
     <a href="//fast.wistia.net/embed/iframe/kajgrymlz3?popover=true" class="wistia-popover[height=720,playerColor=7b796a,width=1280]"><button class="btn btn-default">Watch Video &raquo;</button></a>
     <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/popover-v1.js"></script>
     </p>
 </div>
+
+{% if request.device_type = 'mobile' %}
+<div class="row">
+    <div class="col-xs-12 col-md-6 text-center">
+        <img class="img-responsive" src="{% static "app/img/mobile_view.png" %}"/>
+    </div>
+</div>
+{% endif %}
 
 <div class="row">
     <div class="col-xs-12 col-md-6">
