@@ -330,7 +330,7 @@ def go_plan(tasks, preferences):
 
     if minimum_time_needed <= available_time:
         result_schedule = {}
-        # we sort the tasks according to comes_after and due:
+        # we sort the tasks according to comes_after and due, and priority:
         sorted_task_ids = sort_tasks(tasks)
         if sorted_task_ids:
             return put_tasks_on_schedule(tasks, sorted_task_ids, preferences, result_schedule, available_time)

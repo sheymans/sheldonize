@@ -37,6 +37,23 @@ class TestSort(unittest.TestCase):
         self.assertEqual(sort.smaller_task_than(36L, 2, tasks), -3)
         self.assertEqual(sort.smaller_task_than(35L, 2, tasks), -1)
 
+    def test_smaller_with_priority1(self):
+        tasks = {496L: {'priority': 3, 'when': 0}, 495L: {'priority': 1, 'when': 0, 'due': 27}}
+        self.assertEqual(sort.smaller_task_than(495L, 496L, tasks), -2)
+
+    def test_smaller_with_priority2(self):
+        tasks = {496L: {'priority': 0, 'when': 0}, 495L: {'priority': 1, 'when': 0, 'due': 27}}
+        self.assertEqual(sort.smaller_task_than(496L, 495L, tasks), -1)
+
+    def test_smaller_with_priority3(self):
+        tasks = {496L: {'priority': 0, 'when': 0}, 495L: {'priority': 1, 'when': 0}}
+        self.assertEqual(sort.smaller_task_than(496L, 495L, tasks), -1)
+
+    def test_smaller_with_priority4(self):
+        tasks = {496L: {'when': 0}, 495L: {'priority': 3, 'when': 0}}
+        self.assertEqual(sort.smaller_task_than(495L, 496L, tasks), -1)
+
+
     def test_sort_transitive_20140809(self):
         tasks = {145L: {'comes_after': 143L, 'when': 1}, 142L: {'comes_after': 145L, 'when': 1}, 143L: {'when': 1}}
         # we want to take care of comes_after as a transitive relation (this

@@ -43,6 +43,7 @@ class TaskForm(ModelForm):
             PrependedText('done', ''),
             #Field('done'),
             Field('name', placeholder='a name for your task (make it actionable)'),
+            Field('priority'),
             Field('due', placeholder='the date and time this task is due, leave empty if no due date'),
             Field('topic', placeholder='general area/topic/project this task belongs to'),
             Field('when'), 

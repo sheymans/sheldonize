@@ -82,9 +82,7 @@ def meetings_2_dict(meetings, user_timezone):
         jso["id"] = meeting.id
         if meeting.repeat is not None:
             jso["title"] = "<span class=\"glyphicon glyphicon-repeat\"></span>&nbsp;&nbsp;" + meeting.name 
-        else:
-            jso["title"] = meeting.name
-        if meeting.foreign is not None:
+        elif meeting.foreign is not None:
             jso["title"] = "<span class=\"glyphicon glyphicon-cloud-download\"></span>&nbsp;&nbsp;" + meeting.name 
         else:
             jso["title"] = meeting.name
@@ -122,6 +120,9 @@ def scheduleitems_2_dict(schedule_items, user_timezone):
             # too late
             jso["title"] = "(late) " + str(item.task.name)
             jso["color"] = eventcolors.scheduleditem_toolate["color"]
+        # now add priority if there is one:
+        if item.task.priority:
+            jso["title" ] = jso["title"] + " [" + item.task.priority + "]"
         jso["url"] = "/app/tasks/" + str(item.task.id) + "/"
         # send ISO08601 back to front-end
         jso["start"] = start.datetime.isoformat()
@@ -351,6 +352,16 @@ def tasks_to_engine(tasks, start_arrow):
 
         if task.duration:
             task_details["duration"] = get_quarters_from_minutes(task.duration)
+
+        if task.priority:
+            if task.priority == 'A':
+                task_details["priority"] = 0
+            elif task.priority == 'B':
+                task_details["priority"] = 1
+            elif task.priority == 'C':
+                task_details["priority"] = 2
+            else:
+                task_details["priority"] = 3
 
         engine_tasks[task.id] = task_details
     return engine_tasks

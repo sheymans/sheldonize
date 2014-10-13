@@ -38,6 +38,8 @@ def order_by(self, aliases):
                 self.queryset = self.queryset.extra(select={'null_topic': 'length(app_task.topic) <= 0' }).order_by('null_topic', *(translate(a) for a in accessors))
             elif 'when' in accessors:
                 self.queryset = self.queryset.extra(select={'null_when': 'app_task.when is null'}).order_by('null_when', *(translate(a) for a in accessors))
+            elif 'priority' in accessors:
+                self.queryset = self.queryset.extra(select={'null_priority': 'app_task.priority is null'}).order_by('null_priority', *(translate(a) for a in accessors))
             elif 'due' in accessors:
                 self.queryset = self.queryset.extra(select={'null_due': 'app_task.due is null'}).order_by('null_due', *(translate(a) for a in accessors))
             elif 'comes_after' in accessors:
@@ -61,6 +63,7 @@ class TaskTable(tables.Table):
     #edit = tables.TemplateColumn('<a class="table_edit" href="{{ record.id }}"><span class="glyphicon glyphicon-edit"</span></a>')
     topic = tables.Column(empty_values=())
     when = tables.Column(empty_values=())
+    priority = tables.Column(empty_values=())
     duration = tables.Column(empty_values=())
     comes_after = tables.Column(empty_values=())
 
@@ -101,6 +104,12 @@ class TaskTable(tables.Table):
         else:
             return ""
 
+    def render_priority(self, value, record):
+        if value:
+            return value
+        else:
+            return ""
+
     def render_duration(self, value, record):
         if value:
             return str(value) + " mins"
@@ -117,8 +126,8 @@ class TaskTable(tables.Table):
 
     class Meta:
         model = Task
-        fields = ('selection', 'name', 'topic', 'due', 'when', 'duration', 'comes_after', 'created')
-        sequence = ('selection', 'name','topic', 'duration',  'comes_after', 'due',  'created')
+        fields = ('selection', 'name', 'priority', 'topic', 'due', 'when', 'duration', 'comes_after', 'created')
+        sequence = ('selection', 'name', 'priority', 'topic', 'duration',  'comes_after', 'due',  'created')
         exclude = ('done', 'when', 'user', )
         # default ordering
         # we removed the ordering for Tasks as we are doing it via the raw SQL

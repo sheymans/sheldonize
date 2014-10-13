@@ -20,6 +20,13 @@ class Task(models.Model):
             ('W', 'This Week'),
             )
 
+    ABCD = (
+            ('A', 'A'),
+            ('B', 'B'),
+            ('C', 'C'),
+            ('D', 'D'),
+            )
+
     user = models.ForeignKey(User)
     name = models.CharField(verbose_name='name', max_length=140)
     comes_after = models.ForeignKey('self', verbose_name="after", null=True, blank=True, on_delete=models.SET_NULL)
@@ -31,6 +38,8 @@ class Task(models.Model):
     duration = models.PositiveIntegerField(verbose_name='duration', null=True, blank=True, validators=[MinValueValidator(15), MaxValueValidator(10080)])
     created = models.DateTimeField(auto_now_add=True)
     done_date = models.DateTimeField(null=True, blank=True)
+    # priority for the task
+    priority = models.CharField(verbose_name='priority?', max_length=1, choices=ABCD, null=True, blank=True)
 
     def __unicode__(self):
         return self.name

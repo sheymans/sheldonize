@@ -25,21 +25,42 @@ def toposort(data):
     if len(data) != 0:
         raise ValueError('Cyclic dependencies exist among these items: {}'.format(', '.join(repr(x) for x in data.items())))
 
+def smaller_task_than_due(tid1, tid2, tasks):
+    """
+    Smaller than based on due date.
+    """
+    task1 = tasks[tid1]
+    task2 = tasks[tid2]
+    # Now on due dates
+    if "due" in task1 and "due" in task2:
+        return task1["due"] - task2["due"]
+    # if only the first one has a due, it comes indeed before the one without
+    # due
+    elif "due" in task1:
+        return -1
+    elif "due" in task2:
+        return 1
+    else:
+        return 0
+
 
 def smaller_task_than(tid1, tid2, tasks):
     task1 = tasks[tid1]
     task2 = tasks[tid2]
 
-    if "due" in task1 and "due" in task2:
-        return task1["due"] - task2["due"]
-    # if only the first one has a due, it comes indeed before the one without
-    # due
-    if "due" in task1:
+    if "priority" in task1 and "priority" in task2:
+        diff = task1["priority"] - task2["priority"]
+        if diff != 0:
+            return diff
+        else:
+            return smaller_task_than_due(tid1, tid2, tasks)
+    # anything with priority is better than anything without priority
+    elif "priority" in task1:
         return -1
-    if "due" in task2:
+    elif "priority" in task2:
         return 1
     else:
-        return 0
+        return smaller_task_than_due(tid1, tid2, tasks)
 
 def cyclic(data):
     try:
@@ -76,7 +97,7 @@ def sort_tasks(tasks):
     # Now add the no_comes_after to the back:
     sorted_data.append(no_comes_after)
 
-    # then sort each group on due date
+    # then sort each group on due date and priority
     result = []
     for group in sorted_data:
         sorted_group = sorted(group, cmp=lambda tid1, tid2: smaller_task_than(tid1, tid2, tasks))
