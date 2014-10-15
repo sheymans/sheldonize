@@ -91,7 +91,7 @@ def support(request):
                     superuser = User.objects.get(username='support')
                 except ObjectDoesNotExist:
                     superuser = User.objects.create_user('support', 'stijn.heymans+support@gmail.com', 'GV@4c*yiLBge')
-                    user_profile = UserProfile.objects.create(user=superuser)
+                    user_profile = UserProfile.objects.create(user=superuser, usertype=0)
                     user_profile.timezone = 'America/Los_Angeles'
                     user_profile.save()
                     
