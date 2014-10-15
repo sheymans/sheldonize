@@ -59,6 +59,8 @@ function setup_schedule(eventfeed_url) {
             slotDuration: '00:30:00',
             // from where show the calendar:
             minTime: "04:00:00",
+            // auto means no scrollbars will be used
+            contentHeight: "auto",
             // view user starts on when opening schedule (from what time):
             scrollTime: "07:30:00",
             selectable: true,

@@ -6,7 +6,7 @@
 }
 
 /* Header on top  of calendar indicating period. */
-.fc-header-title > h2 {
+.fc-toolbar > .fc-center > h2 {
   font-weight: 300;
 }
 
@@ -22,6 +22,11 @@ th.fc-widget-header {
 
 
 .fc-agenda th.fc-agenda-axis {
+  font-weight: 300;
+}
+
+
+.fc-time {
   font-weight: 300;
 }
 
@@ -41,12 +46,14 @@ th.fc-widget-header {
   color: #000000;
 }
 
-table.fc-header .fc-state-default {
+/* The buttons in the toolbar -- today, month, etc */
+.fc-toolbar .fc-state-default {
   border-color: white;
   text-shadow: none;
   box-shadow: none;
 }
-table.fc-header .fc-state-active {
+
+.fc-toolbar .fc-state-active {
   color: #ecf0f1;
   border-color: white;
   background: none repeat scroll 0% 0% #444;
@@ -54,14 +61,17 @@ table.fc-header .fc-state-active {
 
 
 /* today highlight (yellow normally) */
-.fc-state-highlight { 
+.fc-unthemed .fc-today { 
   background: #ecf0f1;
 }
 
+
 /* height of slots is by default 20px */
+/*
 .fc-agenda-slots td div {
   height:23px;
 }
+*/
 
 
 h3, h4, h5, h6 {
