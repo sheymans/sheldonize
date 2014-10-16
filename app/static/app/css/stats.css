@@ -12,6 +12,12 @@
   border-radius: 5px;
 }
 
+.emptybar {
+  display: inline-block;
+  border-radius: 5px;
+}
+
+
 
 .count_tasks {
   font-weight: 300;
@@ -20,3 +26,10 @@
   color: white;
 }
 
+.weeknumber {
+  font-weight: 300;
+  padding: 12px;
+  display: inline-block;
+  float:right;
+  color: white;
+}

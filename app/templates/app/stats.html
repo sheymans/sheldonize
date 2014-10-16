@@ -42,11 +42,17 @@ Stats
     {% for item in stats_data %}
 
     <div class="chart">
+        {% if item.total != 0 %}
         <div class="bar" style="width: {{ item.percentage }}%">
-            {% if item.total != 0 %}
-            <span class="count_tasks">w{{ item.weeknumber }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.total }} done</span>
-            {% endif %}
+            <span class="count_tasks">{{ item.total }} done</span>
+            <span class="weeknumber">week {{ item.weeknumber }}</span>
         </div>
+        {% else %}
+        <div class="emptybar" style="width: 12%">
+            <span class="count_tasks">0</span>
+            <span class="weeknumber">week {{ item.weeknumber }}</span>
+        </div>
+        {% endif %}
     </div>
 
     {% endfor %}
