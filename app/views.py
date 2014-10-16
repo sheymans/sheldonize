@@ -14,6 +14,7 @@ from models import Task, ScheduleItem, Preference, Meeting, CredentialsModel, Fl
 from tables import TaskTable, PreferenceTable, MeetingTable
 from forms import TaskForm, AddTaskForm, AddPreferenceForm, MeetingForm, AddMeetingForm
 import service
+import stats
 import json
 import arrow
 import logging
@@ -715,5 +716,58 @@ def clean_up_authentication(user):
     storage.delete()
     FlowModel.objects.filter(id=user).delete()
     CredentialsModel.objects.filter(id=user).delete()
+
+## Statistics
+
+@login_required
+def stats_v(request):
+    return redirect(stats_weekly)
+
+@login_required
+def stats_weekly(request):
+    if request.method == "GET":
+        data = stats.collect_weekly_todos(request.user)
+        # now turn it into something that we can use in the html
+        start = data[0]
+        end = data[1]
+        maximum = data[2]
+        print "maxiu: ", maximum
+        todo_numbers = data[3]
+
+        stats_data = []
+        
+        while start <= end:
+            item = {}
+            item['year'] = end[0]
+            item['weeknumber'] = end[1]
+            if (end[0], end[1]) in todo_numbers:
+                item['total'] = todo_numbers[(end[0], end[1])]
+            else:
+                item['total'] = 0
+            item['percentage'] = (item['total'] / float(maximum))*100
+            stats_data.append(item.copy())
+
+            # run from end to start AND only for 1 year!!! (otherwise we have
+            # to know the number of weeks in the previous year, and we're not
+            # into that)
+            if end[1] - 1 > 0:
+                end = (end[0], end[1] - 1, end[2])
+            else:
+                # done
+                break
+
+        return render(request, "app/stats.html", {'stats_data': stats_data, 'stats_when': 'weekly'})
+
+@login_required
+def stats_daily(request):
+    if request.method == "GET":
+        return render(request, "app/stats.html", {'stats_data': "something", 'stats_when': 'daily'})
+
+@login_required
+def stats_monthly(request):
+    if request.method == "GET":
+        return render(request, "app/stats.html", {'stats_data': "something", 'stats_when': 'monthly'})
+
+
 
 

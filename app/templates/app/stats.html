@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static "app/css/stats.css" %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Stats
+{% endblock %}
+
+{% block filtercontent %}
+<div class="col-xs-12">
+    <ul class="nav nav-pills">
+        {% if stats_when = 'weekly' %}
+        <li class="active"><a href="/app/stats/weekly/">Weekly</a></li>
+        <li><a href="/app/stats/daily/">Daily</a></li>
+        <li><a href="/app/stats/monthly/">Monthly</a></li>
+        {% elif stats_when = 'daily' %}
+        <li><a href="/app/stats/weekly/">Weekly</a></li>
+        <li class="active"><a href="/app/stats/daily/">Daily</a></li>
+        <li><a href="/app/stats/monthly/">Monthly</a></li>
+        {% elif stats_when = 'monthly' %}
+        <li><a href="/app/stats/weekly/">Weekly</a></li>
+        <li><a href="/app/stats/daily/">Daily</a></li>
+        <li class="active"><a href="/app/stats/monthly/">Monthly</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock filtercontent %}
+
+
+{% block content %}
+
+
+{% if stats_data %}
+
+{% if stats_when = 'weekly' %}
+<ul>
+    {% for item in stats_data %}
+
+    <div class="chart">
+        <div class="bar" style="width: {{ item.percentage }}%">
+            {% if item.total != 0 %}
+            <span class="count_tasks">w{{ item.weeknumber }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.total }} tasks done</span>
+            {% endif %}
+        </div>
+    </div>
+
+    {% endfor %}
+</ul>
+
+{% elif stats_when = 'daily' %}
+
+Coming soon...
+
+{% elif stats_when = 'monthly' %}
+
+Coming soon...
+
+{% endif %}
+
+{% else %}
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        (no stats)
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endblock %}
+
+{% block morejs %}
+<script src="{% static "app/js/stats.js" %}"></script>
+{% endblock %}

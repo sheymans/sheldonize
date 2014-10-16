@@ -1,0 +1,22 @@
+.chart {
+  background-color: #ddd;
+  border-radius: 5px;
+  background: -moz-linear-gradient(left, #ddd, #eee);
+  background: -webkit-gradient(linear, left center, right center, from(#ddd), to(#eee));
+  margin: 10px;
+}
+
+.bar {
+  background-color: #428BCA;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+
+.count_tasks {
+  font-weight: 300;
+  padding: 12px;
+  display: inline-block;
+  color: white;
+}
+
