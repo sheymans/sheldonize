@@ -2,7 +2,7 @@ from models import Task, ScheduleItem, Preference, Meeting
 import arrow
 
 def collect_weekly_todos(user):
-    done_tasks = Task.objects.filter(user=user, done=True)
+    done_tasks = Task.objects.filter(user=user, done=True, done_date__isnull=False)
     if done_tasks:
         first_done_date = done_tasks[0].done_date
         first_task_iso = arrow.get(first_done_date).isocalendar()
@@ -32,7 +32,7 @@ def collect_weekly_todos(user):
         return None
 
 def collect_monthly_todos(user):
-    done_tasks = Task.objects.filter(user=user, done=True)
+    done_tasks = Task.objects.filter(user=user, done=True, done_date__isnull=False)
     if done_tasks:
         first_done_date = done_tasks[0].done_date
         first_task_iso = (first_done_date.year, first_done_date.month)

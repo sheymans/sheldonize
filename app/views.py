@@ -763,7 +763,7 @@ def stats_weekly(request):
 @login_required
 def stats_monthly(request):
     if request.method == "GET":
-        data = stats.collect_monthly_todos(request.user)
+        #data = stats.collect_monthly_todos(request.user)
         ## now turn it into something that we can use in the html
         #if not data:
         #    return render(request, "app/stats.html", {'stats_data': None, 'stats_when': 'monthly'})
