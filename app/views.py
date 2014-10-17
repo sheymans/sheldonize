@@ -763,66 +763,65 @@ def stats_weekly(request):
 @login_required
 def stats_monthly(request):
     if request.method == "GET":
-        #data = stats.collect_monthly_todos(request.user)
-        ## now turn it into something that we can use in the html
-        #if not data:
-        #    return render(request, "app/stats.html", {'stats_data': None, 'stats_when': 'monthly'})
+        data = stats.collect_monthly_todos(request.user)
+        # now turn it into something that we can use in the html
+        if not data:
+            return render(request, "app/stats.html", {'stats_data': None, 'stats_when': 'monthly'})
 
-        #start = data[0]
-        #end = data[1]
-        #maximum = data[2]
-        #todo_numbers = data[3]
+        start = data[0]
+        end = data[1]
+        maximum = data[2]
+        todo_numbers = data[3]
 
-        #stats_data = []
-        #
-        #while start <= end:
-        #    item = {}
-        #    item['year'] = end[0]
-        #    item['month'] = end[1]
-        #    if (end[0], end[1]) in todo_numbers:
-        #        item['total'] = todo_numbers[(end[0], end[1])]
-        #    else:
-        #        item['total'] = 0
-        #    item['percentage'] = (item['total'] / float(maximum))*100
-        #    stats_data.append(item.copy())
+        stats_data = []
+        
+        while start <= end:
+            item = {}
+            item['year'] = end[0]
+            item['month'] = end[1]
+            if (end[0], end[1]) in todo_numbers:
+                item['total'] = todo_numbers[(end[0], end[1])]
+            else:
+                item['total'] = 0
+            item['percentage'] = (item['total'] / float(maximum))*100
+            stats_data.append(item.copy())
 
-        #    # run from end to start AND only for 1 year!!! (otherwise we have
-        #    # to know the number of weeks in the previous year, and we're not
-        #    # into that)
-        #    if end[1] - 1 > 0:
-        #        end = (end[0], end[1] - 1)
-        #    elif end[1] == 1:
-        #        # minus the year with 1 and set month to 12
-        #        end = (end[0] - 1, 12)
-        #    else:
-        #        # done
-        #        break
+            # run from end to start AND only for 1 year!!! (otherwise we have
+            # to know the number of weeks in the previous year, and we're not
+            # into that)
+            if end[1] - 1 > 0:
+                end = (end[0], end[1] - 1)
+            elif end[1] == 1:
+                # minus the year with 1 and set month to 12
+                end = (end[0] - 1, 12)
+            else:
+                # done
+                break
 
-        #for item in stats_data:
-        #    if item['month'] == 1:
-        #        item['month'] = 'Jan'
-        #    elif item['month'] == 2:
-        #        item['month'] = 'Feb'
-        #    elif item['month'] == 3:
-        #        item['month'] = 'Mar'
-        #    elif item['month'] == 4:
-        #        item['month'] = 'Apr'
-        #    elif item['month'] == 5:
-        #        item['month'] = 'May'
-        #    elif item['month'] == 6:
-        #        item['month'] = 'Jun'
-        #    elif item['month'] == 7:
-        #        item['month'] = 'Jul'
-        #    elif item['month'] == 8:
-        #        item['month'] = 'Aug'
-        #    elif item['month'] == 9:
-        #        item['month'] = 'Sep'
-        #    elif item['month'] == 10:
-        #        item['month'] = 'Oct'
-        #    elif item['month'] == 11:
-        #        item['month'] = 'Nov'
-        #    elif item['month'] == 12:
-        #        item['month'] = 'Dec'
+        for item in stats_data:
+            if item['month'] == 1:
+                item['month'] = 'Jan'
+            elif item['month'] == 2:
+                item['month'] = 'Feb'
+            elif item['month'] == 3:
+                item['month'] = 'Mar'
+            elif item['month'] == 4:
+                item['month'] = 'Apr'
+            elif item['month'] == 5:
+                item['month'] = 'May'
+            elif item['month'] == 6:
+                item['month'] = 'Jun'
+            elif item['month'] == 7:
+                item['month'] = 'Jul'
+            elif item['month'] == 8:
+                item['month'] = 'Aug'
+            elif item['month'] == 9:
+                item['month'] = 'Sep'
+            elif item['month'] == 10:
+                item['month'] = 'Oct'
+            elif item['month'] == 11:
+                item['month'] = 'Nov'
+            elif item['month'] == 12:
+                item['month'] = 'Dec'
 
-        #return render(request, "app/stats.html", {'stats_data': stats_data, 'stats_when': 'monthly'})
-        return render(request, "app/stats.html", {'stats_data': None, 'stats_when': 'monthly'})
+        return render(request, "app/stats.html", {'stats_data': stats_data, 'stats_when': 'monthly'})
