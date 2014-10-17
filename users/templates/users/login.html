@@ -18,6 +18,36 @@ Sign In
 {% endblock header %}
 
 {% block content %}
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-social btn-twitter">
+            <i class="fa fa-twitter"></i>
+            Sign in with Twitter
+        </a>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+
+<div class="row">
+    <br/>
+    <br/>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="hline"><span>Or</span></div>
+    </div>
+</div>
+
+
+<div class="row">
+    <br/>
+    <br/>
+</div>
 
 
 
@@ -48,11 +78,6 @@ Sign In
 
         </div>
     </div>
-    <center><h1>Or</h2></center>
-    <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-social btn-twitter">
-        <i class="fa fa-twitter"></i>
-        Sign in with Twitter
-    </a>
 </form>
 {% endblock %}
 

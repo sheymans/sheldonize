@@ -6,14 +6,6 @@
 Sheldonize
 {% endblock %}
 
-{% block customcss %}
-<!-- font awesome is for the boostrap social buttons -->
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{% static "users/css/bootstrap-social.css" %}">
-{% endblock %}
-
-
-
 {% block header %}
 <h3>Sheldonize</h3>
 {% endblock header %}
@@ -56,18 +48,6 @@ Sheldonize
     </div>
 </div>
 {% endif %}
-
-<div class="row">
-    <div class="col-xs-12 col-md-6">
-        <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-social btn-twitter">
-            <i class="fa fa-twitter"></i>
-            Sign in with Twitter
-        </a>
-    </div>
-</div>
-
-
-
 
 <div class="row">
     <div class="col-xs-12 col-md-6">

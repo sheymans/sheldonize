@@ -457,6 +457,20 @@ fieldset[disabled] .btn-sheldonize-orange.active {
   border-color: #444444; 
 } 
 
+.hline {
+  border: 1px solid #EEE;
+  color: #666;
+  font-weight: bold;
+  font-variant: small-caps;
+  letter-spacing: .1em;
+  line-height: 0px;
+  text-align: center;
+  text-transform: uppercase;
+}
 
+.hline > span {
+  background-color: #FFF;
+    padding: 0px 1em;
+}
 
 
