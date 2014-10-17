@@ -32,7 +32,6 @@ Stats
 {% if stats_data %}
 
 {% if stats_when = 'weekly' %}
-<ul>
     {% for item in stats_data %}
 
     <div class="chart">
@@ -55,11 +54,31 @@ Stats
     </div>
 
     {% endfor %}
-</ul>
 
 {% elif stats_when = 'monthly' %}
 
-Coming soon...
+    {% for item in stats_data %}
+
+    <div class="chart">
+        {% if item.total != 0 %}
+        <div class="bar" style="width: {{ item.percentage }}%">
+            {% if item.percentage < 12 %}
+            <span class="count_tasks">{{ item.total }}</span>
+            <span class="weeknumber">{{ item.month }} {{ item.year }}</span>
+            {% else %}
+            <span class="count_tasks">{{ item.total }} done</span>
+            <span class="weeknumber">{{ item.month }} {{ item.year }}</span>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="emptybar" style="width: 12%">
+            <span class="count_tasks">0</span>
+            <span class="weeknumber">{{ item.month }} {{ item.year }}</span>
+        </div>
+        {% endif %}
+    </div>
+
+    {% endfor %}
 
 {% endif %}
 
