@@ -16,15 +16,9 @@ Stats
     <ul class="nav nav-pills">
         {% if stats_when = 'weekly' %}
         <li class="active"><a href="/app/stats/weekly/">Weekly</a></li>
-        <li><a href="/app/stats/daily/">Daily</a></li>
-        <li><a href="/app/stats/monthly/">Monthly</a></li>
-        {% elif stats_when = 'daily' %}
-        <li><a href="/app/stats/weekly/">Weekly</a></li>
-        <li class="active"><a href="/app/stats/daily/">Daily</a></li>
         <li><a href="/app/stats/monthly/">Monthly</a></li>
         {% elif stats_when = 'monthly' %}
         <li><a href="/app/stats/weekly/">Weekly</a></li>
-        <li><a href="/app/stats/daily/">Daily</a></li>
         <li class="active"><a href="/app/stats/monthly/">Monthly</a></li>
         {% endif %}
     </ul>
@@ -63,10 +57,6 @@ Stats
     {% endfor %}
 </ul>
 
-{% elif stats_when = 'daily' %}
-
-Coming soon...
-
 {% elif stats_when = 'monthly' %}
 
 Coming soon...
@@ -82,7 +72,7 @@ Coming soon...
 </div>
 <div class="row">
     <div class="col-xs-12 text-center">
-        (no stats)
+        (no stats. you should get some stuff done.)
     </div>
 </div>
 

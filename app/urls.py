@@ -52,7 +52,6 @@ urlpatterns = patterns('',
     # Statistics
     url(r'^stats/$', views.stats_v, name='stats'),
     url(r'^stats/weekly/$', views.stats_weekly, name='stats_weekly'),
-    url(r'^stats/daily/$', views.stats_daily, name='stats_daily'),
     url(r'^stats/monthly/$', views.stats_monthly, name='stats_monthly'),
 
 )

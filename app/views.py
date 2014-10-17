@@ -759,11 +759,6 @@ def stats_weekly(request):
         return render(request, "app/stats.html", {'stats_data': stats_data, 'stats_when': 'weekly'})
 
 @login_required
-def stats_daily(request):
-    if request.method == "GET":
-        return render(request, "app/stats.html", {'stats_data': "something", 'stats_when': 'daily'})
-
-@login_required
 def stats_monthly(request):
     if request.method == "GET":
         return render(request, "app/stats.html", {'stats_data': "something", 'stats_when': 'monthly'})
