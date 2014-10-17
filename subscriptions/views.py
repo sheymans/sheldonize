@@ -43,6 +43,11 @@ def signup_subscription(request):
 
                 profile = request.user.userprofile
                 profile.go_pro()
+                # Also set the email of the user if not yet set (like from a
+                # twitter user):
+                if not request.user.email:
+                    request.user.email = email
+                    request.user.save()
                 success = "Your pro account has been created. Congratulations!"
                 messages.add_message(request, messages.SUCCESS, success)
                 return render(request, 'subscriptions/signup_subscription.html') 
@@ -105,6 +110,11 @@ def signup_student(request):
 
                 profile = request.user.userprofile
                 profile.go_edu()
+                # Also set the email of the user if not yet set (like from a
+                # twitter user):
+                if not request.user.email:
+                    request.user.email = email
+                    request.user.save()
                 success = "Your teacher and student account has been created. Congratulations!"
                 messages.add_message(request, messages.SUCCESS, success)
                 return render(request, 'subscriptions/signup_student.html') 

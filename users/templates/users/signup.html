@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 
+
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+
+
+{% block customcss %}
+<!-- font awesome is for the boostrap social buttons -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static "users/css/bootstrap-social.css" %}">
+{% endblock %}
+
+
 
 {% block title%}
 Sign Up For A Free Trial
@@ -27,6 +37,17 @@ Sign Up For A Free Trial
         <p><small><i> By clicking on the Sign Up button, you are agreeing to the <a
                     href="{% url 'terms' %}">Terms of Use</a> and <a href="{% url 'privacy' %}">Privacy Policy</a>.</small></i></p>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4">
+<center><h1>Or</h2></center>
+    <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-social btn-twitter">
+        <i class="fa fa-twitter"></i>
+        Sign in with Twitter
+    </a>
 </div>
 
             {% endblock content %}

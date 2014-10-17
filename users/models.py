@@ -15,6 +15,13 @@ class UserProfile(models.Model):
             (5, 'edu'),
             )
 
+    SOCIAL_TYPE = (
+            (0, 'antisocial'),
+            (1, 'twitter'),
+            (2, 'facebook'),
+            (3, 'google'),
+            )
+
 
     user = models.OneToOneField(User)
     timezone = TimeZoneField(default='America/Los_Angeles')
@@ -26,6 +33,11 @@ class UserProfile(models.Model):
     # how many successful invites did this user do (how people sign up that
     # this user invited)
     success_invites = models.PositiveIntegerField(default=0)
+    # Verify whether this is a social account; in that case you should no ask
+    # to change the password. Also not twitter users do not have an email!!!!
+    # so you need to check on that whenever you need email.
+    social = models.BooleanField(verbose_name='social?', default=False)
+    socialtype = models.PositiveIntegerField(choices=SOCIAL_TYPE, max_length=1, default=0)
 
     def go_pro(self):
         self.user.is_active = True
@@ -74,6 +86,18 @@ class UserProfile(models.Model):
 
     def is_pro_user(self):
         return self.usertype == 2
+
+    def is_social(self):
+        return self.social
+
+    def is_twitter_user(self):
+        return self.socialtype == 1
+
+    def is_facebook_user(self):
+        return self.socialtype == 2
+
+    def is_google_user(self):
+        return self.socialtype == 3
 
     def is_edu_user(self):
         return self.usertype == 5

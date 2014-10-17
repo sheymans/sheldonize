@@ -203,7 +203,7 @@ class InviteView(FormView):
             w = Invite.objects.create(inviter=self.request.user, invited=form.cleaned_data['email'])
             # send email!
             admin_email = 'admin@sheldonize.com'
-            message = "Hi!\n\n" + self.request.user.username + " (" + self.request.user.email + ")" + \
+            message = "Hi!\n\n" + self.request.user.username + " (" + str(self.request.user.email) + ")" + \
                     " just invited you to join https://sheldonize.com, a smart task manager.\n\nNot only will you get the chance to try out Sheldonize for free for 31 days, in addition you help your friend as she/he gets extra trial days if you sign up.\n\n" + \
                     "So please consider joining at https://sheldonize.com. We are waiting for you!\n\n" + \
                     "Stijn Heymans\nCo-Founder of Sheldonize\n\n" + \

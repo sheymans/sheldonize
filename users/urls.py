@@ -7,7 +7,7 @@ from django.contrib.auth.views import (
     password_reset_complete
 )
 
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
  
 from users import views
 
@@ -35,5 +35,7 @@ urlpatterns = patterns('',
     url(r'^password/reset/done/$', view=password_reset_done, name='password_reset_done'),
     url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', view=password_reset_confirm, name='password_reset_confirm'),
     url(r'^password_reset_complete/$', view=password_reset_complete, name='password_reset_complete'),
+    # Social login:
+    url('', include('social.apps.django_app.urls', namespace='social')),
 )
 

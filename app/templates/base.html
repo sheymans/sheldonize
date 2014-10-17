@@ -78,7 +78,11 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              {% if user.userprofile.is_twitter_user %}
+              <img width="23px" src="{% static "app/img/twitter_small.png" %}" alt="twitter" title="You're connected with your twitter account."/>
+              {% else %}
               <span class="glyphicon glyphicon-user"></span>
+              {% endif %}
               <sup>{{ user.userprofile.get_usertype_display }}
                 {% if user.userprofile.usertype == 1 %}
                 / {{ user.userprofile.daysleft }} days left / {{ user.userprofile.success_invites }} accepted invites
@@ -90,7 +94,9 @@
             <ul class="dropdown-menu">
               <li><a href="{% url 'userprofile' %}">Settings</a></li>
               <li><a href="{% url 'support' %}">Get Help</a></li>
+              {% if not user.userprofile.is_social %}
               <li><a href="{% url 'password_change' %}">Change Password</a></li>
+              {% endif %}
               {% if user.userprofile.is_pro_user %}
               <li><a href="{% url 'change_subscription' %}">Your Pro Subscription</a></li>
               {% endif %}
