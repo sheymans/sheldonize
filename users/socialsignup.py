@@ -6,8 +6,9 @@ from app.service import create_default_preferences
 def create_userprofile(backend, user, response, *args, **kwargs):
     # if the user is not there something went wrong, if the user profile is
     # already there, we already did all of this
-    if user and not user.userprofile:
+    if user and not UserProfile.objects.filter(user=user).exists():
         user_profile = UserProfile.objects.create(user=user)
+        user_profile.save()
 
         # Social specific
         if backend.name == 'twitter':
