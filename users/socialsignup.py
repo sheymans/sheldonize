@@ -12,7 +12,11 @@ def create_userprofile(backend, user, response, *args, **kwargs):
 
         # Social specific
         if backend.name == 'twitter':
-            user_profile.timezone = pytz.timezone(twitter_timezones.zones[response.get('time_zone')])
+            timez = response.get('time_zone')
+            if timez and timez in twitter_timezones.zones:
+                user_profile.timezone = pytz.timezone(twitter_timezones.zones[timez])
+            else:
+                user_profile.timezone = pytz.timezone("America/Los_Angeles")
             user_profile.social = True
             user_profile.socialtype = 1
             user_profile.save()
