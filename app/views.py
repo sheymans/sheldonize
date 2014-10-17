@@ -798,30 +798,30 @@ def stats_monthly(request):
                 # done
                 break
 
-        for item in stats_data:
-            if item['month'] == 1:
-                item['month'] = 'Jan'
-            elif item['month'] == 2:
-                item['month'] = 'Feb'
-            elif item['month'] == 3:
-                item['month'] = 'Mar'
-            elif item['month'] == 4:
-                item['month'] = 'Apr'
-            elif item['month'] == 5:
-                item['month'] = 'May'
-            elif item['month'] == 6:
-                item['month'] = 'Jun'
-            elif item['month'] == 7:
-                item['month'] = 'Jul'
-            elif item['month'] == 8:
-                item['month'] = 'Aug'
-            elif item['month'] == 9:
-                item['month'] = 'Sep'
-            elif item['month'] == 10:
-                item['month'] = 'Oct'
-            elif item['month'] == 11:
-                item['month'] = 'Nov'
-            elif item['month'] == 12:
-                item['month'] = 'Dec'
+        #for item in stats_data:
+        #    if item['month'] == 1:
+        #        item['month'] = 'Jan'
+        #    elif item['month'] == 2:
+        #        item['month'] = 'Feb'
+        #    elif item['month'] == 3:
+        #        item['month'] = 'Mar'
+        #    elif item['month'] == 4:
+        #        item['month'] = 'Apr'
+        #    elif item['month'] == 5:
+        #        item['month'] = 'May'
+        #    elif item['month'] == 6:
+        #        item['month'] = 'Jun'
+        #    elif item['month'] == 7:
+        #        item['month'] = 'Jul'
+        #    elif item['month'] == 8:
+        #        item['month'] = 'Aug'
+        #    elif item['month'] == 9:
+        #        item['month'] = 'Sep'
+        #    elif item['month'] == 10:
+        #        item['month'] = 'Oct'
+        #    elif item['month'] == 11:
+        #        item['month'] = 'Nov'
+        #    elif item['month'] == 12:
+        #        item['month'] = 'Dec'
 
         return render(request, "app/stats.html", {'stats_data': stats_data, 'stats_when': 'monthly'})
