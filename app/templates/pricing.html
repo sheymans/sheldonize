@@ -73,6 +73,10 @@ Pricing
     <center>
         <button id="signupbutton" type="button" onclick="location.href=&quot;{% url 'signup' %}?timezone=&quot; + this.value ;" class="btn btn-primary">Great, get me to the Sign-up page! &raquo;</button>
         <center><h1>Or</h2></center>
+        <a href="{% url 'social:begin' 'google-oauth2' %}?next=/users/userprofile/" class="btn btn-block btn-social btn-google-plus">
+            <i class="fa fa-google-plus"></i>
+            Sign in with Google
+        </a>
         <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-social btn-twitter">
             <i class="fa fa-twitter"></i>
             Sign in with Twitter

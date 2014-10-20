@@ -27,6 +27,11 @@ Sign Up For A Free Trial
     <div class="col-md-2">
     </div>
     <div class="col-md-4">
+        <a href="{% url 'social:begin' 'google-oauth2' %}?next=/users/userprofile/" class="btn btn-block btn-social btn-google-plus">
+            <i class="fa fa-google-plus"></i>
+            Sign up with Google
+        </a>
+
         <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-social btn-twitter">
             <i class="fa fa-twitter"></i>
             Sign up with Twitter

@@ -80,6 +80,8 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               {% if user.userprofile.is_twitter_user %}
               <img width="23px" src="{% static "app/img/twitter_small.png" %}" alt="twitter" title="You're connected with your twitter account."/>
+              {% elif user.userprofile.is_google_user %}
+              <img width="19px" src="{% static "app/img/google_small.png" %}" alt="google" title="You're connected with your google+ account."/>
               {% else %}
               <span class="glyphicon glyphicon-user"></span>
               {% endif %}

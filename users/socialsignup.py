@@ -21,6 +21,14 @@ def create_userprofile(backend, user, response, *args, **kwargs):
             user_profile.socialtype = 1
             user_profile.save()
 
+        if backend.name == 'google-oauth2':
+            # Google does not send timezone
+            user_profile.timezone = pytz.timezone("America/Los_Angeles")
+            user_profile.social = True
+            user_profile.socialtype = 3
+            user_profile.save()
+
+
         # Facebook (Also set email here)
 
         # create the default preferences
