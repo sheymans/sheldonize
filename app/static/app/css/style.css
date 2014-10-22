@@ -473,4 +473,28 @@ fieldset[disabled] .btn-sheldonize-orange.active {
     padding: 0px 1em;
 }
 
-
+/* For the boostrap carrousel */
+/* see https://gist.github.com/loschke/8489303#file-product-carousel-html */
+#myCarousel .thumbnail {
+margin-bottom:0;
+}
+.carousel-control {
+color:#444444;
+top:44%;
+bottom:auto;
+opacity:1;
+}
+.carousel-control:hover {
+color:#e67e22;
+}
+.carousel-control.left, .carousel-control.right {
+background-image:none !important;
+}
+.carousel-control.right {
+left:auto;
+right:-25px;
+}
+.carousel-control.left {
+right:auto;
+left:-25px;
+}

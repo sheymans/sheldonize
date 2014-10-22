@@ -10,6 +10,8 @@ Sheldonize
 <h3>Sheldonize</h3>
 {% endblock header %}
 
+
+
 {% block content %}
 
 <div class="row">
@@ -71,7 +73,7 @@ Sheldonize
         </p>
         <p>If you like the sound of that, check
         out our 3-minute <a
-            href="http://iwokeupthismorning.net/scheduling/tutorial/2014/08/29/sheldonize-an-overview/"/>overview
+            href="http://iwokeupthismorning.net/2014/10/13/sheldonize-organizes-todos-automatically-on-a-calendar/"/>overview
             video</a> on our sister blog, <a
             href="http://iwokeupthismorning.net">I Woke Up This Morning</a>.
         </p>
@@ -95,8 +97,150 @@ Sheldonize
         </p>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-3">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_schedule.png" %}" alt="Slide1">
+                        <div class="caption">
+                            <h3>Automatic Scheduling</h3>
+                            <p>We schedule your tasks automatically on your calendar.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+                <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_mobile.png" %}" alt="Slide2">
+                        <div class="caption">
+                            <h3>Mobile View</h3>
+                            <p>On your mobile, we show you a quick view of what's up next.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+                <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_inbox.png" %}" alt="Slide3">
+                        <div class="caption">
+                            <h3>Inbox</h3>
+                            <p>Use the Inbox to quickly dump tasks without further planning them, GTD-style.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+                <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_estimate.png" %}" alt="Slide4">
+                        <div class="caption">
+                            <h3>Task Estimation</h3>
+                            <p>Estimate how long a task will take and Sheldonize will take that into account.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+
+                 <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_after.png" %}" alt="Slide5">
+                        <div class="caption">
+                            <h3>Task Order</h3>
+                            <p>Indicate what tasks come after what other tasks.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+
+                  <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_due.png" %}" alt="Slide6">
+                        <div class="caption">
+                            <h3>Due Dates</h3>
+                            <p>Indicate when a task is due.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+
+                 <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_abcd.png" %}" alt="Slide7">
+                        <div class="caption">
+                            <h3>ABCD Priorities</h3>
+                            <p>Tag a task with an <i>A,</i> <i>B</i>, <i>C</i>, <i>D</i> priority. Sheldonize will automatically schedule more important tasks first.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+ 
+                 <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_today.png" %}" alt="Slide8">
+                        <div class="caption">
+                            <h3>Focus</h3>
+                            <p>Focus by indicating whether you are doing tasks <i>Today</i> or <i>This Week</i>.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+ 
+                 <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_meeting.png" %}" alt="Slide9">
+                        <div class="caption">
+                            <h3>Meetings</h3>
+                            <p>You can add meetings in Sheldonize and make them recurring.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+
+                  <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_google.png" %}" alt="Slide10">
+                        <div class="caption">
+                            <h3>Google Calendar</h3>
+                            <p>You can automatically pull in your external Google Calendar meetings such that Sheldonize can take those into account.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+
+                   <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_preferences.png" %}" alt="Slide11">
+                        <div class="caption">
+                            <h3>Work Times</h3>
+                            <p>You can personalize the scheduling by indicating what your normal working times are. Sheldonize will only schedule work within these times.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+
+                 <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_archive.png" %}" alt="Slide12">
+                        <div class="caption">
+                            <h3>Archive</h3>
+                            <p>We offer an unlimited archive of all your tasks and meetings.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
+
+                <div class="item">
+                    <div class="thumbnail">
+                        <img src="{% static "app/img/carousel_stats.png" %}" alt="Slide13">
+                        <div class="caption">
+                            <h3>Statistics</h3>
+                            <p>You can at a glance see how productive you are this week or this month with our statistics.</p>
+                        </div>
+                    </div>
+                </div><!-- End Item -->
 
 
+            </div><!-- End Carousel Inner -->
+            <div class="carousel-controls">
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div><!-- /.carousel --> 
+    </div>
+
+
+</div>
 
 <div class="row">
     <br/>
