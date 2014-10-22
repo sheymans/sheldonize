@@ -473,28 +473,39 @@ fieldset[disabled] .btn-sheldonize-orange.active {
     padding: 0px 1em;
 }
 
-/* For the boostrap carrousel */
-/* see https://gist.github.com/loschke/8489303#file-product-carousel-html */
-#myCarousel .thumbnail {
-margin-bottom:0;
+/* for the features */
+.feature-chart {
+  background-color: #ddd;
+  border-radius: 5px;
+  background: -moz-linear-gradient(left, #ddd, #eee);
+  background: -webkit-gradient(linear, left center, right center, from(#ddd), to(#eee));
+  margin: 10px;
 }
-.carousel-control {
-color:#444444;
-top:44%;
-bottom:auto;
-opacity:1;
+
+.feature-task-bar {
+  background-color: #428BCA;
+  display: inline-block;
+  border-radius: 5px;
 }
-.carousel-control:hover {
-color:#e67e22;
+
+.feature-meeting-bar {
+  background-color: #e67e22;
+  display: inline-block;
+  border-radius: 5px;
 }
-.carousel-control.left, .carousel-control.right {
-background-image:none !important;
+
+
+.feature-emptybar {
+  display: inline-block;
+  border-radius: 5px;
 }
-.carousel-control.right {
-left:auto;
-right:-25px;
+
+
+
+.feature {
+  font-weight: 300;
+  padding: 12px;
+  display: inline-block;
+  color: white;
 }
-.carousel-control.left {
-right:auto;
-left:-25px;
-}
+
