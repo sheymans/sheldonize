@@ -53,6 +53,8 @@ urlpatterns = patterns('',
     url(r'^stats/$', views.stats_v, name='stats'),
     url(r'^stats/weekly/$', views.stats_weekly, name='stats_weekly'),
     url(r'^stats/monthly/$', views.stats_monthly, name='stats_monthly'),
+    # Respond to Mailgun requests; this is posting without forms so bypass csrf
+    url(r'^mailgun/$', views.mailgun, name='mailgun'),
 
 )
 
