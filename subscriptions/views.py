@@ -193,7 +193,7 @@ def change_subscription(request):
                 charges_data = charges.data
                 
                 if len(charges_data) <= 0: # pragma: no cover
-                    messages.add_message(request, message.ERROR, "No previous charges are present. That's strange. Please contact sheldonizellc@gmail.com")
+                    messages.add_message(request, message.ERROR, "No previous charges are present. That's strange. Please contact support@sheldonize.com")
                     raise Http404
 
                 charge = charges_data[0]
@@ -201,7 +201,7 @@ def change_subscription(request):
                     # establish refund
                     refund = charge.refunds.create()
                 except: # pragma: no cover
-                    error = "We could not create a refund on the last charge. Please contact sheldonizellc@gmail.com"
+                    error = "We could not create a refund on the last charge. Please contact support@sheldonize.com"
                     raise Http404
 
                 # delete the STRIPE customer
@@ -318,7 +318,7 @@ def webhook(request):
             try:
                 message_subject = 'Sheldonize: A problem with Your Payment'
                 message = 'There seems to be a problem with your payment information. Please log in to sheldonize.com and check your payment information.'
-                send_mail(message_subject, message, admin_email, [email, 'sheldonizellc@gmail.com'], fail_silently=True)
+                send_mail(message_subject, message, admin_email, [email, 'support@sheldonize.com'], fail_silently=True)
             except: # pragma: no cover
                 logger.error("invoice.payment_failed or charge.failed email failed for " + email)
 
@@ -330,7 +330,7 @@ def webhook(request):
         #    try:
         #        message_subject = 'Sheldonize: Charge Refunded'
         #        message = '3.99$ was refunded to your account. This should arrive within 5-10 days on your account.'
-        #        send_mail(message_subject, message, admin_email, [email, 'sheldonizellc@gmail.com'], fail_silently=True)
+        #        send_mail(message_subject, message, admin_email, [email, 'support@sheldonize.com'], fail_silently=True)
         #    except: # pragma: no cover
         #        logger.error("charge.refunded email failed for " + email)
 
@@ -363,7 +363,7 @@ def webhook(request):
             if message_subject and message:
                 # send message only to me: this is a failure to pay delete (not
                 # initiated by user)
-                send_mail(message_subject, message, admin_email, ['sheldonizellc@gmail.com'], fail_silently=True)
+                send_mail(message_subject, message, admin_email, ['support@sheldonize.com'], fail_silently=True)
     
         except Exception as e: # pragma: no cover
             error_msg = "customer.subscription.deleted event failed for event %s: " % (event)

@@ -237,7 +237,7 @@ class StripeWebhookTest(TestCase):
         # Test that one message has been sent.
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Sheldonize: A problem with Your Payment')
-        self.assertEqual(mail.outbox[0].to, ['stijn.heymans+stripewebhooktest@gmail.com', 'sheldonizellc@gmail.com'])
+        self.assertEqual(mail.outbox[0].to, ['stijn.heymans+stripewebhooktest@gmail.com', 'support@sheldonize.com'])
 
         # clean up
         try:
@@ -335,7 +335,7 @@ class StripeWebhookTest(TestCase):
         # Test that one message has been sent.
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Sheldonize: A problem with Your Payment')
-        self.assertEqual(mail.outbox[0].to, ['stijn.heymans+stripewebhooktest@gmail.com', 'sheldonizellc@gmail.com'])
+        self.assertEqual(mail.outbox[0].to, ['stijn.heymans+stripewebhooktest@gmail.com', 'support@sheldonize.com'])
 
         # clean up
         try:
@@ -447,7 +447,7 @@ class StripeWebhookTest(TestCase):
         # we set strip to do that
         #self.assertEqual(len(mail.outbox), 1)
         #self.assertEqual(mail.outbox[0].subject, 'Sheldonize: Charge Refunded')
-        #self.assertEqual(mail.outbox[0].to, ['stijn.heymans+stripewebhooktest@gmail.com', 'sheldonizellc@gmail.com'])
+        #self.assertEqual(mail.outbox[0].to, ['stijn.heymans+stripewebhooktest@gmail.com', 'support@sheldonize.com'])
 
         # clean up
         try:
