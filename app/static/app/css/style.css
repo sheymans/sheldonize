@@ -494,6 +494,13 @@ fieldset[disabled] .btn-sheldonize-orange.active {
   border-radius: 5px;
 }
 
+.feature-new-bar {
+  background-color: #e6e022;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+
 
 .feature-emptybar {
   display: inline-block;
@@ -506,6 +513,21 @@ fieldset[disabled] .btn-sheldonize-orange.active {
   font-weight: 300;
   padding: 12px;
   display: inline-block;
-  color: white;
+  color: #ECF0F1;
 }
 
+.new-feature {
+  font-weight: 300;
+  padding: 12px;
+  display: inline-block;
+  color: #444444;
+}
+
+
+.learn-more {
+  font-weight: 300;
+  padding: 12px;
+  display: inline-block;
+  float:right;
+  color: #444444;
+}
