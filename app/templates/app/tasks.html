@@ -100,18 +100,18 @@ Tasks
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
                     <li role="presentation" class="divider"></li>
-                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> Today</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks">Move to Inbox</button></li>
                     {% elif what_tasks.when = 'W' %}
                     <!-- This Week -->
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
                     <li role="presentation" class="divider"></li>
-                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks"><b>Not</b> This Week</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks">Move to Inbox</button></li>
                     {% endif %}
                     {% else %}
                     <!-- Archive -->
-                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="uncomplete-marked-tasks" name="uncomplete-marked-tasks"><b>Not</b> Done</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="uncomplete-marked-tasks" name="uncomplete-marked-tasks">Move to Inbox</button></li>
 
                     {% endif %}
                 </ul>
