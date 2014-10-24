@@ -28,14 +28,22 @@ Tasks
         <li class="active"><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
         <li><a href="/app/tasks/incomplete/today/">Today</a></li>
         <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
+        <li><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
         {% elif what_tasks.when = 'T' %}
         <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
         <li class="active"><a href="/app/tasks/incomplete/today/">Today</a></li>
         <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
+        <li><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
         {% elif what_tasks.when = 'W' %}
         <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
         <li><a href="/app/tasks/incomplete/today/">Today</a></li>
         <li class="active"><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
+        <li><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
+        {% elif what_tasks.when = 'Z' %}
+        <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
+        <li><a href="/app/tasks/incomplete/today/">Today</a></li>
+        <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
+        <li class="active"><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
         {% endif %}
         {% if table.data %}
         {% if what_tasks.when = 'T' or what_tasks.when = 'W' %}
@@ -94,17 +102,28 @@ Tasks
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="someday-marked-tasks" name="someday-marked-tasks">To Do Someday/Maybe</button></li>
                     {% elif what_tasks.when = 'T' %}
                     <!-- Today -->
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="someday-marked-tasks" name="someday-marked-tasks">To Do Someday/Maybe</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks">Move to Inbox</button></li>
                     {% elif what_tasks.when = 'W' %}
                     <!-- This Week -->
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
                     <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="someday-marked-tasks" name="someday-marked-tasks">To Do Someday/Maybe</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks">Move to Inbox</button></li>
+                    <!-- Someday -->
+                    {% elif what_tasks.when = 'Z' %}
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks">Move to Inbox</button></li>
@@ -144,8 +163,7 @@ Tasks
 {% endif %}
 
 {% if what_tasks.first %}
-<a href="//fast.wistia.net/embed/iframe/kajgrymlz3?popover=true" class="wistia-popover[height=720,playerColor=7b796a,width=1280]"></a>
-<script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/popover-v1.js"></script>
+<!-- First time sign-up stuff -->
 {% endif %}
 
 

@@ -138,6 +138,11 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 form = AddTaskForm()
                 RequestConfig(request, paginate={"per_page": 10}).configure(table)
                 return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks})
+            elif show_tasks['when'] and show_tasks['when'] == 'Z':
+                table = TaskTable(Task.objects.filter(user=request.user, done=False, when='Z'))
+                form = AddTaskForm()
+                RequestConfig(request, paginate={"per_page": 10}).configure(table)
+                return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks})
             #elif show_tasks['when'] and show_tasks['when'] == 'NoTNoW':
             else:
                 table = TaskTable(Task.objects.filter(user=request.user, done=False, when__isnull=True))
@@ -157,7 +162,7 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
         success = ""
         warning = "Please select a task first."
         error = ""
-        if 'complete-marked-tasks' in request.POST:
+        if 'complete-marked-tasks' in request.POST and selected_tasks:
             for task in selected_tasks:
                 task.done = True
                 task.save()
@@ -169,7 +174,7 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 task.save()
                 success = "Task marked not Done and back to Inbox."
         elif 'delete-marked-tasks' in request.POST:
-            if selected_tasks:
+            if selected_tasks.exists():
                 selected_tasks.delete()
                 success = "Tasks deleted."
         elif 'thisweek-marked-tasks' in request.POST:
@@ -182,6 +187,11 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 task.when = 'T'
                 task.save()
                 success = "Tasks moved to Today."
+        elif 'someday-marked-tasks' in request.POST:
+            for task in selected_tasks:
+                task.when = 'Z'
+                task.save()
+                success = "Tasks moved to Someday/Maybe."
         elif 'nowhen-marked-tasks' in request.POST:
             for task in selected_tasks:
                 task.when = None
@@ -201,6 +211,9 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 elif 'when' in show_tasks and show_tasks['when'] == 'W':
                     task_instance.when = 'W'
                     success = "Task added to This Week."
+                elif 'when' in show_tasks and show_tasks['when'] == 'Z':
+                    task_instance.when = 'Z'
+                    success = "Task added to Someday/Maybe."
                 else:
                     success = "Task added."
                 # don't forget to save then
@@ -244,6 +257,11 @@ def tasks_incomplete_today(request):
 def tasks_incomplete_thisweek(request):
     show_tasks = {'incomplete': True, 'done': False, 'when': 'W' }
     return tasks_generic(request, tasks_incomplete_thisweek, schedule, show_tasks)
+
+@login_required
+def tasks_incomplete_someday(request):
+    show_tasks = {'incomplete': True, 'done': False, 'when': 'Z' }
+    return tasks_generic(request, tasks_incomplete_someday, schedule, show_tasks)
 
 @login_required
 def tasks_done(request):

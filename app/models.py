@@ -18,6 +18,7 @@ class Task(models.Model):
     WORK_ON_IT = (
             ('T', 'Today'),
             ('W', 'This Week'),
+            ('Z', 'Someday/Maybe'),
             )
 
     ABCD = (

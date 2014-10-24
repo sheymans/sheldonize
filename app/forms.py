@@ -103,7 +103,7 @@ class AddTaskForm(ModelForm):
 
     helper.layout = Layout(
             FieldWithButtons(
-                Field('name', placeholder="Quick add tasks"),
+                Field('name', placeholder="Quick add tasks (press Enter or the '+' sign)"),
                 StrictButton('<span class="glyphicon glyphicon-plus"></span>', type="submit", name="new_task", css_class='btn btn-sheldonize btn-sheldonize-default'))
       )
     class Meta:
