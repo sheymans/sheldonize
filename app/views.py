@@ -834,16 +834,25 @@ def stats_monthly(request):
 def mailgun(request):
      if request.method == 'POST':
         sender    = request.POST.get('sender')
-        
         subject   = request.POST.get('subject', '')
 
          # let's find that sender in our users
         if User.objects.filter(email=sender).exists():
             user_sender = User.objects.get(email=sender)
             short_task = (subject[:135] + '..') if len(subject) > 139 else subject
+
+
+            today = True if "#today" in short_task else False
+            thisweek = True if "#thisweek" in short_task else False
+
             # now create a task:
-            # create a task with the first 139 characters
-            task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False)
+            if today:
+                task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False, when='T')
+            elif thisweek:
+                task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False, when='W')
+            else:
+                task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False)
+
             task.save()
 
      # Mailgun wants to see 2xx, otherwise it will make another attempt in 5 minutes
