@@ -847,8 +847,10 @@ def mailgun(request):
 
             # now create a task:
             if today:
+                short_task = short_task.replace("#today", "", 1)
                 task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False, when='T')
             elif thisweek:
+                short_task = short_task.replace("#thisweek", "", 1)
                 task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False, when='W')
             else:
                 task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False)
