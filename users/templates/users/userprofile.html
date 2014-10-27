@@ -12,4 +12,21 @@ User Profile
 
 {% block content %}
   {% crispy form %}
+
+<div class="row">
+    <br/>
+    <br/>
+    <br/>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        {% if request.user.userprofile.is_twitter_user %}
+        You are linked via Twitter and do not have a registered email (and that's OK!). If you become a pro user, we will use that email.
+        {% else %}
+        This is your registered email: {{ request.user.email }}. You cannot change that currently. Write <a href="mailto:support@sheldonize.com">support@sheldonize.com</a> if you want to change your email.
+        {% endif %}
+</div>
+</div>
 {% endblock content %}
