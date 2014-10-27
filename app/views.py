@@ -548,7 +548,8 @@ def meetings(request):
 @user_passes_test(lambda user: user.userprofile.all_permissions_granted(), login_url="/subscriptions/signup/")
 def meeting_generic(request, meeting_id, meeting_list_view, meeting_link):
     meeting = get_object_or_404(Meeting, pk=meeting_id)
-
+    # is it foreign or not
+    foreign_marker = meeting.foreign
 
     # check whether this is indeed yours
     if meeting.user != request.user:
@@ -565,7 +566,14 @@ def meeting_generic(request, meeting_id, meeting_list_view, meeting_link):
         else:
             form = MeetingForm(request.POST, instance=meeting)
             if form.is_valid():
+                # Do not forget to also set the foreign label (the form does
+                # not have that field, so it would be set to None if you do it
+                # explicitly).
                 meeting_instance = form.save(commit=True)
+                # if it is external (0 is Google)
+                if foreign_marker == 0:
+                    meeting_instance.foreign = foreign_marker
+                meeting_instance.save()
                 messages.add_message(request, messages.SUCCESS, "Saved meeting.")
                 return go_back_to_previous(request, meeting_list_view)
             else:

@@ -48,7 +48,7 @@ function setup_schedule(eventfeed_url) {
             },
             // render title as HTML:
             eventRender: function(event, element, view) {                                          
-                element.find('.fc-event-title').html(element.find('.fc-event-title').text());
+                element.find('.fc-title').html(element.find('.fc-title').text());
             },
             defaultView: 'agendaWeek',
             // What day to show first (Monday=1)
