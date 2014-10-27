@@ -7,7 +7,7 @@ from models import UserProfile
 from users.models import UserProfile, Wait, Invite
 
 class UserProfileAdmin(admin.ModelAdmin):
-    actions = ['reset_to_trial', 'send_me_betas', 'send_me_trials', 'send_me_undecided']
+    actions = ['reset_to_trial', 'send_me_betas', 'send_me_trials', 'send_me_undecided', 'evaluate_trial']
     list_display = ('user', 'usertype', 'daysleft', 'endperiod', 'timezone')
 
     def reset_to_trial(self, request, queryset):
@@ -31,6 +31,13 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     reset_to_trial.short_description = "Reset all trial or undecided users to be an initial trial user."
 
+    def evaluate_trial(self, request, queryset):
+        trial_userprofiles = UserProfile.objects.filter(usertype=1)
+        for userprofile in trial_userprofiles:
+            userprofile.evaluate_trial()
+
+    evaluate_trial.short_description = "Calculate days_left and undecided status for all trial users."
+ 
     def send_me_betas(self, request, queryset):
         beta_profiles = UserProfile.objects.filter(usertype=0)
         message = ""
