@@ -32,7 +32,10 @@ def tasks_2_dict(tasks, user_timezone):
             # send ISO08601 back to front-end
             jso["start"] = start.datetime.isoformat()
             jso["end"] = (start.datetime + datetime.timedelta(minutes=30)).isoformat()
-            if in_past:
+            
+            if in_past and not task.done_date:
+                # only color red (deadline late) if it is late and the task is
+                # not done yet
                 jso["color"] = eventcolors.deadline_late["color"]
             else:
                 jso["color"] = eventcolors.deadline["color"]
