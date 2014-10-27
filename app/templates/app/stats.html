@@ -63,7 +63,7 @@ Stats
         <div class="bar" style="width: {{ item.percentage }}%">
             {% if item.percentage < 12 %}
             <span class="count_tasks">{{ item.total }}</span>
-            <span class="weeknumber">{{ item.month }} {{ item.year }}</span>
+            <span class="weeknumber">{{ item.month }}</span>
             {% else %}
             <span class="count_tasks">{{ item.total }} done</span>
             <span class="weeknumber">{{ item.month }} {{ item.year }}</span>
