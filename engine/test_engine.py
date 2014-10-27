@@ -149,7 +149,7 @@ class TestEngine(unittest.TestCase):
     def test_schedule_20140623C(self):
         tasks =  {33L: {'when': 1}, 31L: {'when': 1}}
         preferences =  {'thisweek': [[94, 142], [386, 438]], 'today': [[0, 30]]}
-        schedule =   {33L: [[94, 142], [386, 388]], 31L: [[388, 438]]}
+        schedule = {33L: [[0, 30], [94, 129]], 31L: [[129, 142], [386, 438]]}
         self.assertEqual(engine.plan(tasks, preferences), schedule)
         with self.ti:
             engine.plan(tasks, preferences)
@@ -336,6 +336,17 @@ class TestEngine(unittest.TestCase):
         with self.ti:
             engine.plan(tasks, preferences)
         self.assertLess(self.ti.secs, self.max_time)
+
+    def test_schedule_no_tasks_today(self):
+        tasks =  {528L: {'when': 1}, 529L: {'when': 1}}
+        preferences =  {'thisweek': [[83, 123], [165, 201], [261, 297], [357, 393]], 'today': [[0, 15]]}
+        schedule =  {528L: [[0, 15], [83, 123], [165, 192]], 529L: [[192, 201], [261, 297], [357, 393]]}
+
+        self.assertEqual(engine.plan(tasks, preferences), schedule)
+        with self.ti:
+            engine.plan(tasks, preferences)
+        self.assertLess(self.ti.secs, self.max_time)
+
 
 if __name__ == '__main__':
     unittest.main()
