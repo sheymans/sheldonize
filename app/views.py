@@ -900,7 +900,8 @@ def mailgun(request):
                 task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False)
 
             if body_plain:
-                task.note = str(body_plain)
+                # body_plain is unicode, we make ascii out if it
+                task.note = body_plain.decode('ascii', 'ignore')
 
             task.save()
 
