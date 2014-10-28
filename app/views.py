@@ -550,6 +550,7 @@ def meeting_generic(request, meeting_id, meeting_list_view, meeting_link):
     meeting = get_object_or_404(Meeting, pk=meeting_id)
     # is it foreign or not
     foreign_marker = meeting.foreign
+    original_note = Meeting.objects.get(id=meeting.id).note
 
     # check whether this is indeed yours
     if meeting.user != request.user:
@@ -557,7 +558,7 @@ def meeting_generic(request, meeting_id, meeting_list_view, meeting_link):
 
     if request.method == "GET":
         form = MeetingForm(instance=meeting)
-        return render(request, 'app/meeting.html', {'form': form, 'meeting_link': meeting_link})
+        return render(request, 'app/meeting.html', {'form': form, 'meeting_link': meeting_link, 'note': meeting.note, 'meetingid': meeting.id, 'foreign': meeting.foreign})
     elif request.method == "POST":
         if 'delete-meeting' in request.POST:
             meeting.delete()
@@ -573,6 +574,14 @@ def meeting_generic(request, meeting_id, meeting_list_view, meeting_link):
                 # if it is external (0 is Google)
                 if foreign_marker == 0:
                     meeting_instance.foreign = foreign_marker
+                # Make sure to put the meeting_instance note back to note (the
+                # if the form's note was changed in the meantime since loading
+                # the form, we would wronfully overwrite the new note with the
+                # old note). And you cannot just take meeting.note (you have to
+                # get it from the database)
+                meeting_instance.note = original_note
+
+                # and now save
                 meeting_instance.save()
                 messages.add_message(request, messages.SUCCESS, "Saved meeting.")
                 return go_back_to_previous(request, meeting_list_view)
@@ -885,3 +894,33 @@ def mailgun(request):
 
      # Mailgun wants to see 2xx, otherwise it will make another attempt in 5 minutes
      return HttpResponse('OK')
+
+# Ajax for saving a note
+
+@login_required
+def meeting_note_ajax(request):
+    if request.method == "POST":
+        note = request.POST["note"]
+        id = request.POST["id"]
+
+        if id:
+            meeting = Meeting.objects.get(id=id)
+
+            # check whether this is indeed yours
+            if meeting.user != request.user:
+                raise PermissionDenied
+
+            meeting.note = note
+
+        meeting.save()
+
+        return HttpResponse('OK')
+
+    else:
+        raise Http404
+
+
+
+
+
+

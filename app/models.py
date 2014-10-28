@@ -123,6 +123,7 @@ class Meeting(models.Model):
     name = models.CharField(verbose_name='name', max_length=140)
     start = models.DateTimeField()
     end = models.DateTimeField()
+    note = models.TextField(null=True, blank=True)
 
     # for recurring meetings
     REPEAT = (

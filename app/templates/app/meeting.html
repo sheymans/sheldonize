@@ -7,6 +7,8 @@
 {% block customcss %}
 <!-- For bootstrap-datetimepicker -->
 <link rel="stylesheet" href="{% static "bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %}">
+<!-- For bootstrap-markdwon -->
+<link rel="stylesheet" href="{% static "bootstrap-markdown/css/bootstrap-markdown.min.css" %}">
 {% endblock customcss %}
 
 
@@ -15,11 +17,48 @@
 
 {% block content %}
 <div class="row">
-
     <div class="col-md-12">
         {% crispy form %}
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <br/>
+    </div>
+</div>
+
+
+{% if not foreign = 0 %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="hline"><span>Note</span></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <br/>
+        <div id="meeting-comment" data-provide="markdown" meeting-id={{ meetingid }}>
+            {% if note %}
+            {{ note }}
+            {% else %}
+            _Try editing this note (you can format it using [Markdown](http://daringfireball.net/projects/markdown/))._
+            {% endif %}
+        </div>
+        <br/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 text-right">
+        <button id="meeting-edit" type="button" class="btn btn-sheldonize btn-sheldonize-default">Edit Note</button>
+    </div>
+</div>
+{% endif %}
+
+
 {% endblock content %}
 
 
@@ -29,5 +68,12 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="{% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}"></script>
 <!-- end bootstrap-datetimepicker requirements -->
+<!-- For bootstrap markdown -->
+<script src="{% static "bootstrap-markdown/js/markdown.js" %}"></script>
+<script src="{% static "bootstrap-markdown/js/to-markdown.js" %}"></script>
+<script src="{% static "bootstrap-markdown/js/bootstrap-markdown.js" %}"></script>
+<!-- End bootstrap markdown -->
+
 <script src="{% static "app/js/meeting.js" %}"></script>
+
 {% endblock morejs %}

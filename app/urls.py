@@ -56,6 +56,8 @@ urlpatterns = patterns('',
     url(r'^stats/monthly/$', views.stats_monthly, name='stats_monthly'),
     # Respond to Mailgun requests; this is posting without forms so bypass csrf
     url(r'^mailgun/$', views.mailgun, name='mailgun'),
+    # Ajax to post meeting note
+    url(r'^meetings/note/ajax/$', views.meeting_note_ajax, name='meeting_note_ajax'),
 
 )
 
