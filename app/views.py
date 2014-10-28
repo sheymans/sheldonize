@@ -878,6 +878,7 @@ def mailgun(request):
      if request.method == 'POST':
         sender    = request.POST.get('sender')
         subject   = request.POST.get('subject', '')
+        body_plain = request.POST.get('body-plain', '')
 
          # let's find that sender in our users
         if User.objects.filter(email=sender).exists():
@@ -897,6 +898,9 @@ def mailgun(request):
                 task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False, when='W')
             else:
                 task = Task.objects.create(user=user_sender, name=short_task, topic="via email", done=False)
+
+            if body_plain:
+                task.note = body_plain
 
             task.save()
 
