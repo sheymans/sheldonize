@@ -21,6 +21,9 @@ import arrow
 import logging
 import requests
 
+# for parsing the bodies from emails
+from django.utils.encoding import smart_str
+
 from dateutil.parser import parse
 
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -901,7 +904,7 @@ def mailgun(request):
 
             if body_plain:
                 # body_plain is unicode, we make ascii out if it
-                task.note = body_plain.decode('ascii', 'ignore')
+                task.note = smart_str(body_plain)
 
             task.save()
 
