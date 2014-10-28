@@ -41,6 +41,7 @@ class Task(models.Model):
     done_date = models.DateTimeField(null=True, blank=True)
     # priority for the task
     priority = models.CharField(verbose_name='priority?', max_length=1, choices=ABCD, null=True, blank=True)
+    note = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return self.name

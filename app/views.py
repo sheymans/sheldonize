@@ -286,13 +286,15 @@ def tasks_firstvisit(request):
 def task_generic(request, task_id, task_list_view, task_link):
     task = get_object_or_404(Task, pk=task_id)
     
+    original_note = Task.objects.get(id=task.id).note
+
     # check whether this is indeed your task!
     if task.user != request.user:
         raise PermissionDenied
     
     if request.method == "GET":
         form = TaskForm(instance=task)
-        return render(request, 'app/task.html', {'form': form, 'task_link': task_link})
+        return render(request, 'app/task.html', {'form': form, 'task_link': task_link, 'note': task.note, 'taskid': task.id})
     elif request.method == "POST":
         if 'delete-task' in request.POST:
             task.delete()
@@ -305,6 +307,12 @@ def task_generic(request, task_id, task_list_view, task_link):
                 # commit=False means the form doesn't save at this time.
                 # commit defaults to True which means it normally saves.
                 task_instance = form.save(commit=True)
+
+                # add the original note (the note is not in the form but gets
+                # changed in the back):
+                task_instance.note = original_note
+                task_instance.save()
+
                 messages.add_message(request, messages.SUCCESS, "Updated task.")
                 return go_back_to_previous(request, task_list_view)
             else:
@@ -918,6 +926,29 @@ def meeting_note_ajax(request):
 
     else:
         raise Http404
+
+@login_required
+def task_note_ajax(request):
+    if request.method == "POST":
+        note = request.POST["note"]
+        id = request.POST["id"]
+
+        if id:
+            task = Task.objects.get(id=id)
+
+            # check whether this is indeed yours
+            if task.user != request.user:
+                raise PermissionDenied
+
+            task.note = note
+
+        task.save()
+
+        return HttpResponse('OK')
+
+    else:
+        raise Http404
+
 
 
 
