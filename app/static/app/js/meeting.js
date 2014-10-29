@@ -22,17 +22,24 @@ $("#meeting-comment").markdown({autofocus:false,savable:true,
     e.$editor.replaceWith(oldElement)
 
     $("#meeting-edit").click(function(){
+        // At this point first remove the "Edit Note" button
+        $('#meeting-edit').remove();
         $("#meeting-comment").markdown({autofocus:false,savable:true,height:"400",
 
             onSave: function(e) {
                 // Send note to background
+                $('#save-status').html('Saving...');
                 $.ajax({
                     url:"/app/meetings/note/ajax/",
-                type:"POST",
-                data : { 'id': id, 'note': e.getContent() },
-                dataType:"json",
-                });
-                //$('.md-editor > .md-footer > .btn[data-handler="cmdSave"]').html('Saved');
+                    type:"POST",
+                    data : { 'id': id, 'note': e.getContent() },
+                    dataType:"json",
+                })
+                .done(function(data, textStatus, jqXHR) { $('#save-status').html('Note saved ' + (new Date()));
+                })
+                .fail(function(jqXHR, textStatus, errorThrown) { $('#save-status').html('Saving Failed! Try again.'); })
+            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { });
+        //$('.md-editor > .md-footer > .btn[data-handler="cmdSave"]').html('Saved');
             },
         })
     }); 

@@ -930,7 +930,7 @@ def meeting_note_ajax(request):
 
         meeting.save()
 
-        return HttpResponse('OK')
+        return HttpResponse(json.dumps({'id': id}), content_type="application/json")
 
     else:
         raise Http404
@@ -952,7 +952,7 @@ def task_note_ajax(request):
 
         task.save()
 
-        return HttpResponse('OK')
+        return HttpResponse(json.dumps({'id': id}), content_type="application/json")
 
     else:
         raise Http404
