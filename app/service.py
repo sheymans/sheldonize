@@ -685,6 +685,11 @@ def save_google_events(user, events, calendar_name):
         s = event['start']
         e = event['end']
 
+        if 'summary' in event and event['summary'] is not None:
+            summary = event['summary']
+        else:
+            summary = "(No title)"
+
         if 'date' in s:
             # Do not take all-day events into account
             continue
@@ -703,7 +708,7 @@ def save_google_events(user, events, calendar_name):
             end = end.to(e['timeZone'])
 
         if start and end:
-            meeting = Meeting.objects.create(user=user, name=str(event['summary']) + " (" + str(calendar_name) + ")", start=start.datetime, end=end.datetime, foreign=0)
+            meeting = Meeting.objects.create(user=user, name=str(summary) + " (" + str(calendar_name) + ")", start=start.datetime, end=end.datetime, foreign=0)
             meeting.save()
             
     success = calendar_name + ": Imported this week's items for scheduling."
