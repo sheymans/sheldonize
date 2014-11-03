@@ -218,8 +218,10 @@ def add_recurrent_meetings(meetings, from_arrow, to_arrow, preferences):
                 f = from_arrow
                 e = to_arrow.replace(days=+1)
                 while f <= e:
-                    if is_working_day(preferences, f):
-                        new_start = m.start.replace(year=f.year, month=f.month, day=f.day)
+                    new_start = m.start.replace(year=f.year, month=f.month, day=f.day)
+                    local_start = arrow.get(new_start).to(m.user.userprofile.timezone)
+                    if is_working_day(preferences, local_start):
+                        #new_start = m.start.replace(year=f.year, month=f.month, day=f.day)
                         diff = (m.end - m.start)
                         new_end = new_start + diff
                         new_m = Meeting(id=m.id, user=m.user, name=m.name, start=new_start, end=new_end, repeat=m.repeat)
