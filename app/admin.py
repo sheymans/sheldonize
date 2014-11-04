@@ -17,9 +17,10 @@ class PreferenceAdmin(admin.ModelAdmin):
 
 # Google
 class CredentialsAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'credential' )
+
 class FlowAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'flow' )
 
 class StorageAdmin(admin.ModelAdmin):
     pass

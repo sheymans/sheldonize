@@ -417,9 +417,6 @@ def eventfeed(request):
         to = arrow.get(request.GET.get('end')).to(user_timezone)
 
         tasks = service.get_tasks_between_from_and_to(request.user, fr, to)
-        print "user time zone: ", user_timezone
-        print "from ", fr
-        print "to ", to
         meetings = service.get_meetings_between_from_and_to(request.user, fr, to)
         scheduleis = service.get_scheduleitems_between_from_and_to(request.user, fr, to)
 
