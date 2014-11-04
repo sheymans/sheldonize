@@ -689,7 +689,7 @@ def redirect_to_current(request, default_view):
 def googlecalendar(request):
     storage = Storage(CredentialsModel, 'id', request.user, 'credential')
     credential = storage.get()
-    if credential is None or credential.invalid == True or credential.access_token_expired() == True:
+    if credential is None or credential.invalid == True or credential.access_token_expired():
         if FlowModel.objects.filter(id=request.user).exists():
             # there is already a flow model for this user
             # get it
