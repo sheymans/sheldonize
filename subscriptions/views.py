@@ -159,6 +159,74 @@ def signup_student(request):
         raise Http404
 
 
+@login_required
+# Everyone can donate so let's remove user_passes_test
+#@user_passes_test(lambda user: user.userprofile.is_undecided_user() or user.userprofile.is_trial_user() or user.userprofile.is_cancelled_user(), login_url="/app/tasks")
+def signup_donate(request):
+    if request.method == "GET":
+        return render(request, 'subscriptions/signup_donate.html', {'stripe_public_key': settings.STRIPE_PUBLIC_KEY}) 
+    # Extra test on userprofile as cancelled users will not be shown the
+    # subscribe buttons, but malicious users could try to post to the page
+    # without that they  see it.
+    elif request.method == "POST":
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        if 'stripeToken' in request.POST and 'stripeEmail' in request.POST:
+            token = request.POST['stripeToken']
+            email = request.POST['stripeEmail']
+            try:
+                # one time charge
+                charge = stripe.Charge.create(amount=999, currency="usd", card=token, description=email)
+
+                profile = request.user.userprofile
+                profile.go_donor()
+                # Also set the email of the user if not yet set (like from a
+                # twitter user):
+                if not request.user.email:
+                    request.user.email = email
+                    request.user.save()
+                success = "Thanks for donating; you are literally the best of the best!"
+                messages.add_message(request, messages.SUCCESS, success)
+                return render(request, 'subscriptions/signup_donate.html', {'just_donated': True}) 
+                
+            # see API: https://stripe.com/docs/api#errors
+            except stripe.error.CardError, e: 
+                # Since it's a decline, stripe.error.CardError will be caught
+                body = e.json_body 
+                err = body['error']
+                error =  err['message']
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_donate.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY}) 
+        
+            except stripe.error.InvalidRequestError, e:
+                error = "Stripe: Invalid request."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_donate.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+            except stripe.error.AuthenticationError, e:
+                error = "Stripe: Authentication Error."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_donate.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+            except stripe.error.APIConnectionError, e: # pragma: no cover
+                error = "Stripe: Connection Error."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_donate.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+            except stripe.error.StripeError, e: # pragma: no cover
+                error = "Stripe: Error."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_donate.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+            except Exception, e: # pragma: no cover
+                error = "Uknown problem; if this problem persists contact support." + str(e)
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'subscriptions/signup_donate.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+
+        else:
+            error="Error: No token or email obtained from Stripe."
+            messages.add_message(request, messages.ERROR, error)
+            return render(request, 'subscriptions/signup_donate.html', { 'stripe_public_key': settings.STRIPE_PUBLIC_KEY }) 
+
+    # not get or post
+    else:
+        raise Http404
+
 
 
 

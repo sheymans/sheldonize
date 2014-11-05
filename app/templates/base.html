@@ -131,9 +131,15 @@
       <div class="sheldonize-content">
         {% block content %}{% endblock %}
       </div>
+      {% if user.is_authenticated %}
       <div class="row">
         <div class="col-xs-12 text-center">
-
+          <div class="love">Show us your <span class="glyphicon glyphicon-heart"></span> by <a href="/subscriptions/signup_donate">donating</a></div>
+        </div>
+      </div>
+      {% endif %}
+      <div class="row">
+        <div class="col-xs-12 text-center">
           <div class="company">Sheldonize, LLC.  &copy; 2014 | <a href="/app/terms/">Terms of Use</a> | <a href="/app/privacy/">Privacy Policy</a></div>
         </div>
       </div>

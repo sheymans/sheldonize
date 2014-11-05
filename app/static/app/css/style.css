@@ -29,9 +29,15 @@ body {
 }
 
 .company {
+  padding-top: 20px;
+  font-weight: 300;
+}
+
+.love {
   padding-top: 40px;
   font-weight: 300;
 }
+
 
 
 .navbar-sheldonize {

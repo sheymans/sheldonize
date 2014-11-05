@@ -38,17 +38,17 @@ class SignUpTest(LiveServerTestCase):
       self.assertIn('Tasks', self.browser.title)
 
 
-  def test_signup_when_limit_trial_users_has_been_reached(self):    
-      # set the total allowed trial users to something smaller for testing
-      app.parameters.TOTAL_ALLOWED_TRIAL_USERS = 50
+  def test_signup_when_limit_free_users_has_been_reached(self):    
+      # set the total allowed free users to something smaller for testing
+      app.parameters.TOTAL_ALLOWED_FREE_USERS = 50
 
       # Some setup (add users to fill up trial registrations)
-      for i in range(app.parameters.TOTAL_ALLOWED_TRIAL_USERS):
+      for i in range(app.parameters.TOTAL_ALLOWED_FREE_USERS):
           u = User.objects.create_user(str(i), str(i), str(i))
-          # Usertype 1 is TRIAL
-          UserProfile.objects.create(user=u, usertype=1, timezone="America/Los_Angeles")
+          # Usertype 6 is FREE
+          UserProfile.objects.create(user=u, usertype=6, timezone="America/Los_Angeles")
       # Check that they are indeed added
-      self.assertEqual(UserProfile.objects.all().count(), app.parameters.TOTAL_ALLOWED_TRIAL_USERS)
+      self.assertEqual(UserProfile.objects.all().count(), app.parameters.TOTAL_ALLOWED_FREE_USERS)
 
       # sign up should fail when limit of trial users has been reached
       self.browser.get(self.live_server_url + '/users/signup/')
@@ -76,14 +76,14 @@ class SignUpTest(LiveServerTestCase):
       except NoSuchElementException:
           self.fail('Could not find expected error')
 
-      self.assertIn('We have reached the maximum of trial users we allow', error_msg.text)
+      self.assertIn('We have reached the maximum of free users we allow', error_msg.text)
 
       # Now remove a user and confirm that there is then place again.
       u = User.objects.get(email=str(5))
       p = u.userprofile
       p.delete()
       u.delete()
-      self.assertEqual(UserProfile.objects.all().count(), app.parameters.TOTAL_ALLOWED_TRIAL_USERS - 1)
+      self.assertEqual(UserProfile.objects.all().count(), app.parameters.TOTAL_ALLOWED_FREE_USERS - 1)
       # email field is still filled in but needs to get refreshed from page
       inputusername = self.browser.find_element_by_id('id_username')
       inputemail = self.browser.find_element_by_id('id_email')

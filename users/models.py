@@ -13,6 +13,8 @@ class UserProfile(models.Model):
             (3, 'undecided'),
             (4, 'cancelled'),
             (5, 'edu'),
+            (6, 'free'),
+            (7, 'donor'),
             )
 
     SOCIAL_TYPE = (
@@ -26,7 +28,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     timezone = TimeZoneField(default='America/Los_Angeles')
     # default user is 1 (trial user)
-    usertype = models.PositiveIntegerField(choices=USER_TYPE, max_length=1, default=1)
+    usertype = models.PositiveIntegerField(choices=USER_TYPE, max_length=1, default=6)
     daysleft = models.PositiveIntegerField(default=31)
     # ENDPERIOD DEPRECATED; we are doing a refund instead
     endperiod = models.DateTimeField(null=True, blank=True)
@@ -54,6 +56,20 @@ class UserProfile(models.Model):
         self.user.save()
         self.save()
 
+    def go_free(self):
+        self.user.is_active = True
+        self.usertype = 6
+        self.daysleft = 31
+        self.user.save()
+        self.save()
+
+    def go_donor(self):
+        self.user.is_active = True
+        self.usertype = 7
+        self.daysleft = 31
+        self.user.save()
+        self.save()
+
     def go_undecided(self):
         self.user.is_active = False
         self.usertype = 3
@@ -73,7 +89,7 @@ class UserProfile(models.Model):
     def all_permissions_granted(self):
         # make sure a trial goes to undecided if longer than a month
         self.evaluate_trial()
-        return self.user.is_active and (self.usertype == 0 or self.usertype == 1 or self.usertype == 2 or self.usertype == 5)
+        return self.user.is_active and (self.usertype == 0 or self.usertype == 1 or self.usertype == 2 or self.usertype == 5 or self.usertype == 6 or self.usertype == 7)
 
     def is_cancelled_user(self):
         return self.usertype == 4
@@ -101,6 +117,12 @@ class UserProfile(models.Model):
 
     def is_edu_user(self):
         return self.usertype == 5
+
+    def is_free_user(self):
+        return self.usertype == 6
+
+    def is_donor_user(self):
+        return self.usertype == 7
 
     def evaluate_trial(self):
         if self.is_trial_user():

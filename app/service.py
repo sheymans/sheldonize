@@ -671,8 +671,11 @@ def trial_registrations_left():
         return 0
     else:
         return result
- 
 
+def free_registrations_left():
+    free_users = UserProfile.objects.filter(usertype=6)
+    return parameters.TOTAL_ALLOWED_FREE_USERS - free_users.count()
+            
 ## Google
 
 # Save Google Calendar Events to our Meetings

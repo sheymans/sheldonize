@@ -38,8 +38,6 @@ def friend_already_signed_up(value):
     if current:
         raise ValidationError('Your friend already signed up for Sheldonize. Try another friend!')
 
-
-
 def unique_username_check(value):
     current = User.objects.filter(username__iexact=value)
     if current:
@@ -52,8 +50,8 @@ def allowed_email_check(value):
 
 
 def max_users_reached(value):
-    if app.service.trial_registrations_left() <= 0:
-        raise ValidationError('We have reached the maximum of trial users we allow. Places become available daily. Please check back.')
+    if app.service.free_registrations_left() <= 0:
+        raise ValidationError('We have reached the maximum of free users we allow. Places become available daily. Please check back.')
 
 
 class SignUpForm(forms.Form):
@@ -74,7 +72,7 @@ class SignUpForm(forms.Form):
                 Field('password', placeholder='pick a password'),
                 Field('timezone'),
             FormActions(
-                SubmitButton('submit', 'Sign Up for Free 31-day Trial', css_class='btn-sheldonize btn-sheldonize-primary'),
+                SubmitButton('submit', 'Sign Up for Free', css_class='btn-sheldonize btn-sheldonize-primary'),
                 ),
             )
 

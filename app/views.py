@@ -49,12 +49,10 @@ def home(request):
 
 # ELB needs a healthcheck returning 200
 def healthcheck(request):
-    trial_registrations_left = service.trial_registrations_left()
-    #tasks_count = Task.objects.count()
-    #meetings_count = Meeting.objects.count()
+    free_registrations_left = service.free_registrations_left()
     user_count = User.objects.count()
-    invite_count = Invite.objects.count()
-    return HttpResponse('<ul><li>users in system: ' + str(user_count) + '</li><li>trials left: ' + str(trial_registrations_left) +'</li><li>invites sent: ' + str(invite_count) + '</li></ul>')
+    donor_count = UserProfile.objects.filter(usertype=7).count()
+    return HttpResponse('<ul><li>users in system: ' + str(user_count) + '</li><li>free accounts left: ' + str(free_registrations_left) + '</li><li>donors: ' + str(donor_count)+ '</li></ul>')
 
 # The terms of use
 def terms(request):
