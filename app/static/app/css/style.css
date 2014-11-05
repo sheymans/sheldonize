@@ -501,7 +501,7 @@ fieldset[disabled] .btn-sheldonize-orange.active {
 }
 
 .feature-new-bar {
-  background-color: #ADC229;
+  background-color: #556b2f ;
   display: inline-block;
   border-radius: 5px;
 }
@@ -526,7 +526,7 @@ fieldset[disabled] .btn-sheldonize-orange.active {
   font-weight: 300;
   padding: 12px;
   display: inline-block;
-  color: #444444;
+  color: #ECF0F1;
 }
 
 
@@ -535,5 +535,10 @@ fieldset[disabled] .btn-sheldonize-orange.active {
   padding: 12px;
   display: inline-block;
   float:right;
-  color: #444444;
+  color: #ECF0F1;
+}
+
+
+.learn-more > a, a:hover {
+  color: #ECF0F1;
 }
