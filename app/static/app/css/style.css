@@ -539,6 +539,6 @@ fieldset[disabled] .btn-sheldonize-orange.active {
 }
 
 
-.learn-more > a, a:hover {
+.learn-more > a, .learn-more a:hover {
   color: #ECF0F1;
 }
