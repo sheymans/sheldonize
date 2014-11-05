@@ -684,6 +684,8 @@ def free_registrations_left():
 # Save Google Calendar Events to our Meetings
 def save_google_events(user, events, calendar_name):
     user_timezone = get_timezone(user)
+    # rewrite calendar_name for unicode
+    calendar_name = smart_str(calendar_name)
 
     error = ""
     warning = ""
