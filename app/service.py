@@ -12,6 +12,9 @@ import engine.engine as e
 
 import arrow
 
+# for unicode imports from google calendar
+from django.utils.encoding import smart_str
+
 logger = logging.getLogger(__name__)
 
 def tasks_2_dict(tasks, user_timezone):
@@ -691,7 +694,7 @@ def save_google_events(user, events, calendar_name):
         e = event['end']
 
         if 'summary' in event and event['summary'] is not None:
-            summary = event['summary']
+            summary = smart_str(event['summary'])
         else:
             summary = "(No title)"
 
