@@ -7,7 +7,7 @@ from models import UserProfile
 from users.models import UserProfile, Wait, Invite
 
 class UserProfileAdmin(admin.ModelAdmin):
-    actions = ['reset_to_trial', 'send_me_betas', 'send_me_trials', 'send_me_undecided', 'evaluate_trial', 'convert_trial_to_free']
+    actions = ['reset_to_trial', 'send_me_betas', 'send_me_trials', 'send_me_free', 'send_me_undecided', 'evaluate_trial', 'convert_trial_to_free']
     list_display = ('user', 'usertype', 'daysleft', 'endperiod', 'timezone')
 
     def reset_to_trial(self, request, queryset):
@@ -67,6 +67,18 @@ class UserProfileAdmin(admin.ModelAdmin):
         send_mail('Trial users Sheldonize', message , 'admin@sheldonize.com', ['stijn.heymans@gmail.com'], fail_silently=True)
 
     send_me_trials.short_description = "Send me all trial user emails."
+
+    def send_me_free(self, request, queryset):
+        free_profiles = UserProfile.objects.filter(usertype=6)
+        message = ""
+        for p in free_profiles:
+            email = p.user.email
+            message += email + ", "
+        send_mail('Free users Sheldonize', message , 'admin@sheldonize.com', ['stijn.heymans@gmail.com'], fail_silently=True)
+
+    send_me_free.short_description = "Send me all free user emails."
+
+
 
     def convert_trial_to_free(self, request, queryset):
         trial_userprofiles = UserProfile.objects.filter(usertype=1)
