@@ -54,7 +54,7 @@ def tasks_2_dict(tasks, user_timezone):
 
             jso = {}
             jso["id"] = task.id
-            jso["title"] = "(done) " + str(task.name)
+            jso["title"] = "(done) " + smart_str(task.name)
             jso["url"] = "/app/tasks/" + str(task.id) + "/"
             # send ISO08601 back to front-end
             jso["start"] = start.datetime.isoformat()
@@ -116,15 +116,15 @@ def scheduleitems_2_dict(schedule_items, user_timezone):
         jso = {}
         jso["id"] = item.id
         if item.status == 0:
-            jso["title"] = str(item.task.name)
+            jso["title"] = smart_str(item.task.name)
             jso["color"] = eventcolors.scheduleditem["color"]
         elif item.status == 1:
             # too short
-            jso["title"] = "(short) " + str(item.task.name)
+            jso["title"] = "(short) " + smart_str(item.task.name)
             jso["color"] = eventcolors.scheduleditem_tooshort["color"]
         elif item.status == 2:
             # too late
-            jso["title"] = "(late) " + str(item.task.name)
+            jso["title"] = "(late) " + smart_str(item.task.name)
             jso["color"] = eventcolors.scheduleditem_toolate["color"]
         # now add priority if there is one:
         if item.task.priority:
@@ -718,7 +718,7 @@ def save_google_events(user, events, calendar_name):
             end = end.to(e['timeZone'])
 
         if start and end:
-            meeting = Meeting.objects.create(user=user, name=str(summary) + " (" + str(calendar_name) + ")", start=start.datetime, end=end.datetime, foreign=0)
+            meeting = Meeting.objects.create(user=user, name=smart_str(summary) + " (" + str(calendar_name) + ")", start=start.datetime, end=end.datetime, foreign=0)
             meeting.save()
             
     success = calendar_name + ": Imported this week's items for scheduling."
