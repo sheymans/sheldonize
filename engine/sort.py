@@ -69,7 +69,6 @@ def cyclic(data):
     except ValueError:
         return False
 
-
 def sort_tasks(tasks):
     task_ids = tasks.keys()
 
@@ -77,6 +76,7 @@ def sort_tasks(tasks):
     data = {}
     no_comes_after = set([])
     for task_id, item in tasks.iteritems():
+        # we want the comes_after taken into account
         if 'comes_after' in item:
             data[task_id] = set([item['comes_after']])
         else:
@@ -94,8 +94,12 @@ def sort_tasks(tasks):
     for group in sorted_data:
         # difference update
         no_comes_after -= group
-    # Now add the no_comes_after to the back:
-    sorted_data.append(no_comes_after)
+    # Now add the no_comes_after to the last group:
+    if sorted_data:
+        sorted_data[-1].update(no_comes_after)
+    else:
+        sorted_data.append(no_comes_after)
+        
 
     # then sort each group on due date and priority
     result = []
