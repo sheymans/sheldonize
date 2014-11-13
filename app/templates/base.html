@@ -29,6 +29,7 @@
     <link href='https://fonts.googleapis.com/css?family=Lato:100,400,300' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="{% static "app/css/style.css" %}">
+    <link rel="stylesheet" href="{% static "app/css/search.css" %}">
 
     {% block customcss %}{% endblock %}
 
@@ -71,6 +72,15 @@
             </ul>
             </li>
             <li id="stats-nav"><a href="/app/stats/">Stats</a></li>
+
+            <li>
+            <form class="search-container" action="/app/search/">
+              {% csrf_token %}
+              <input id="search-box" type="text" class="search-box" name="q" placeholder="Search tasks and meetings"/>
+              <label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>
+              <input type="submit" id="search-submit" />
+            </form>
+            </li>
 
           </ul>
 

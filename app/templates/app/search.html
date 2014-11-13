@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Search Results
+{% endblock %}
+
+{% block content %}
+
+
+
+{% if searchresults %}
+
+<ol>
+
+    {% for result in searchresults %}
+        <li>
+            {% if result.object.get_cname == 'meeting' %}
+             <a href="/app/meetings/{{result.object.id}}/">{{result.title}}</a>
+            {% else %}
+             <a href="/app/tasks/{{result.object.id}}/">{{result.title}}</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+
+
+</ol>
+
+
+
+
+{% else %}
+
+Nothing found.
+
+{% endif %}
+
+
+{% endblock %}

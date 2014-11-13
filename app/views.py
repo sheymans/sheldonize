@@ -20,6 +20,8 @@ import json
 import arrow
 import logging
 import requests
+# for searching with django-watson
+import watson
 
 # for parsing the bodies from emails
 from django.utils.encoding import smart_str
@@ -955,6 +957,21 @@ def task_note_ajax(request):
     else:
         raise Http404
 
+# Search
+
+@login_required
+def search(request):
+    if request.method == "GET":
+        if "q" in request.GET:
+            query = request.GET["q"]
+            # Make sure we only look for the current user
+            search_results = watson.search(query, models=(Task.objects.filter(user=request.user), Meeting.objects.filter(user=request.user),))
+            print "search results ", search_results
+            return render(request, "app/search.html", {'searchresults': search_results })
+        else:
+            return render(request, "app/search.html")
+    else:
+        raise Http404
 
 
 

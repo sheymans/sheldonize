@@ -167,4 +167,9 @@ class FlowModel(models.Model):
       flow = FlowField()
 
 
+### Searching/Registering which models we'll allow for search
+
+import watson
+watson.register(Task)
+watson.register(Meeting)
 
