@@ -73,7 +73,7 @@ class TaskForm(ModelForm):
         # we can only use this self.fields AFTER having called super. The
         # initial stuff needs to be done before as it sets the initial VALUES
         # (you could set the default comes after task there for example).
-        self.fields['comes_after'].queryset = Task.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id).exclude(done=True)
+        self.fields['comes_after'].queryset = Task.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id).exclude(done=True).exclude(when='Z')
 
 
     def clean_due(self):
