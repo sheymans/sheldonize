@@ -29,7 +29,6 @@ from timer import Timer
 from sort import sort_tasks
 
 
-
 def constrain_interval_with_interval(interval1, interval2):
 
     i1 = interval1[0]
@@ -211,7 +210,7 @@ def put_one_task_on_schedule(task_id, task_value, schedule, preferences):
             # the flex is now shorter, but since flex > time_in_pref it will be
             # at least 1
             task_value["flex"] = flex - time_in_pref
-            # and recurse
+            # recurse
             return put_one_task_on_schedule(task_id, task_value, schedule, preferences)
     return (schedule, preferences)
 
