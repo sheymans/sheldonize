@@ -9,27 +9,51 @@ Search Results
 
 
 
-{% if searchresults %}
+{% if tasks_open_search_results  %}
+
+<h1>Tasks</h1>
+
+<h3>In Progress</h3>
 
 <ol>
-
-    {% for result in searchresults %}
+    {% for result in tasks_open_search_results %}
         <li>
-            {% if result.object.get_cname == 'meeting' %}
-             <a href="/app/meetings/{{result.object.id}}/">{{result.title}}</a>
-            {% else %}
              <a href="/app/tasks/{{result.object.id}}/">{{result.title}}</a>
-            {% endif %}
         </li>
     {% endfor %}
-
-
 </ol>
 
+{% endif %}
 
+{% if tasks_closed_search_results %}
 
+<h3>Archive</h3>
 
-{% else %}
+<ol>
+    {% for result in tasks_closed_search_results %}
+        <li>
+             <a href="/app/tasks/{{result.object.id}}/">{{result.title}}</a>
+        </li>
+    {% endfor %}
+</ol>
+
+{% endif %} 
+
+{% if meetings_search_results %}
+
+<h1>Meetings</h1>
+
+<ol>
+    {% for result in meetings_search_results %}
+        <li>
+             <a href="/app/meetings/{{result.object.id}}/">{{result.title}}</a>
+        </li>
+    {% endfor %}
+</ol>
+
+{% endif %} 
+
+{% if not tasks_open_search_results and not tasks_closed_search_results and not meetings_search_results %}
 
 Nothing found.
 

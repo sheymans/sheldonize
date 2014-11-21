@@ -965,9 +965,14 @@ def search(request):
         if "q" in request.GET:
             query = request.GET["q"]
             # Make sure we only look for the current user
-            search_results = watson.search(query, models=(Task.objects.filter(user=request.user), Meeting.objects.filter(user=request.user),))
-            print "search results ", search_results
-            return render(request, "app/search.html", {'searchresults': search_results })
+            #search_results = watson.search(query, models=(Task.objects.filter(user=request.user), Meeting.objects.filter(user=request.user),))
+            tasks_open_search_results = watson.search(query, models=(Task.objects.filter(user=request.user, done=False),))
+            tasks_closed_search_results = watson.search(query, models=(Task.objects.filter(user=request.user, done=True),))
+            meetings_search_results = watson.search(query, models=(Meeting.objects.filter(user=request.user),))
+
+            return render(request, "app/search.html", {'tasks_open_search_results': tasks_open_search_results,
+                'tasks_closed_search_results': tasks_closed_search_results,
+                'meetings_search_results': meetings_search_results})
         else:
             return render(request, "app/search.html")
     else:
