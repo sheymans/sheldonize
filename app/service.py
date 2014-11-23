@@ -131,7 +131,7 @@ def scheduleitems_2_dict(schedule_items, user_timezone):
             jso["color"] = eventcolors.scheduleditem_toolate["color"]
         # now add priority if there is one:
         if item.task.priority:
-            jso["title" ] = jso["title"] + " [" + item.task.priority + "]"
+            jso["title" ] = jso["title"] + " [" + smart_str(item.task.priority) + "]"
         jso["url"] = "/app/tasks/" + str(item.task.id) + "/"
         # send ISO08601 back to front-end
         jso["start"] = start.datetime.isoformat()
