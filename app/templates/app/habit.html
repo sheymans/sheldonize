@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block customcss %}
+<!-- For bootstrap-datetimepicker -->
+<link rel="stylesheet" href="{% static "bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %}">
+<!-- For bootstrap-markdwon -->
+<link rel="stylesheet" href="{% static "bootstrap-markdown/css/bootstrap-markdown.min.css" %}">
+{% endblock customcss %}
+
+{% block title %}Habit details...{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-12">
+        {% crispy form %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <br/>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="hline"><span>Note</span></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <br/>
+        <div id="habit-comment" data-provide="markdown" habit-id={{ habitid }}>
+            {% if note %}
+            {{ note }}
+            {% else %}
+            _Try editing this note (you can format it using [Markdown](http://daringfireball.net/projects/markdown/))._
+            {% endif %}
+        </div>
+        <br/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 text-left">
+        <i id="save-status"></i>
+    </div>
+    <div class="col-md-6 text-right">
+        <button id="habit-edit" type="button" class="btn btn-sheldonize btn-sheldonize-default">Edit Note</button>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
+
+
+{% block morejs %}
+<!-- For bootstrap-datetimepicker http://eonasdan.github.io/bootstrap-datetimepicker/ -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="{% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}"></script>
+<!-- end bootstrap-datetimepicker requirements -->
+<!-- For bootstrap markdown -->
+<script src="{% static "bootstrap-markdown/js/markdown.js" %}"></script>
+<script src="{% static "bootstrap-markdown/js/to-markdown.js" %}"></script>
+<script src="{% static "bootstrap-markdown/js/bootstrap-markdown.js" %}"></script>
+<!-- End bootstrap markdown -->
+
+
+<script src="{% static "app/js/habit.js" %}"></script>
+{% endblock morejs %}

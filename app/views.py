@@ -11,9 +11,9 @@ from django.conf import settings
 from users.models import UserProfile, Invite
 
 from django.contrib.auth.models import User
-from models import Task, ScheduleItem, Preference, Meeting, CredentialsModel, FlowModel
-from tables import TaskTable, PreferenceTable, MeetingTable
-from forms import TaskForm, AddTaskForm, AddPreferenceForm, MeetingForm, AddMeetingForm
+from models import Task, ScheduleItem, Preference, Meeting, CredentialsModel, FlowModel, Habit
+from tables import TaskTable, PreferenceTable, MeetingTable, HabitTable
+from forms import TaskForm, AddTaskForm, AddPreferenceForm, MeetingForm, AddMeetingForm, HabitForm, AddHabitForm
 import service
 import stats
 import json
@@ -200,6 +200,10 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 task.when = None
                 task.save()
                 success = "Tasks moved to Inbox."
+        elif 'spawn-tasks' in request.POST:
+            warnings = ""
+            spawn_tasks(request)
+            return redirect_to_current(request, tasks_view)
         elif 'new_task' in request.POST:
             warning = ""
             form = AddTaskForm(request.POST)
@@ -957,6 +961,29 @@ def task_note_ajax(request):
     else:
         raise Http404
 
+@login_required
+def habit_note_ajax(request):
+    if request.method == "POST":
+        note = request.POST["note"]
+        id = request.POST["id"]
+
+        if id:
+            habit = Habit.objects.get(id=id)
+
+            # check whether this is indeed yours
+            if habit.user != request.user:
+                raise PermissionDenied
+
+            habit.note = note
+
+        habit.save()
+
+        return HttpResponse(json.dumps({'id': id}), content_type="application/json")
+
+    else:
+        raise Http404
+
+
 # Search
 
 @login_required
@@ -978,7 +1005,118 @@ def search(request):
     else:
         raise Http404
 
+# Habits
 
+@login_required
+def spawn_tasks(request):
+    user_timezone = service.get_timezone(request.user)
+    info = service.spawn_tasks(request.user, user_timezone)
+    messages.add_message(request, messages.ERROR, info[0])
+    messages.add_message(request, messages.WARNING, info[1])
+    messages.add_message(request, messages.SUCCESS, info[2])
+
+
+@login_required
+@user_passes_test(lambda user: user.is_active, login_url="/subscriptions/signup/")
+def habits(request):
+    if request.method == "GET":
+        table = HabitTable(Habit.objects.filter(user=request.user))
+        form = AddHabitForm()
+        RequestConfig(request, paginate={"per_page": 10}).configure(table)
+        return render(request, "app/habits.html", {'table': table,'pages': [i+1 for i in range(table.paginator.num_pages)], 'addhabitform': form})
+
+    elif request.method == "POST":
+        pks = request.POST.getlist("selection")
+        selected_habits = Habit.objects.filter(user=request.user, pk__in=pks)
+        success = ""
+        warning = "Please select a habit first."
+        error = ""
+        if 'delete-marked-habits' in request.POST:
+            if selected_habits.exists():
+                selected_habits.delete()
+                success = "Habits deleted."
+        elif 'thisweek-marked-habits' in request.POST:
+            for habit in selected_habits:
+                habit.when = 'W'
+                habit.save()
+                success = "Habits set to do Weekly."
+        elif 'today-marked-habits' in request.POST:
+            for habit in selected_habits:
+                habit.when = 'T'
+                habit.save()
+                success = "Habits set to do Daily."
+        elif 'nowhen-marked-habits' in request.POST:
+            for habit in selected_habits:
+                habit.when = None
+                habit.save()
+                success = "Habits not set to daily or weekly."
+        elif 'spawn-tasks' in request.POST:
+            spawn_tasks(request)
+            return redirect_to_current(request, habits)
+
+        elif 'new_habit' in request.POST:
+            warning = ""
+            form = AddHabitForm(request.POST)
+            if form.is_valid():
+                habit_instance = form.save(commit=False)
+                habit_instance.user=request.user
+                success = "Habit added."
+                # don't forget to save then
+                habit_instance.save()
+            else:
+                error = "Habit could not be added."
+            
+        if success:
+            messages.add_message(request, messages.SUCCESS, success)
+        elif warning:
+            messages.add_message(request, messages.WARNING, warning)
+        elif error:
+            messages.add_message(request, messages.ERROR, error)
+
+        return redirect_to_current(request, habits)
+
+    else:
+        raise Http404
+ 
+@login_required
+@user_passes_test(lambda user: user.userprofile.all_permissions_granted(), login_url="/subscriptions/signup/")
+def habit(request, habit_id):
+    habit = get_object_or_404(Habit, pk=habit_id)
+    
+    original_note = Habit.objects.get(id=habit.id).note
+
+    # check whether this is indeed your habit!
+    if habit.user != request.user:
+        raise PermissionDenied
+    
+    if request.method == "GET":
+        form = HabitForm(instance=habit)
+        return render(request, 'app/habit.html', {'form': form, 'note': habit.note, 'habitid': habit.id})
+    elif request.method == "POST":
+        if 'delete-habit' in request.POST:
+            habit.delete()
+            messages.add_message(request, messages.SUCCESS, "Deleted habit.")
+            return go_back_to_previous(request, habit)
+        else:
+            # it's a submit
+            form = HabitForm(request.POST, instance=habit)
+            if form.is_valid():
+                # commit=False means the form doesn't save at this time.
+                # commit defaults to True which means it normally saves.
+                habit_instance = form.save(commit=True)
+
+                # add the original note (the note is not in the form but gets
+                # changed in the back):
+                habit_instance.note = original_note
+                habit_instance.save()
+
+                messages.add_message(request, messages.SUCCESS, "Updated habit.")
+                return go_back_to_previous(request, habit)
+            else:
+                messages.add_message(request, messages.ERROR, "The habit you tried to update is not valid. Please correct the indicated error.")
+                return render(request, 'app/habit.html', {'form': form})
+    else:
+        raise Http404
 
 
 

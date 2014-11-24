@@ -1,4 +1,4 @@
-from models import Task, ScheduleItem, Preference, Meeting
+from models import Task, ScheduleItem, Preference, Meeting, Habit
 from users.models import UserProfile
 import time
 import datetime
@@ -62,8 +62,12 @@ def tasks_2_dict(tasks, user_timezone):
             # send ISO08601 back to front-end
             jso["start"] = start.datetime.isoformat()
             jso["end"] = (start.datetime + datetime.timedelta(minutes=30)).isoformat()
-            jso["color"] = eventcolors.deadline_done["color"]
-            jso["textColor"] = eventcolors.deadline_done["textColor"]
+            if task.habit:
+                jso["color"] = eventcolors.habit_done["color"]
+                jso["textColor"] = eventcolors.habit_done["textColor"]
+            else:
+                jso["color"] = eventcolors.deadline_done["color"]
+                jso["textColor"] = eventcolors.deadline_done["textColor"]
             jso["editable"] = False
             jso["eventStartEditable"] = False
             jso["eventDurationEditable"] = False
@@ -141,6 +145,10 @@ def scheduleitems_2_dict(schedule_items, user_timezone):
         else:
             jso["end"] = end.datetime.isoformat()
         jso["textColor"] = eventcolors.scheduleditem["textColor"]
+        # For schedule items that come from tasks that come from habit, we
+        # always use a particuluar color:
+        if item.task.habit:
+            jso["color"] = eventcolors.habit["color"]
         jso["editable"] = False
         jso["eventStartEditable"] = False
         jso["eventDurationEditable"] = False
@@ -726,4 +734,29 @@ def save_google_events(user, events, calendar_name):
             
     success = calendar_name + ": Imported this week's items for scheduling."
     return (error, warning, success)
+
+
+## Creating tasks out of habits
+
+def spawn_tasks(user, user_timezone):
+    """
+    Create tasks out of schedule.
+    """
+    error = ""
+    warning = ""
+    success = ""
+
+    habits = Habit.objects.filter(user=user)
+    if not habits:
+        warning = "You do not have any Habits currently. No tasks created."
+        return (error, warning, success)
+    else:
+        for habit in habits:
+            if habit.when:
+                task = Task.objects.create(user=user, name=habit.name, topic=habit.topic, when=habit.when, duration=habit.duration, note=habit.note, done=False, habit=True)
+                task.save()
+        success = "Tasks created and moved to Today or This Week."
+
+    return (error, warning, success)
+
 

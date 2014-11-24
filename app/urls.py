@@ -59,8 +59,12 @@ urlpatterns = patterns('',
     # Ajax to post meeting/task note
     url(r'^meetings/note/ajax/$', views.meeting_note_ajax, name='meeting_note_ajax'),
     url(r'^tasks/note/ajax/$', views.task_note_ajax, name='task_note_ajax'),
+    url(r'^habits/note/ajax/$', views.habit_note_ajax, name='habit_note_ajax'),
     # Searching
     url(r'^search/$', views.search, name='search'),
+    # /app/habits/
+    url(r'^habits/$', views.habits, name='habits'),
+    url(r'^habits/(?P<habit_id>\d+)/$', views.habit, name='habit'),
 
 )
 

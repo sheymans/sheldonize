@@ -45,8 +45,17 @@ Tasks
         <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         <li class="active"><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
         {% endif %}
-        {% if table.data %}
         {% if what_tasks.when = 'T' or what_tasks.when = 'W' %}
+        <li class="pull-right"><form action="." method="post">
+            {% csrf_token %}
+            {% if request.device_type = 'mobile' %}
+            <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks" id="spawn-habits">&nbsp;Habits</button>
+            {% else %}
+            <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks" id="spawn-habits">&nbsp;Pull in Habits</button>
+            {% endif %}
+        </form></li>
+
+        {% if table.data %}
         <li class="pull-right"><form action="." method="post">
             {% csrf_token %}
             {% if request.device_type = 'mobile' %}

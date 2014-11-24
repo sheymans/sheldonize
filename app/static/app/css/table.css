@@ -3,7 +3,7 @@ td.id, th.id {
 }
 
 /* do not show certain column headers */
-th.delete, th.done, th.name, th.selection  {
+th.delete, th.done, th.name, th.selection, th.habit  {
   visibility:hidden;
 }
 
@@ -81,3 +81,23 @@ tr > th > a > span.caret {
   font-weight: 250;
   color: #D4D8D9;
 }
+
+
+/* Hovering over habit rows */
+
+/*
+tr.habit {
+  color: #fff;
+  background-color: #43AC6A;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  border-radius:10px;
+}
+
+.table-hover > tbody > tr.habit:hover, 
+.table-hover > tbody > tr.habit:hover > td {
+  color: #fff;
+  background-color: #368A55;
+}
+*/
+

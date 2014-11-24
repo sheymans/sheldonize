@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, DateTimeField, TimeField, CharField, HiddenInput, DateField
 from django.core.urlresolvers import reverse
-from models import Task, Preference, Meeting
+from models import Task, Preference, Meeting, Habit
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field, BaseInput 
@@ -214,4 +214,50 @@ class AddMeetingForm(forms.Form):
                 Field('name', placeholder="Quick add meetings"),
                 StrictButton('<span class="glyphicon glyphicon-plus"></span>', type="submit", name="new_meeting", css_class='btn btn-sheldonize btn-sheldonize-default'))
             )
+
+
+### Habits
+
+class HabitForm(ModelForm):
+    helper = FormHelper()
+    helper.form_class='form-horizontal sheldonize-form'
+    helper.label_class = 'col-sm-2'
+    helper.field_class = 'col-sm-10'
+    helper.form_method = 'POST'
+    # the action is what we need to catch
+    helper.form_action = '.'
+    helper.add_input(SubmitButton('submit_save_habit', 'Update', css_class='btn-sheldonize btn-sheldonize-primary'))
+    helper.add_input(SubmitButton('delete-habit', 'Delete', css_class='btn-sheldonize btn-sheldonize-default details-delete-button'))
+
+    helper.layout = Layout(
+            # Prepended text for boolean field to trick it
+            # (http://stackoverflow.com/questions/22002861/booleanfield-checkbox-not-render-correctly-with-crispy-forms-using-bootstrap)
+            Field('name', placeholder='a name for your habit'),
+            Field('topic', placeholder='general area/topic/project this habit belongs to'),
+            Field('when'), 
+            Field('duration', placeholder='how much time do you want to spend on this habit in each session (in minutes)'),
+            )   
+
+    class Meta:
+        model = Habit 
+        exclude = ('user',)
+
+class AddHabitForm(ModelForm):
+
+
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal sheldonize-form'
+    helper.field_class = 'col-xs-12'
+    helper.form_method = 'POST'
+    helper.form_action = '.'
+
+    helper.layout = Layout(
+            FieldWithButtons(
+                Field('name', placeholder="Quick add habits (press Enter or the '+' sign)"),
+                StrictButton('<span class="glyphicon glyphicon-plus"></span>', type="submit", name="new_habit", css_class='btn btn-sheldonize btn-sheldonize-default'))
+      )
+    class Meta:
+        model = Habit 
+        exclude = ('user',)
+
 

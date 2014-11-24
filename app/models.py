@@ -42,6 +42,9 @@ class Task(models.Model):
     # priority for the task
     priority = models.CharField(verbose_name='priority?', max_length=1, choices=ABCD, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
+    # Is this a task that comes from a habit?
+    habit = models.BooleanField(verbose_name='habit?', default=False)
+
 
     def __unicode__(self):
         return self.name
@@ -167,9 +170,37 @@ class FlowModel(models.Model):
       flow = FlowField()
 
 
+### Habits
+
+class Habit(models.Model):
+
+    WHEN = (
+            ('T', 'Daily'),
+            ('W', 'Weekly'),
+            )
+
+    user = models.ForeignKey(User)
+    name = models.CharField(verbose_name='name', max_length=140)
+    topic = models.CharField(max_length=30, null=True, blank=True)
+    when = models.CharField(verbose_name='when?', max_length=1, choices=WHEN, null=True, blank=True)
+    duration = models.PositiveIntegerField(verbose_name='duration', null=True, blank=True, validators=[MinValueValidator(15), MaxValueValidator(10080)])
+    created = models.DateTimeField(auto_now_add=True)
+    note = models.TextField(null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    # to be able to check for class name in django templates
+    def get_cname(self):
+        return 'habit'
+
+
 ### Searching/Registering which models we'll allow for search
 
 import watson
 watson.register(Task)
 watson.register(Meeting)
+
+
+
 

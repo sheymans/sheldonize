@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static "app/css/table.css" %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Habits
+{% endblock %}
+
+{% block beforecontent %}
+{% if addhabitform %}
+<!-- Make sure that from tablets on (sm), the form is filling the full row -->
+<div class="col-sm-12">
+    {% crispy addhabitform %}
+</div>
+{% endif %}
+{% endblock beforecontent %}
+
+{% block filtercontent %}
+<div class="col-xs-12">
+    <ul class="nav nav-pills">
+        <li><a href="#"></a></li>
+        <li class="pull-right"><form action="." method="post">
+            {% csrf_token %}
+            {% if request.device_type = 'mobile' %}
+            <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks" id="spawn-tasks">&nbsp;Spawn Tasks</button>
+            {% else %}
+            <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks" id="spawn-tasks">&nbsp;Spawn Tasks</button>
+            {% endif %}
+        </form></li>
+    </ul>
+</div>
+{% endblock filtercontent %}
+
+
+{% block header %}
+<h3>Habits</h3>
+
+{% endblock header %}
+
+
+{% block content %}
+
+
+
+{% if table.data %}
+
+<form action="." method="post">
+    {% csrf_token %}
+    <div class="row">
+        <!-- Table -->
+        <div class="col-xs-12">
+            {% include "app/sheldonize_table.html" %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-xs-5">
+            <div class="dropup">
+                <button class="btn btn-sheldonize btn-sheldonize-primary dropdown-toggle" type="button" id="dropdown-markedactions" data-toggle="dropdown">
+                    Make it
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-markedactions">
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-habits" name="thisweek-marked-habits">a Weekly Habit</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-habits" name="today-marked-habits">a Daily Habit</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-habits" name="nowhen-marked-habits">a Wish</button></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-8 col-xs-2">
+
+        </div>
+        <div class="col-md-2 col-xs-5 text-right">
+            <button type="submit" name="delete-marked-habits" class="btn btn-sheldonize btn-sheldonize-default" id="delete-marked-habits">Delete</button>
+        </div>
+    </div>
+</form>
+
+{% else %}
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        (no habits)
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endblock %}
+
+{% block morejs %}
+<script src="{% static "app/js/habits.js" %}"></script>
+{% endblock %}
+

@@ -3,7 +3,7 @@ import arrow
 
 from django_tables2.utils import A
 from django_tables2.utils import OrderByTuple, OrderBy, Accessor
-from models import Task, Preference, Meeting, ScheduleItem
+from models import Task, Preference, Meeting, ScheduleItem, Habit
 # to not escape html
 from django.utils.safestring import mark_safe
 
@@ -48,6 +48,16 @@ def order_by(self, aliases):
                 self.queryset = self.queryset.extra(select={'null_duration': 'app_task.duration is null'}).order_by('null_duration', *(translate(a) for a in accessors))
             else:
                 self.queryset = self.queryset.order_by(*(translate(a) for a in accessors))
+        elif self.queryset.count() > 0 and isinstance(self.queryset[0], Habit):
+            if 'topic' in accessors:
+                self.queryset = self.queryset.extra(select={'null_topic': 'length(app_habit.topic) <= 0' }).order_by('null_topic', *(translate(a) for a in accessors))
+            elif 'when' in accessors:
+                self.queryset = self.queryset.extra(select={'null_when': 'app_habit.when is null'}).order_by('null_when', *(translate(a) for a in accessors))
+            elif 'duration' in accessors:
+                self.queryset = self.queryset.extra(select={'null_duration': 'app_habit.duration is null'}).order_by('null_duration', *(translate(a) for a in accessors))
+            else:
+                self.queryset = self.queryset.order_by(*(translate(a) for a in accessors))
+ 
         else:
             self.queryset = self.queryset.order_by(*(translate(a) for a in accessors))
     else:
@@ -66,6 +76,8 @@ class TaskTable(tables.Table):
     priority = tables.Column(empty_values=())
     duration = tables.Column(empty_values=())
     comes_after = tables.Column(empty_values=())
+    # the habit indication
+    habit = tables.TemplateColumn('{% if record.habit %}<span class="glyphicon glyphicon-repeat"</span>{% endif %}')
 
     def render_created(self, value, record):
         # value is utc record.timezone is something like America/Los_Angeles
@@ -134,6 +146,60 @@ class TaskTable(tables.Table):
         # see redefinition of order_by
         order_by = ('-created')
         attrs = {"class": "table table-striped table-hover"}
+
+
+class HabitTable(tables.Table):
+    
+    selection = tables.CheckBoxColumn(accessor="pk", attrs = { "th__input": {"onclick": "toggle(this)"}}, orderable=False)
+    topic = tables.Column(empty_values=())
+    when = tables.Column(empty_values=())
+    duration = tables.Column(empty_values=())
+
+    def render_created(self, value, record):
+        # value is utc record.timezone is something like America/Los_Angeles
+        timezone = record.user.userprofile.timezone.zone
+        if timezone:
+            local_display = arrow.get(value).to(timezone)
+        else:
+            local_display = arrow.get(value)
+        return local_display.humanize()
+
+    def render_name(self, value, record):
+        if value:
+            shorter = (value[:65] + '..') if len(value) > 65 else value
+            return shorter
+        else:
+            return ""
+
+    def render_topic(self, value, record):
+        if value:
+            return "(" + value + ")"
+        else:
+            return ""
+
+    def render_when(self, value, record):
+        if value:
+            return value
+        else:
+            return ""
+
+    def render_duration(self, value, record):
+        if value:
+            return str(value) + " mins"
+        else:
+            return ""
+
+    class Meta:
+        model = Habit 
+        fields = ('selection', 'name', 'topic', 'when', 'duration', 'created')
+        sequence = ('selection', 'name', 'topic', 'when', 'duration', 'created')
+        exclude = ('done', 'user', )
+        # default ordering
+        order_by = ('-created')
+        attrs = {"class": "table table-striped table-hover"}
+
+
+
 
 class MeetingTable(tables.Table):
     selection = tables.CheckBoxColumn(accessor="pk", attrs = { "th__input": 

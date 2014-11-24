@@ -27,7 +27,7 @@ th.fc-widget-header {
 
 
 .fc-time {
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* The buttons */
@@ -79,21 +79,21 @@ h3, h4, h5, h6 {
 }
 
 div.meeting {
-  color: #ecf0f1;
+  color: #fff;
   background-color: #e67e22;
   border-radius: 4px;
   padding: 10px;
 }
 
 div.scheduleitem {
-  color: #ecf0f1;
+  color: #fff;
   background-color: #428BCA;
   border-radius: 4px;
   padding: 10px;
 }
 
 .meeting  a, .scheduleitem a {
-  color: #ecf0f1;
+  color: #fff;
 }
 
 .meeting  a:hover, .scheduleitem a:hover, 
