@@ -738,7 +738,7 @@ def save_google_events(user, events, calendar_name):
 
 ## Creating tasks out of habits
 
-def spawn_tasks(user, user_timezone):
+def spawn_tasks(user, user_timezone, when):
     """
     Create tasks out of schedule.
     """
@@ -746,16 +746,22 @@ def spawn_tasks(user, user_timezone):
     warning = ""
     success = ""
 
-    habits = Habit.objects.filter(user=user)
+    habits = Habit.objects.filter(user=user, when=when)
     if not habits:
-        warning = "You do not have any Habits currently. No tasks created."
+        if when == 'T':
+            warning = "You do not have any daily Habits currently. No tasks for today created."
+        elif when == 'W':
+            warning = "You do not have any weekly Habits currently. No tasks for this week created."
         return (error, warning, success)
     else:
         for habit in habits:
             if habit.when:
                 task = Task.objects.create(user=user, name=habit.name, topic=habit.topic, when=habit.when, duration=habit.duration, note=habit.note, done=False, habit=True)
                 task.save()
-        success = "Tasks created and moved to Today or This Week."
+        if when == 'T':
+            success = "Tasks created and moved to Today."
+        elif when == 'W':
+            success = "Tasks created and moved to This Week."
 
     return (error, warning, success)
 

@@ -48,11 +48,20 @@ Tasks
         {% if what_tasks.when = 'T' or what_tasks.when = 'W' %}
         <li class="pull-right"><form action="." method="post">
             {% csrf_token %}
-            {% if request.device_type = 'mobile' %}
-            <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks" id="spawn-habits">&nbsp;Habits</button>
-            {% else %}
-            <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks" id="spawn-habits">&nbsp;Pull in Habits</button>
+            {% if what_tasks.when = 'T' %}
+                {% if request.device_type = 'mobile' %}
+                <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks-daily" id="spawn-habits">&nbsp;Daily Habits</button>
+                {% else %}
+                <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks-daily" id="spawn-habits">&nbsp;Pull in Daily Habits</button>
+                {% endif %}
+            {% elif what_tasks.when = 'W' %}
+                {% if request.device_type = 'mobile' %}
+                <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks-weekly" id="spawn-habits">&nbsp;Weekly Habits</button>
+                {% else %}
+                <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks-weekly" id="spawn-habits">&nbsp;Pull in Weekly Habits</button>
+                {% endif %}
             {% endif %}
+ 
         </form></li>
 
         {% if table.data %}

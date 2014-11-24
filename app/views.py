@@ -200,9 +200,13 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 task.when = None
                 task.save()
                 success = "Tasks moved to Inbox."
-        elif 'spawn-tasks' in request.POST:
+        elif 'spawn-tasks-daily' in request.POST:
             warnings = ""
-            spawn_tasks(request)
+            spawn_tasks(request, 'T')
+            return redirect_to_current(request, tasks_view)
+        elif 'spawn-tasks-weekly' in request.POST:
+            warnings = ""
+            spawn_tasks(request, 'W')
             return redirect_to_current(request, tasks_view)
         elif 'new_task' in request.POST:
             warning = ""
@@ -1008,9 +1012,9 @@ def search(request):
 # Habits
 
 @login_required
-def spawn_tasks(request):
+def spawn_tasks(request, when):
     user_timezone = service.get_timezone(request.user)
-    info = service.spawn_tasks(request.user, user_timezone)
+    info = service.spawn_tasks(request.user, user_timezone, when)
     messages.add_message(request, messages.ERROR, info[0])
     messages.add_message(request, messages.WARNING, info[1])
     messages.add_message(request, messages.SUCCESS, info[2])
@@ -1051,7 +1055,10 @@ def habits(request):
                 habit.save()
                 success = "Habits not set to daily or weekly."
         elif 'spawn-tasks' in request.POST:
-            spawn_tasks(request)
+            # Spawn daily
+            spawn_tasks(request, 'T')
+            # Spawn weekly
+            spawn_tasks(request, 'W')
             return redirect_to_current(request, habits)
 
         elif 'new_habit' in request.POST:
