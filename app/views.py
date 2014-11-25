@@ -298,6 +298,7 @@ def task_generic(request, task_id, task_list_view, task_link):
     task = get_object_or_404(Task, pk=task_id)
     
     original_note = Task.objects.get(id=task.id).note
+    original_habit = task.habit
 
     # check whether this is indeed your task!
     if task.user != request.user:
@@ -322,6 +323,8 @@ def task_generic(request, task_id, task_list_view, task_link):
                 # add the original note (the note is not in the form but gets
                 # changed in the back):
                 task_instance.note = original_note
+                # also add the original habit
+                task_instance.habit = original_habit
                 task_instance.save()
 
                 messages.add_message(request, messages.SUCCESS, "Updated task.")
