@@ -21,19 +21,6 @@ Habits
 {% endblock beforecontent %}
 
 {% block filtercontent %}
-<div class="col-xs-12">
-    <ul class="nav nav-pills">
-        <li><a href="#"></a></li>
-        <li class="pull-right"><form action="." method="post">
-            {% csrf_token %}
-            {% if request.device_type = 'mobile' %}
-            <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks" id="spawn-tasks">&nbsp;Spawn Tasks</button>
-            {% else %}
-            <button type="submit" class="btn btn-sheldonize btn-sheldonize-green" name="spawn-tasks" id="spawn-tasks">&nbsp;Spawn Tasks</button>
-            {% endif %}
-        </form></li>
-    </ul>
-</div>
 {% endblock filtercontent %}
 
 
