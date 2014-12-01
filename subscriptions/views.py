@@ -162,7 +162,7 @@ def signup_student(request):
 @login_required
 # Everyone can donate so let's remove user_passes_test
 #@user_passes_test(lambda user: user.userprofile.is_undecided_user() or user.userprofile.is_trial_user() or user.userprofile.is_cancelled_user(), login_url="/app/tasks")
-def signup_donate(request):
+def signup_donate(request, amount=None):
     if request.method == "GET":
         return render(request, 'subscriptions/signup_donate.html', {'stripe_public_key': settings.STRIPE_PUBLIC_KEY}) 
     # Extra test on userprofile as cancelled users will not be shown the
@@ -170,12 +170,14 @@ def signup_donate(request):
     # without that they  see it.
     elif request.method == "POST":
         stripe.api_key = settings.STRIPE_SECRET_KEY
-        if 'stripeToken' in request.POST and 'stripeEmail' in request.POST:
+        if 'stripeToken' in request.POST and 'stripeEmail' in request.POST and amount:
             token = request.POST['stripeToken']
             email = request.POST['stripeEmail']
             try:
                 # one time charge
-                charge = stripe.Charge.create(amount=999, currency="usd", card=token, description=email)
+                # amount is in cents
+                amount = int(amount)
+                charge = stripe.Charge.create(amount=amount*100, currency="usd", card=token, description=email)
 
                 profile = request.user.userprofile
                 profile.go_donor()

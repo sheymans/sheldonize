@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     url(r'^signup_student/$', views.signup_student, name='signup_student'),
     # /subscriptions/signup_donate/
     url(r'^signup_donate/$', views.signup_donate, name='signup_donate'),
+    url(r'^signup_donate/$', views.signup_donate, name='signup_donate'),
+    url(r'^signup_donate/(?P<amount>\d+)/$', views.signup_donate, name='signup_donate'),
     # /subscriptions/change/
     url(r'^change/$', views.change_subscription, name='change_subscription'),
     # /subscriptions/webhook/
