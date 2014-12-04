@@ -67,6 +67,15 @@ class TestSort(unittest.TestCase):
         # a key (but only in comes after)
         self.assertEqual(sort.sort_tasks(tasks), sorted_tasks_ids)
 
+    def test_sort_20141203(self):
+        """
+        For 3 tasks where 2 are specified after another and a third one has priority A, we should schedule that last task first.
+        """
+        tasks = {626L: {'comes_after': 627L, 'when': 1}, 627L: {'when': 1}, 628L: {'priority': 0, 'when': 1}}
+        sorted_tasks = [628L, 627L, 626L]
+        self.assertEqual(sort.sort_tasks(tasks), sorted_tasks)
+
+
 
 if __name__ == '__main__':
     unittest.main()

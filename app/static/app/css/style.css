@@ -536,30 +536,30 @@ fieldset[disabled] .btn-sheldonize-orange.active {
 
 
 .feature {
-  font-weight: 300;
+  font-weight: 400;
   padding: 12px;
   display: inline-block;
-  color: #ECF0F1;
+  color: #fff;
 }
 
 .new-feature {
-  font-weight: 300;
+  font-weight: 400;
   padding: 12px;
   display: inline-block;
-  color: #ECF0F1;
+  color: #fff;
 }
 
 
 .learn-more {
-  font-weight: 300;
+  font-weight: 400;
   padding: 12px;
   display: inline-block;
   float:right;
-  color: #ECF0F1;
+  color: #fff;
 }
 
 
 .learn-more > a, .learn-more a:hover {
-  color: #ECF0F1;
+  color: #fff;
 }
 

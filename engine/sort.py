@@ -44,6 +44,8 @@ def smaller_task_than_due(tid1, tid2, tasks):
         return 0
 
 
+# deprecated for now, we sorting the priorities already in the sort, and just
+# use smaller_task_than_due
 def smaller_task_than(tid1, tid2, tasks):
     task1 = tasks[tid1]
     task2 = tasks[tid2]
@@ -70,16 +72,44 @@ def cyclic(data):
         return False
 
 def sort_tasks(tasks):
+
     task_ids = tasks.keys()
+
+    # determine whether priorities exist (everything without priority will come
+    # after those)
+    exists_priorities = [t_id for t_id, it in tasks.iteritems() if 'priority' in it]
 
     # data will be dict of { node: deps, node: deps}
     data = {}
     no_comes_after = set([])
     for task_id, item in tasks.iteritems():
-        # we want the comes_after taken into account
+        # we want the comes_after taken into account and we treat priorities as
+        # implicit comes_after (we just make sure they are added to data, no
+        # dependencies yet)
         if 'comes_after' in item:
             data[task_id] = set([item['comes_after']])
-        else:
+
+        # now separate if, based on priority
+        if 'priority' in item:
+            # pick up all task ids that have priorities smaller (so higher)
+            # than this one (that means this task_id has to come after these)
+            deps = [ t_id for t_id, it in tasks.iteritems() if t_id != task_id and 'priority' in it and it['priority'] < item['priority']]
+            if task_id in data:
+                data[task_id] |= set(deps)
+            else:
+                data[task_id] = set(deps)
+
+        # this item does not have a priority but they do exist in general, so
+        # this item has to come after.
+        elif 'priority' not in item and exists_priorities:
+            if task_id in data: # if we already added something from comes_after above
+                data[task_id] |= set(exists_priorities)
+            else:
+                data[task_id] = set(exists_priorities)
+
+        # last case if you did not manage to add task_id to data in previouse,
+        # it's not relevant for sorting
+        elif task_id not in data:
             no_comes_after.add(task_id)
 
     # first topo sort for comes_after
@@ -104,7 +134,7 @@ def sort_tasks(tasks):
     # then sort each group on due date and priority
     result = []
     for group in sorted_data:
-        sorted_group = sorted(group, cmp=lambda tid1, tid2: smaller_task_than(tid1, tid2, tasks))
+        sorted_group = sorted(group, cmp=lambda tid1, tid2: smaller_task_than_due(tid1, tid2, tasks))
         result += sorted_group
 
     # finally remove any task_ids that are in the sorted list (because they
