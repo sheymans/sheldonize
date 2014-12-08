@@ -200,6 +200,14 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 task.when = None
                 task.save()
                 success = "Tasks moved to Inbox."
+        elif 'create-habit' in request.POST:
+            for task in selected_tasks:
+                habit = Habit.objects.create(user=task.user, name=task.name, topic=task.topic, duration=task.duration, note=task.note)
+                if task.when == 'T' or task.when == 'W':
+                    habit.when = task.when
+                habit.save()
+                task.delete()
+                success = "Habits created and tasks removed."
         elif 'spawn-tasks-daily' in request.POST:
             warnings = ""
             spawn_tasks(request, 'T')
