@@ -184,17 +184,17 @@
             var t = "{{ message.tags }}"
             $.bootstrapGrowl(msg, {
 type: t,
-ele: ".sheldonize-container",
-offset: {from: 'bottom', amount: 0},
-align: 'center',
+ele: "body",
+offset: {from: 'top', amount: 400},
+align: 'right',
 width: 'auto',
+delay: 6000,
 allow_dismiss: false,
 });
             });
       </script>
       {% endfor %}
       {% endif %}
-
 
     </body>
   </html>
