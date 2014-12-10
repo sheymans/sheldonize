@@ -99,7 +99,7 @@ $( document ).ready(function() {
     // END CSRF SETUP
 
     var id = $("#meeting-comment").attr( "meeting-id" )
-        markdownlogic(id);
+    markdownlogic(id);
 
 });
 

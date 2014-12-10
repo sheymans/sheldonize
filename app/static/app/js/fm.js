@@ -73,6 +73,20 @@
                 }
             }
 
+            function set_clicks_on_buttons(form, options, original_url) {
+                        $("#submit-id-delete-meeting").click(function() {
+                                    options.url = options.url.replace("update", "delete"); 
+                                    submit_form(form, options);
+                                    return false;
+                        });
+
+                        $("#submit-id-submit_save_meeting").click(function() {
+                                    options.url = original_url
+                                    submit_form(form, options);
+                                    return false;
+                        });
+            }
+
             function load_content(options) {
                 if (!options.url) {
                     debug("no URL found to load data from");
@@ -91,11 +105,14 @@
                         debug("modal body successfully loaded");
                         modal_body.html(data);
                         show_modal_wrapper();
+                        
                         var form = modal.find('form');
-                        form.on('submit', function () {
-                            submit_form(form, options);
-                            return false;
-                        });
+                        // Now listen to clicks on buttons and change form
+                        // actions depending on it:
+                        original_url = options.url
+
+                        set_clicks_on_buttons(form, options, original_url);
+
                         modal.trigger(global_options.ready_event_name);
                     }
                 }).done(function(){
@@ -116,10 +133,7 @@
                 debug("options:");
                 debug(options);
                 modal.modal('show');
-                modal_buttons.find('[type="submit"]').unbind('click').bind("click", function () {
-                    var form = modal.find('form');
-                    submit_form(form, options);
-                });
+
                 load_content(options);
             }
 
@@ -172,10 +186,10 @@
                     params['processData'] = false;
                     params['contentType'] = false;
                 }
+
                 params['data'] = data;
                 disable_modal_buttons();
                 $.ajax(params).success(function (data) {
-                    debug("in submit_form at process_response")
                     process_response_data(data, options);
                 }).error(function () {
                     enable_modal_buttons();
@@ -211,16 +225,15 @@
                     }
                 } else {
                     modal_body.html(data.message);
-                    // we have to put the submit form back ok
+                    // Also reinstate bindings on submit buttons (in case a
+                    // form is invalid, subsequent invalid submissions should
+                    // keep the user on the form):
                     var form = modal.find('form');
-                    form.on('submit', function () {
-                            submit_form(form, options);
-                            return false;
-                    });
-                    // and event ready:
+                    original_url = options.url;
+                    set_clicks_on_buttons(form, options, original_url);
+                    //
+                    // and set event ready:
                     modal.trigger(global_options.ready_event_name);
-                    // not sure what this does: not defined
-                    modal.trigger('modal_body_ready');
                 }
                 enable_modal_buttons();
             }
@@ -272,3 +285,5 @@
         }
     });
 })(jQuery);
+
+

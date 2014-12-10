@@ -151,6 +151,7 @@ class MeetingForm(ModelForm):
     helper.add_input(SubmitButton('submit_save_meeting', 'Update', css_class='btn btn-sheldonize btn-sheldonize-primary'))
     helper.add_input(SubmitButton('delete-meeting', 'Delete', css_class='btn btn-sheldonize btn-sheldonize-default details-delete-button'))
 
+
     helper.layout = Layout(
             Field('name', placeholder="description for your meeting"),
             Field('start', placeholder="start meeting"),

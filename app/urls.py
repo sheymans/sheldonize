@@ -68,6 +68,7 @@ urlpatterns = patterns('',
     url(r'^habits/(?P<habit_id>\d+)/$', views.habit, name='habit'),
     # modals (django-fm)
     url(r'^meetings/modal/update/(?P<meeting_pk>\d+)/$', modal_views.MeetingUpdateView.as_view(), name="meeting_update"),
+    url(r'^meetings/modal/delete/(?P<meeting_pk>\d+)/$', modal_views.MeetingDeleteView.as_view(), name="meeting_delete"),
 
 )
 
