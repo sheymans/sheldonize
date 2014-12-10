@@ -68,6 +68,14 @@ Meetings
 
 
 {% endif %}
+
+<!-- Stuff for django-fm. To attach in modals. Originall this is include
+     fm/modal.html but we redo that. -->
+{% include "app/meeting_modal.html" %}
+<!-- end Stuff for django-fm -->
+
+
+
 {% endblock %}
 
 {% block morejs %}
@@ -76,4 +84,6 @@ Meetings
 {% else %}
 <script src="{% static "app/js/archive-meetings.js" %}"></script>
 {% endif %}
+
+
 {% endblock morejs %}

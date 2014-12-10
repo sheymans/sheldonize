@@ -16,9 +16,10 @@ class PreviousURLMiddleware(object):
             request.session['current_url'] = visiting_url
 
             # only update previous when old_current is OK though:
-            forbidden_terms = ["eventfeed", "ajax" ]
+            forbidden_terms = ["eventfeed", "ajax", "modal" ]
             if old_current:
                 matching_forbidden_terms = filter(lambda term: term in old_current, forbidden_terms)
+                print "matching: ", matching_forbidden_terms
             else:
                 matching_forbidden_terms = []
 
@@ -29,6 +30,8 @@ class PreviousURLMiddleware(object):
             if old_current and not matching_forbidden_terms and ("page" in old_current or not any(char.isdigit() for char in old_current)):
                 request.session['previous_url'] = old_current
 
+        print "previous: ", request.session['previous_url']
+        print "current: ", request.session['current_url']
         return response
 
 

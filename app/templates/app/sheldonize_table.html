@@ -28,6 +28,8 @@
             {% for column, cell in row.items %}
                 <td {{ column.attrs.td.as_html }}>{% if column.localize == None %}{{ cell }}{% else %}{% if column.localize %}{{ cell|localize }}{% else %}{{ cell|unlocalize }}{% endif %}{% endif %}</td>
             {% endfor %}
+            <!-- For django-fm; A link to click -->
+            <a href="#" id="{{row.record.id}}" class="fm-update" data-fm-callback="reload"></a>
         </tr>
         {% endblock table.tbody.row %}
         {% empty %}

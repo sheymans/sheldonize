@@ -1,0 +1,59 @@
+{% load staticfiles %}
+{% load fm_tags %}
+
+<!-- Begin FM stuff -->
+
+<div tabindex="-1" role="dialog" aria-hidden="true" id="fm-modal" class="fm-modal modal">
+<div class="modal-loader" style="display: none;">
+<img class="modal-loader-img" src="{% static "fm/img/loading-bars.svg" %}">
+</div>
+<div class="modal-dialog modal-content">
+<div data-dismiss="modal" class="close-modal">
+<div class="lr">
+<div class="rl">
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-lg-8 col-lg-offset-2">
+<div class="modal-wrapper" style="display: none;">
+<div class="modal-head"></div>
+<div class="modal-body"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<link rel="stylesheet" href="{% static "app/css/modal.css" %}?v={% fm_version %}" />
+
+<!-- For bootstrap-datetimepicker -->
+<link rel="stylesheet" href="{% static "bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %}">
+<!-- For bootstrap-markdwon -->
+<link rel="stylesheet" href="{% static "bootstrap-markdown/css/bootstrap-markdown.min.css" %}">
+
+<!-- For bootstrap-datetimepicker http://eonasdan.github.io/bootstrap-datetimepicker/ -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="{% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}"></script>
+<!-- end bootstrap-datetimepicker requirements -->
+<!-- For bootstrap markdown -->
+<script src="{% static "bootstrap-markdown/js/markdown.js" %}"></script>
+<script src="{% static "bootstrap-markdown/js/to-markdown.js" %}"></script>
+<script src="{% static "bootstrap-markdown/js/bootstrap-markdown.js" %}"></script>
+<!-- End bootstrap markdown -->
+
+
+
+<script type="text/javascript" src="{% static "app/js/fm.js" %}?v={% fm_version %}"></script>
+
+<!-- django-fm -->
+     <script type="text/javascript">
+       $(function() {
+           $.fm({debug: true});
+           });
+     </script>
+
+
+<!-- END FM Stuff -->

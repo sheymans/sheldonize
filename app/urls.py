@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 
 from app import views
+from app import modal_views
 
 urlpatterns = patterns('',
     # /app/
@@ -65,6 +66,8 @@ urlpatterns = patterns('',
     # /app/habits/
     url(r'^habits/$', views.habits, name='habits'),
     url(r'^habits/(?P<habit_id>\d+)/$', views.habit, name='habit'),
+    # modals (django-fm)
+    url(r'^meetings/modal/update/(?P<meeting_pk>\d+)/$', modal_views.MeetingUpdateView.as_view(), name="meeting_update"),
 
 )
 
