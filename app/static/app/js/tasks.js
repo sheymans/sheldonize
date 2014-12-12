@@ -46,6 +46,7 @@ $( document ).ready(function() {
             minuteStepping: 15,
         });
 
+
         // set up the markdown notes on the modal
         $.markdown_note("#task-comment", "task-id", "#task-edit", "/app/tasks/note/ajax/");
 

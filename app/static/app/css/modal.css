@@ -1,11 +1,8 @@
 .fm-modal .modal-content {
-    margin-left: 3%;
-    margin-right: 3%;
-    width: auto;
-    background-clip: border-box;
     border: 0 none;
     border-radius: 4px;
     box-shadow: none;
+    border-bottom: thick solid black;
     padding: 100px 0 20px 0;
 
 }
