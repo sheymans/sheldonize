@@ -49,6 +49,15 @@ function setup_schedule(eventfeed_url) {
             // render title as HTML:
             eventRender: function(event, element, view) {                                          
                 element.find('.fc-title').html(element.find('.fc-title').text());
+                // at time of rendering also add to body a link for opening
+                // with modal:
+                var alink = "<a href='" + event.url + "' id='" + event.id + "' class='fm-update' data-fm-callback='reload'></a>"
+                $(document.body).append(alink);
+            },
+            // when clicking navigate via the above link
+            eventClick: function(event) {
+                $('#' + event.id).trigger("click");
+                return false;
             },
             defaultView: 'agendaWeek',
             // What day to show first (Monday=1)
@@ -122,6 +131,27 @@ function setup_schedule(eventfeed_url) {
         var rowId = $(this).parent().data("rowKey");
         window.location = "/app/scheduleitems/" + rowId + "/";
     });
+
+
+        // Set up the modal javascript when fm says it opened a modal window:
+        $( "body" ).on( "fm.ready", function() {
+        // Set up javascript on modals (start date, end date dropdowns, as well
+        // as markdown note taking.)
+        //
+        // Put a datetimepicker on the start and end field:
+        $('#id_start').datetimepicker({
+            minuteStepping: 15,
+        });
+
+        $('#id_end').datetimepicker({
+            minuteStepping: 15,
+        });
+
+        // set up the markdown notes on the modal
+        $.markdown_note("#meeting-comment", "meeting-id", "#meeting-edit", "/app/meetings/note/ajax/");
+
+    });
+
 
 
 

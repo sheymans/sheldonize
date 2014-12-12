@@ -46,14 +46,15 @@
 
 
 
+<!-- for opening and closing modals as wellas sending ajax calls -->
 <script type="text/javascript" src="{% static "app/js/fm.js" %}?v={% fm_version %}"></script>
+<!-- for showing markdown notes on modals -->
+<script type="text/javascript" src="{% static "app/js/markdown_note.js" %}"></script>
 
 <!-- django-fm -->
-     <script type="text/javascript">
-       $(function() {
-           $.fm({debug: true});
-           });
-     </script>
-
-
+<script type="text/javascript">
+  $(function() {
+      $.fm({debug: true});
+      });
+</script>
 <!-- END FM Stuff -->

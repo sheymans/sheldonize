@@ -99,7 +99,7 @@ def meetings_2_dict(meetings, user_timezone):
             jso["title"] = "<span class=\"glyphicon glyphicon-cloud-download\"></span>&nbsp;&nbsp;" + meeting.name 
         else:
             jso["title"] = meeting.name
-        jso["url"] = "/app/meetings/" + str(meeting.id) + "/"
+        jso["url"] = "/app/meetings/modal/update/" + str(meeting.id) + "/"
         # send ISO08601 back to front-end
         jso["start"] = start.datetime.isoformat()
         jso["end"] = end.datetime.isoformat()
