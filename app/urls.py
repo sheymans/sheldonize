@@ -71,6 +71,8 @@ urlpatterns = patterns('',
     url(r'^meetings/modal/delete/(?P<meeting_pk>\d+)/$', modal_views.MeetingDeleteView.as_view(), name="meeting_delete"),
     url(r'^tasks/modal/update/(?P<task_pk>\d+)/$', modal_views.TaskUpdateView.as_view(), name="task_update"),
     url(r'^tasks/modal/delete/(?P<task_pk>\d+)/$', modal_views.TaskDeleteView.as_view(), name="task_delete"),
+    url(r'^habits/modal/update/(?P<habit_pk>\d+)/$', modal_views.HabitUpdateView.as_view(), name="habit_update"),
+    url(r'^habits/modal/delete/(?P<habit_pk>\d+)/$', modal_views.HabitDeleteView.as_view(), name="habit_delete"),
 
 )
 
