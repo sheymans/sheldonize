@@ -67,10 +67,12 @@ class TaskUpdateView(AjaxUpdateView, LoginRequiredMixin):
         # we pick up the original out of the database:
         task = get_object_or_404(Task, pk=self.object.id)
         original_note = Task.objects.get(id=task.id).note
+        original_habit = task.habit
         
         # now set those values in self.object (which is the object that is
         # going to be saved):
         self.object.note = original_note
+        self.object.habit = original_habit
         pass
 
 class TaskDeleteView(AjaxDeleteView, LoginRequiredMixin):
