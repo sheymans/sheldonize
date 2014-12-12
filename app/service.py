@@ -31,7 +31,7 @@ def tasks_2_dict(tasks, user_timezone):
             # http://arshaw.com/fullcalendar/docs2/event_data/Event_Object/
             jso["id"] = task.id
             jso["title"] = task.name
-            jso["url"] = "/app/tasks/" + str(task.id) + "/"
+            jso["url"] = "/app/tasks/modal/update/" + str(task.id) + "/"
             # send ISO08601 back to front-end
             jso["start"] = start.datetime.isoformat()
             jso["end"] = (start.datetime + datetime.timedelta(minutes=30)).isoformat()
@@ -58,7 +58,7 @@ def tasks_2_dict(tasks, user_timezone):
             jso = {}
             jso["id"] = task.id
             jso["title"] = "(done) " + smart_str(task.name)
-            jso["url"] = "/app/tasks/" + str(task.id) + "/"
+            jso["url"] = "/app/tasks/modal/update/" + str(task.id) + "/"
             # send ISO08601 back to front-end
             jso["start"] = start.datetime.isoformat()
             jso["end"] = (start.datetime + datetime.timedelta(minutes=30)).isoformat()
@@ -136,7 +136,7 @@ def scheduleitems_2_dict(schedule_items, user_timezone):
         # now add priority if there is one:
         if item.task.priority:
             jso["title" ] = jso["title"] + " [" + smart_str(item.task.priority) + "]"
-        jso["url"] = "/app/tasks/" + str(item.task.id) + "/"
+        jso["url"] = "/app/tasks/modal/update/" + str(item.task.id) + "/"
         # send ISO08601 back to front-end
         jso["start"] = start.datetime.isoformat()
         difference = end - start

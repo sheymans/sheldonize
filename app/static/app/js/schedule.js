@@ -147,8 +147,15 @@ function setup_schedule(eventfeed_url) {
             minuteStepping: 15,
         });
 
+        // date time picker on end field
+        $('#id_due').datetimepicker({
+            minuteStepping: 15,
+        });
+
+
         // set up the markdown notes on the modal
         $.markdown_note("#meeting-comment", "meeting-id", "#meeting-edit", "/app/meetings/note/ajax/");
+        $.markdown_note("#task-comment", "task-id", "#task-edit", "/app/tasks/note/ajax/");
 
     });
 

@@ -69,6 +69,8 @@ urlpatterns = patterns('',
     # modals (django-fm)
     url(r'^meetings/modal/update/(?P<meeting_pk>\d+)/$', modal_views.MeetingUpdateView.as_view(), name="meeting_update"),
     url(r'^meetings/modal/delete/(?P<meeting_pk>\d+)/$', modal_views.MeetingDeleteView.as_view(), name="meeting_delete"),
+    url(r'^tasks/modal/update/(?P<task_pk>\d+)/$', modal_views.TaskUpdateView.as_view(), name="task_update"),
+    url(r'^tasks/modal/delete/(?P<task_pk>\d+)/$', modal_views.TaskDeleteView.as_view(), name="task_delete"),
 
 )
 

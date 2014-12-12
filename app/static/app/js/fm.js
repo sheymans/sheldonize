@@ -85,6 +85,19 @@
                                     submit_form(form, options);
                                     return false;
                         });
+
+                        $("#submit-id-delete-task").click(function() {
+                                    options.url = options.url.replace("update", "delete"); 
+                                    submit_form(form, options);
+                                    return false;
+                        });
+
+                        $("#submit-id-submit_save_task").click(function() {
+                                    options.url = original_url
+                                    submit_form(form, options);
+                                    return false;
+                        });
+ 
             }
 
             function load_content(options) {
