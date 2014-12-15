@@ -684,20 +684,22 @@ def scheduleitem(request, scheduleitem_id):
 
 ### Utilities:
 
+# TODO update this, we are no longer doing the middleware thing (see
+# outcommented code)
 # requires middleware to set previous_url, so with "pragma" we skip irrelevant
 # lines
 def go_back_to_previous(request, default_view):
     """If request.session has a previous_url set, redirect to that one, otherwise fall back to default_view."""
     previous_url = default_view
-    if request.session and 'previous_url' in request.session: # pragma: no cover
-        previous_url = request.session['previous_url']
+    #if request.session and 'previous_url' in request.session: # pragma: no cover
+    #    previous_url = request.session['previous_url']
     return redirect(previous_url)
 
 def redirect_to_current(request, default_view):
     """If request.session has a current_url set, redirect to that one, otherwise fall back to default_view."""
     current_url = default_view
-    if request.session and 'current_url' in request.session: # pragma: no cover
-        current_url = request.session['current_url']
+    #if request.session and 'current_url' in request.session: # pragma: no cover
+    #    current_url = request.session['current_url']
     return redirect(current_url)
 
 
