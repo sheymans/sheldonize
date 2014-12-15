@@ -2,14 +2,17 @@
     border: 0 none;
     border-radius: 4px;
     box-shadow: none;
+    height: 98%;
     border-bottom: thick solid black;
     padding: 100px 0 20px 0;
+    overflow: auto;
 
 }
 .fm-modal .modal-head {
     font-size: 2.4em;
     text-align: center;
 }
+
 .fm-modal .modal-buttons {
     text-align: left;
     padding-left: 20px;

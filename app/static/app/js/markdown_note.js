@@ -31,7 +31,7 @@
                         $(edit_string).click( function() {
                             // At this point first remove the "Edit Note" button
                             $(edit_string).remove();
-                            $(comment_string).markdown({autofocus:false,savable:true, fullscreen: {enable: false}, height:"400",
+                            $(comment_string).markdown({autofocus:false,savable:true, fullscreen: {enable: false}, 
 
                                 onSave: function(e) {
                                     // Send note to background
