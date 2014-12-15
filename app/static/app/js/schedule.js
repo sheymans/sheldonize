@@ -51,7 +51,7 @@ function setup_schedule(eventfeed_url) {
                 element.find('.fc-title').html(element.find('.fc-title').text());
                 // at time of rendering also add to body a link for opening
                 // with modal:
-                var alink = "<a href='" + event.url + "' id='" + event.id + "' class='fm-update' data-fm-callback='reload'></a>"
+                var alink = "<a href='" + event.url + "' id='" + event.id + "' class='fm-update' data-fm-callback='redirect' data-fm-target='/app/schedule/'></a>"
                 $(document.body).append(alink);
             },
             // when clicking navigate via the above link
