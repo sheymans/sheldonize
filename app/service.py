@@ -103,7 +103,9 @@ def meetings_2_dict(meetings, user_timezone):
         # send ISO08601 back to front-end
         jso["start"] = start.datetime.isoformat()
         jso["end"] = end.datetime.isoformat()
-        if meeting.foreign is not None:
+        if meeting.foreign is not None and in_past:
+            jso["color"] = eventcolors.meeting_foreign_past["color"]
+        elif meeting.foreign is not None:
             jso["color"] = eventcolors.meeting_foreign["color"]
         elif in_past:
             jso["color"] = eventcolors.meeting_past["color"]
