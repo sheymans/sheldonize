@@ -1,5 +1,19 @@
 {% load crispy_forms_tags %}
 
+{% if form.instance.foreign == 0 %}
+
+<p>
+Imported meetings cannot be updated from Sheldonize. Open your calendar item in
+your external calendar (for example, Google Calendar), edit it there, and do a
+calendar import aftward in Sheldonize.
+</p>
+
+<p>
+Note that you can also create meetings in Sheldonize (and those can of course be edited at all times).
+</p>
+
+{% else %}
+
 <div class="row">
     <div class="col-md-12">
         {% crispy form %}
@@ -42,3 +56,4 @@
     </div>
 </div>
 
+{% endif %}
