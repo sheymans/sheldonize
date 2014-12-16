@@ -145,7 +145,7 @@ class TaskTable(tables.Table):
         # we removed the ordering for Tasks as we are doing it via the raw SQL
         # see redefinition of order_by
         order_by = ('-created')
-        attrs = {"class": "table table-striped table-hover"}
+        attrs = {"class": "table table-hover"}
 
 
 class HabitTable(tables.Table):
@@ -196,7 +196,7 @@ class HabitTable(tables.Table):
         exclude = ('done', 'user', )
         # default ordering
         order_by = ('-created')
-        attrs = {"class": "table table-striped table-hover"}
+        attrs = {"class": "table table-hover"}
 
 
 
@@ -246,7 +246,7 @@ class MeetingTable(tables.Table):
         sequence = ('selection', 'name', 'start', 'end', 'repeat', 'foreign')
         exclude = ('user',)
         order_by = ('start')
-        attrs = {"class": "table table-striped table-hover"}
+        attrs = {"class": "table table-hover"}
 
 
 
@@ -255,6 +255,6 @@ class PreferenceTable(tables.Table):
     class Meta:
         model = Preference
         order_by = ('day', 'from_time')
-        attrs = {"class": "table table-striped table-hover"}
+        attrs = {"class": "table table-hover"}
         fields = ('day', 'from_time', 'to_time')
         exclude = ('user')

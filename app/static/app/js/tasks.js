@@ -8,12 +8,12 @@ $( document ).ready(function() {
     // Show recent rows in tasks with different background:
     $("tr td:contains('just now')").each(function(){
         // parent is the row as we go through tds
-        $(this).parent().addClass('success');
+        $(this).parent().addClass('new_thing');
     }
     );
     $("tr td:contains('seconds ago')").each(function(){
         // parent is the row as we go through tds
-        $(this).parent().addClass('success');
+        $(this).parent().addClass('new_thing');
     }
     );
 
