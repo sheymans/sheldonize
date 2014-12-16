@@ -156,7 +156,11 @@ function setup_schedule(eventfeed_url) {
         // set up the markdown notes on the modal
         $.markdown_note("#meeting-comment", "meeting-id", "#meeting-edit", "/app/meetings/note/ajax/");
         $.markdown_note("#task-comment", "task-id", "#task-edit", "/app/tasks/note/ajax/");
-
+        //
+        // Add data attributes to labels:
+        $(".sheldonize-form :checkbox").attr("data-labelauty","No|Yes");
+        $(".sheldonize-form :checkbox").labelauty({same_width: true });
+ 
     });
 
 
