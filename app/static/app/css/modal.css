@@ -4,7 +4,7 @@
     box-shadow: none;
     height: 95%;
     border-bottom: thick solid black;
-    padding: 100px 0 20px 0;
+    padding: 50px 0 20px 0;
     overflow: auto;
 
 }
@@ -22,34 +22,35 @@
     cursor: pointer;
     height: 25px;
     position: absolute;
-    right: 25px;
-    top: 25px;
-    width: 75px;
+    right: 10px;
+    top: 10px;
+    width: 50px;
+    opacity:0.8;
 }
 .fm-modal .close-modal:hover {
     opacity: 0.3;
 }
 .fm-modal .close-modal .lr {
     background-color: #444444;
-    height: 25px;
+    height: 15px;
     margin-left: 35px;
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     -o-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
-    width: 2px;
+    width: 3px;
     z-index: 1051;
 }
 .fm-modal .close-modal .lr .rl {
     background-color: #444444;
-    height: 25px;
+    height: 15px;
     transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
-    width: 5px;
+    width: 3px;
     z-index: 1052;
 }
 

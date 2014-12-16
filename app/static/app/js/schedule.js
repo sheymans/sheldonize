@@ -158,7 +158,7 @@ function setup_schedule(eventfeed_url) {
         $.markdown_note("#task-comment", "task-id", "#task-edit", "/app/tasks/note/ajax/");
         //
         // Add data attributes to labels:
-        $(".sheldonize-form :checkbox").attr("data-labelauty","No|Yes");
+        $(".sheldonize-form :checkbox").attr("data-labelauty","|");
         $(".sheldonize-form :checkbox").labelauty({same_width: true });
  
     });

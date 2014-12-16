@@ -94,9 +94,9 @@
 
             // Construct the button object
             buttonContainer = $('<button></button>');
-            buttonContainer.text(' ' + this.__localize(btnText)).addClass('btn-default btn-sm').addClass(btnClass);
+            buttonContainer.text(' ' + this.__localize(btnText)).addClass('btn-sheldonize btn-sm').addClass(btnClass);
             if(btnClass.match(/btn\-(primary|success|info|warning|danger|link)/)){
-                buttonContainer.removeClass('btn-default');
+                buttonContainer.removeClass('btn-sheldonize');
             }
             buttonContainer.attr({
                 'type': 'button',
@@ -315,7 +315,7 @@
           handler.push(saveHandler)
           callback.push(options.onSave)
 
-          editorFooter.append('<button class="btn btn-success" data-provider="'
+          editorFooter.append('<button class="btn btn-sheldonize btn-sheldonize-primary" data-provider="'
                               +ns
                               +'" data-handler="'
                               +saveHandler
@@ -1232,7 +1232,7 @@
           hotkey: 'Ctrl+P',
           title: 'Preview',
           btnText: 'Preview',
-          btnClass: 'btn btn-primary btn-sm',
+          btnClass: 'btn btn-sheldonize btn-sheldonize-orange',
           icon: { glyph: 'glyphicon glyphicon-search', fa: 'fa fa-search', 'fa-3': 'icon-search' },
           callback: function(e){
             // Check the preview mode and toggle based on this flag

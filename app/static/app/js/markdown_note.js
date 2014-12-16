@@ -9,7 +9,7 @@
                 var id = $(comment_string).attr( id_string );
 
                 // The comment editing
-                $(comment_string).markdown({autofocus:false,savable:true, fullscreen: {enable: false},
+                $(comment_string).markdown({autofocus:false,savable:true, fullscreen: {enable: false}, resize: "vertical", 
                     onShow: function(e) {
 
                         // Transform the markdown content to HTML (in currentContent)
@@ -31,7 +31,7 @@
                         $(edit_string).click( function() {
                             // At this point first remove the "Edit Note" button
                             $(edit_string).remove();
-                            $(comment_string).markdown({autofocus:false,savable:true, fullscreen: {enable: false}, 
+                            $(comment_string).markdown({autofocus:false,savable:true, fullscreen: {enable: false}, resize: "vertical",
 
                                 onSave: function(e) {
                                     // Send note to background

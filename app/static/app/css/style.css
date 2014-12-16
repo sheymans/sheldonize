@@ -19,6 +19,19 @@ body {
 }
 
 
+
+/* Redefining normal links. All navigation should be Fira Mono. */
+a {
+  color: #e67e22;
+  font-family: 'Fira Mono';
+}
+
+a:hover, a:focus {
+  color: #e67e22;
+  font-family: 'Fira Mono';
+}
+
+
 .sheldonize-content {
   background: white;
   border-radius: 5px;
@@ -170,6 +183,12 @@ body {
   box-shadow: none;
 }
 
+/* also on markdown editor */
+.modal-wrapper .md-editor.active {
+  border-color: #e67e22;
+  box-shadow: none;
+}
+
 .sheldonize-form textarea,
 .sheldonize-form input[type="text"],
 .sheldonize-form input[type="email"],
@@ -188,7 +207,11 @@ body {
   border-color: #d9d9d9; 
 }
 
-
+/* Make placeholder style italic */
+::-webkit-input-placeholder { font-style:italic; }
+::-moz-placeholder { font-style:italic; } /* firefox 19+ */
+:-ms-input-placeholder { font-style:italic; } /* ie */
+input:-moz-placeholder { font-style:italic; }
 
 
 /* Buttons; generated with http://blog.koalite.com/bbg/ */
@@ -527,9 +550,9 @@ fieldset[disabled] .btn-sheldonize-orange.active {
 
 
 .hline {
-  border: 1px solid #EEE;
+  border: 4px solid #444444;
   color: #666;
-  font-weight: bold;
+  font-weight: 700;
   font-variant: small-caps;
   letter-spacing: .1em;
   line-height: 0px;
