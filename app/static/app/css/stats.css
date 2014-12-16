@@ -20,14 +20,12 @@
 
 
 .count_tasks {
-  font-weight: 300;
   padding: 12px;
   display: inline-block;
   color: white;
 }
 
 .weeknumber {
-  font-weight: 300;
   padding: 12px;
   display: inline-block;
   float:right;

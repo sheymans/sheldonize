@@ -30,7 +30,7 @@
     opacity: 0.3;
 }
 .fm-modal .close-modal .lr {
-    background-color: #222;
+    background-color: #444444;
     height: 25px;
     margin-left: 35px;
     transform: rotate(45deg);
@@ -38,18 +38,18 @@
     -ms-transform: rotate(45deg);
     -o-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
-    width: 1px;
+    width: 2px;
     z-index: 1051;
 }
 .fm-modal .close-modal .lr .rl {
-    background-color: #222;
+    background-color: #444444;
     height: 25px;
     transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
-    width: 1px;
+    width: 5px;
     z-index: 1052;
 }
 

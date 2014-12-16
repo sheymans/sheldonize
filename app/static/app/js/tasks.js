@@ -37,6 +37,9 @@ $( document ).ready(function() {
 
     });
 
+
+
+
     $( "body" ).on( "fm.ready", function() {
         // Set up javascript on modals (start date, end date dropdowns, as well
         // as markdown note taking.)
@@ -49,6 +52,11 @@ $( document ).ready(function() {
 
         // set up the markdown notes on the modal
         $.markdown_note("#task-comment", "task-id", "#task-edit", "/app/tasks/note/ajax/");
+
+        // Add data attributes to labels:
+        $(".sheldonize-form :checkbox").attr("data-labelauty","No|Yes");
+        $(".sheldonize-form :checkbox").labelauty({same_width: true });
+        
 
     });
 

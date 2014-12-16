@@ -7,22 +7,18 @@
 
 /* Header on top  of calendar indicating period. */
 .fc-toolbar > .fc-center > h2 {
-  font-weight: 300;
 }
 
 /* Day header */
 th.fc-widget-header {
-  font-weight: 300;
 }
 
 /* Day number on months */
 .fc-day-number {
-  font-weight: 300;
 }
 
 
 .fc-agenda th.fc-agenda-axis {
-  font-weight: 300;
 }
 
 
@@ -32,9 +28,7 @@ th.fc-widget-header {
 
 /* The buttons */
 .fc-button {
-  font-weight: 300;
   color: #444;
-  font-weight: 300;
   margin-bottom: 15px;
   border-radius: 4px;
   text-decoration: none;
@@ -75,7 +69,6 @@ th.fc-widget-header {
 
 
 h3, h4, h5, h6 {
-  font-weight: 300
 }
 
 div.meeting {

@@ -24,11 +24,9 @@ th.delete, th.done, th.name, th.selection, th.habit  {
  */
 
 .table-container  ul.pagination {
-  font-weight: 300;
 }
 
 .table-container  div.total_items {
-  font-weight: 300;
 }
 
 .table-container ul.pagination li.active a {
@@ -59,7 +57,6 @@ th.delete, th.done, th.name, th.selection, th.habit  {
 /* The trash links */
 a.table_trash {
   color: #444444; 
-  font-weight: 300;
 }
 
 a.table_trash:hover, a.table_trash:focus {
@@ -69,7 +66,6 @@ a.table_trash:hover, a.table_trash:focus {
 
 th > a {
   color: #444444; 
-  font-weight: 300;
 }
 
 th > a:hover, th:focus {
