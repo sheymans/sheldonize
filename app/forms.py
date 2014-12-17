@@ -255,7 +255,7 @@ class AddHabitForm(ModelForm):
     helper.layout = Layout(
             FieldWithButtons(
                 Field('name', placeholder="Quick add habits (press Enter or the '+' sign)"),
-                StrictButton('<span class="glyphicon glyphicon-plus"></span>', type="submit", name="new_habit", css_class='btn btn-sheldonize btn-sheldonize-default'))
+                StrictButton('<span class="glyphicon glyphicon-plus"></span>', type="submit", name="new_habit", css_class='btn btn-sheldonize btn-sheldonize-orange'))
       )
     class Meta:
         model = Habit 

@@ -18,71 +18,77 @@ Schedule
 <!-- For the schedule we are rewriting the root --> 
 {% block root %}
 <div class="container-fluid sheldonize-container">
-    <div class="sheldonize-content">
-
-        <div class="row calculate-schedule-container">
-            <form action="." method="post">
-                <div class="col-md-2 col-xs-5">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-refresh" name="calculate-schedule" id="calculate-schedule">&nbsp;Calculate</button>
-                </div>
-
-                <div class="col-md-8 col-xs-2">
-                </div>
-                <div class="col-md-2 col-xs-5 text-right">
-                    {% if device_type == 'mobile' %}
-                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-cloud-download" name="get-google-calendar" id="get-google-calendar">&nbsp;GCal</button>
-                    {% else %}
-                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-cloud-download" name="get-google-calendar" id="get-google-calendar">&nbsp;Google Calendar</button>
-                    {% endif %}
-                </div>
-            </form>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <div class="hlinetop"></div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="nav nav-pills nav-pills-sheldonize">
+               <li class="pull-right"><form action="." method="post">
+                    {% csrf_token %}
+                    {% if device_type == 'mobile' %}
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-cloud-download" name="get-google-calendar" id="get-google-calendar"><span style="font-family: 'Fira Sans', sans-serif;">&nbsp;GCal</span></button>
+                    {% else %}
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-primary glyphicon glyphicon-cloud-download" name="get-google-calendar" id="get-google-calendar">&nbsp;<span style="font-family: 'Fira Sans', sans-serif;">Google Calendar</span></button>
+                    {% endif %}
 
+                </form></li>
+                <li class="pull-right"><form action="." method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-orange glyphicon glyphicon-refresh" name="calculate-schedule" id="calculate-schedule">&nbsp;<span style="font-family: 'Fira Sans', sans-serif;">Calculate</span></button>
+                </form></li>
+            </ul>
+            <br/>
+        </div>
+    </div>
+
+    <div class="sheldonize-content">
 
         {% if device_type == 'mobile' %}
 
         {% if current %}
-            <div class="row">
-                <div class="col-xs-12">
-                    <h3>Next Up</h3>
-                    <div class="current-item {{ current.type }}">
-                        <a href="{{ current.url }}"><i>{{ current.from }} - {{ current.to }}</i></br>
-                            <h4>{{ current.name }}</h4></a>
-                    </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Next Up</h3>
+                <div class="current-item {{ current.type }}">
+                    <a href="{{ current.url }}"><i>{{ current.from }} - {{ current.to }}</i></br>
+                        <h4>{{ current.name }}</h4></a>
                 </div>
             </div>
-                {% if next_up %}
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Followed By</h3>
-                        <div class="next-item {{ next_up.type }}">
-                            <a href="{{ next_up.url }}">
-                            <i>{{ next_up.from }} - {{ next_up.to }}</i></br>
-                            <h4>{{ next_up.name }}</h4></a>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-            {% else %}
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <span class="glyphicon glyphicon-arrow-up"></span>
+        </div>
+        {% if next_up %}
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Followed By</h3>
+                <div class="next-item {{ next_up.type }}">
+                    <a href="{{ next_up.url }}">
+                        <i>{{ next_up.from }} - {{ next_up.to }}</i></br>
+                        <h4>{{ next_up.name }}</h4></a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    (no upcoming schedule items - try to calculate)
-                </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <span class="glyphicon glyphicon-arrow-up"></span>
             </div>
-            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                (no upcoming schedule items - try to calculate)
+            </div>
+        </div>
+        {% endif %}
 
         {% else %}
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <div id='calendar'></div>
-                </div>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <div id='calendar'></div>
             </div>
+        </div>
         {% endif %}
 
         <div class="row">
@@ -95,7 +101,7 @@ Schedule
                 </div>
                 <div class="col-md-2 col-xs-5 text-right">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-default glyphicon glyphicon-trash" name="delete-schedule" id="delete-schedule">&nbsp;Clear</button>
+                    <button type="submit" class="btn btn-sheldonize btn-sheldonize-default glyphicon glyphicon-trash" name="delete-schedule" id="delete-schedule"><span style="font-family: 'Fira Sans', sans-serif;">&nbsp;Clear</span></button>
                 </div>
             </form>
         </div>
@@ -103,7 +109,13 @@ Schedule
 
 
     </div>
-
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <div class="hlinebottom"><span>v173</span></div>
+         <div class="love">Show us your <span class="glyphicon glyphicon-heart"></span> by <a href="/subscriptions/signup_donate">donating</a></div>
+        </div>
+      </div>
+ 
     <div class="row">
         <div class="col-xs-12 text-center">
 

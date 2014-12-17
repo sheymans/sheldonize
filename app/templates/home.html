@@ -14,8 +14,19 @@ Sheldonize
 
 {% block content %}
 
+
 <div class="row">
-    <div class="col-xs-12 text-right">
+    <div class="col-xs-12 text-center">
+        It's a to-do application.</br>
+        It plans.</br>
+        </br>
+        </br>
+        </br>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 text-center">
         <a id="signuplink" href="/users/signup/">Sign-up for Free</a>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="/users/login/" rel="nofollow">Log in</a> 
@@ -24,202 +35,52 @@ Sheldonize
 
 <div class="row">
     <br/>
-</div>
-
-
-<div class="jumbotron" style="background-color: #ecf0f1">
-
-    <h1 style="color: #444444">Sheldonize</h1>
-    <p style="color: #444444; font-weight:300">Let Sheldonize plan your work so you can focus on getting things done.
-    </p>
-    {% if request.device_type = 'desktop' or request.device_type = 'tablet' %}
-    <img class="img-responsive" style="width:45%; height:auto;" align="right" src="{% static "app/img/desktop_view.png" %}"/>
-    {% endif %}
-    <p><button id="signupbutton" type="button" onclick="location.href=&quot;{% url 'signup' %}?timezone=&quot; + this.value ;" class="btn btn-primary">Start Planning &raquo;</button>
-    <a href="//fast.wistia.net/embed/iframe/kajgrymlz3?popover=true" class="wistia-popover[height=720,playerColor=7b796a,width=1280]"><button class="btn btn-default">Watch Video &raquo;</button></a>
-    <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/popover-v1.js"></script>
-    </p>
-</div>
-
-{% if request.device_type = 'mobile' %}
-<div class="row">
-    <div class="col-xs-12 col-md-6 text-center">
-        <img class="img-responsive" src="{% static "app/img/mobile_view.png" %}"/>
-    </div>
-</div>
-{% endif %}
-
-<div class="row">
-    <div class="col-xs-12 col-md-6">
-        <h3>What is this?</h3>
-        <p>
-        Sheldonize is a <b>free</b> task manager that automatically schedules your to-dos
-        on your calendar.  Traditional task managers are just
-        lists. They require you to do all the hard work of manually planning your to-dos yourself.
-        However, with Sheldonize that planning happens automatically: Sheldonize checks
-        your existing meetings, and plans your work around them, while making
-        sure deadlines for your tasks are met. The planning is completely
-        flexible and happens with the click of a button, such that when
-        meetings get shifted or more important stuff comes in, Sheldonize can
-        quickly reschedule your work.  
-        </p>
-        <p>
-        Some questions you may have:
-        <ul>
-            <li><i>I'm already using Google Calendar, and I don't want to
-                change</i><p> You should not! We love Google calendar as well.
-            You can simply keep using Google Calendar, sync Sheldonize with
-            it, and then see all your Google Calendar events on the Sheldonize
-            Schedule. We can then schedule around those events.</p>
-            </li>
-
-            <li><i>I'm
-                often on the way, how can I quickly add tasks?</i>
-            <p>You can simply
-            send an email to <a
-                href="mailto:hey@sheldonize.com">hey@sheldonize.com</a> with in the
-            subject your to-do. We'll automatically put that in your Sheldonize Inbox.</p></li>
-
-            <li><i>I'm already using Wunderlist!</i>
-            <p>Great! It shows that you take
-            managing your time seriously. Consider this however: does Wunderlist show
-            you your schedule, or is it just a list of to-dos that often overwhelms you?
-            If yes, give Sheldonize a try. We schedule your to-dos.</p></li>
-
-            <li><i>I'd like to keep notes with to-dos and meetings</i>
-            <p>You can do that.
-            We even support <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>.</p></li>
-
-            <li><i>I follow the GTD approach; I love it and don't want to switch.</i>
-            <p>
-        You'll be happy to find concepts like the <i>Inbox</i>, the
-        <i>Someday/Maybe</i> view also with us. And we're adding features continuously.</p>
-        </li>
-        <li>And much, much more. See below for a summary of the current features.</li>
-
-    </ul>
-
-
-    </p>
-    <p>Don't forget to check
-    out our 3-minute <a
-        href="http://iwokeupthismorning.net/2014/10/13/sheldonize-organizes-todos-automatically-on-a-calendar/"/>overview
-        video</a> on our sister blog, <a
-        href="http://iwokeupthismorning.net">I Woke Up This Morning</a>. It will show you Sheldonize in action.
-    </p>
-</div>
+    <div class="hlinetop"></div>
+    <br/>
 </div>
 
 <div class="row">
-<div class="col-xs-12 col-md-6">
-    <h3>Who is this?</h3>
-    <p>
-    This is a 2-person shop based in San Francisco by way of an Austrian
-    and a Belgian (combinations do not get any better in our opinion). 
-    This is <a href="http://stijnheymans.net">your developer</a>; he keeps you up to date via <a
-        href="https://twitter.com/sheldonize">Twitter</a>, <a
-        href="https://plus.google.com/+Sheldonize">Google+</a>, or <a
-        href="https://facebook.com/sheldonize">Facebook</a>. Come check us out!
-    </p>
-</div>
-</div>
-
-<div class="row">
-<div class="col-xs-12 col-md-6">
-    <h3>Features</h3>
-</div>
-</div>
-
-<div class="row">
-<div class="col-xs-12 col-md-6">
-    <div class="feature-chart">
-        <div class="feature-task-bar" style="width: 60%">
-            <span class="feature">Automatic Scheduling</span>
-        </div>
+    <div class="col-md-1">
     </div>
-    <div class="feature-chart">
-        <div class="feature-task-bar" style="width: 90%">
-            <span class="feature">Easy dumping of to-dos in INBOX, GTD-Style</span>
-        </div>
-    </div>
-    <div class="feature-chart">
-        <div class="feature-task-bar" style="width: 75%">
-            <span class="feature">Durations and Due dates on tasks</span>
-        </div>
-    </div>
-    <div class="feature-chart">
-        <div class="feature-task-bar" style="width: 80%">
-            <span class="feature">Task Dependencies</span>
-        </div>
-    </div>
-    <div class="feature-chart">
-        <div class="feature-task-bar" style="width: 65%">
-            <span class="feature">ABCD Priorities</span>
-        </div>
-    </div>
-    <div class="feature-chart">
-        <div class="feature-task-bar" style="width: 70%">
-            <span class="feature">Personalized Working Times</span>
-        </div>
-    </div>
-    <div class="feature-chart">
-        <div class="feature-task-bar" style="width: 90%">
-            <span class="feature">Statistics that track your productivity</span>
-        </div>
-    </div>
-</div>
-
-<div class="col-xs-12 col-md-6">
-
-    <div class="feature-chart">
-        <div class="feature-meeting-bar" style="width: 70%">
-            <span class="feature">Recurrent Meetings</span>
-        </div>
+    <div class="col-xs-12 col-md-5">
+        Automatic Scheduling (<a href="http://iwokeupthismorning.net/2014/10/13/sheldonize-organizes-todos-automatically-on-a-calendar/"/>overview video</a>)</br>
+        Easy dumping of to-dos in INBOX, GTD-Style</br>
+        Durations and Due dates on tasks</br>
+        Task Dependencies</br>
+        ABCD Priorities</br>
+        Personalized Working Times</br>
+        Statistics that track your productivity</br>
     </div>
 
-    <div class="feature-chart">
-        <div class="feature-meeting-bar" style="width: 80%">
-            <span class="feature">Google Calendar Integration</span>
-        </div>
-    </div>
-    <div class="feature-chart">
-        <div class="feature-meeting-bar" style="width: 90%">
-            <span class="feature">Unlimited Archive of Tasks and Meetings</span>
-        </div>
-    </div>
-    <div class="feature-chart">
-        <div class="feature-new-bar" style="width: 70%">
-            <span class="new-feature">Email Todos to hey@sheldonize.com</span>
-            <span class="learn-more">(<a href="http://iwokeupthismorning.net/2014/10/23/hey-sheldonize/">Learn More</a>)</span>
-        </div>
-    </div>
-    <div class="feature-chart">
-        <div class="feature-new-bar" style="width: 90%">
-            <span class="new-feature">Add Markdown notes to your tasks or meetings</span>
-            <span class="learn-more">(<a href="http://iwokeupthismorning.net/2014/10/31/markdown/">Learn More</a>)</span>
-        </div>
+    <div class="col-md-1">
     </div>
 
-    <div class="feature-chart">
-        <div class="feature-new-bar" style="width: 95%">
-            <span class="new-feature">Search your tasks and meetings (notes included)</span>
-        </div>
+    <div class="col-xs-12 col-md-5">
+
+        Recurrent Meetings</br>
+        Google Calendar Integration</br>
+        Unlimited Archive of Tasks and Meetings</br>
+        Email Todos to hey@sheldonize.com (<a href="http://iwokeupthismorning.net/2014/10/23/hey-sheldonize/">Learn More</a>)</br>
+        Add Markdown notes to your tasks or meetings (<a href="http://iwokeupthismorning.net/2014/10/31/markdown/">Learn More</a>)</br>
+        Search your tasks and meetings (notes included)</br>
+        Support for Habits (recurring tasks)</br>
     </div>
-
-    <div class="feature-chart">
-        <div class="feature-new-bar" style="width: 85%">
-            <span class="new-feature">Support for Habits (recurring tasks)</span>
-        </div>
-    </div>
-
-
-
-</div>
 </div>
 
 <div class="row">
-<br/>
-<br/>
+    <br/>
+    <div class="hlinetop"></div>
+    <br/>
+</div>
+
+
+<div class="row">
+<div class="col-xs-12 text-center">
+Stay in the loop via <a
+    href="https://twitter.com/sheldonize">Twitter</a>, <a
+    href="https://plus.google.com/+Sheldonize">Google+</a>, <a
+    href="https://facebook.com/sheldonize">Facebook</a>, or <a href="http://iwokeupthismorning.net">IWokeUpThisMorning</a>. 
+</div>
 </div>
 
 {% endblock content %}

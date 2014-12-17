@@ -54,7 +54,7 @@ a.navbar-brand {
 }
 
 .love {
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 
@@ -91,7 +91,7 @@ a.navbar-brand {
  * color.
  */
 .navbar-sheldonize .navbar-toggle {
-  border-color: #ecf0f1;
+  border-color: #fff;
 }
 .navbar-sheldonize .navbar-toggle > .icon-bar {
   background-color: #e67e22; 
@@ -394,24 +394,24 @@ opacity: 1;
 
 /* Alerts for messages */
 .alert-danger {
-  color: #ecf0f1;
+  color: #fff;
   padding: 15px 14px 15px;
   border-radius: 4px;
-  background: #e74c3c;
+  background: #e67e22;
 }
 
 .alert-success {
- color: #ecf0f1;
+ color: #fff;
  padding: 15px 14px 15px;
  border-radius: 4px;
- background: #27ae60;
+ background: #e67e22;
 }
 
 .alert-warning {
   background: #3276b1;
   padding: 15px 14px 15px;
   border-radius: 4px;
-  color: #D9EDF7;
+  color: #e67e22;
 }
 
 .alert {
@@ -689,3 +689,29 @@ fieldset[disabled] .btn-sheldonize-orange.active {
   color: #fff;
 }
 
+/*Hang schedule this button niceline to hline */
+.nav-pills-sheldonize #calculate-schedule {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.container-fluid .nav-pills-sheldonize #calculate-schedule {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  right: 2px;
+}
+
+.nav-pills-sheldonize #spawn-habits {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.nav-pills-sheldonize #get-google-calendar {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+
+.nav-pills-sheldonize .glyphicon {
+  top: 0px;
+}
