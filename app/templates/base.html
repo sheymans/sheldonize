@@ -56,7 +56,7 @@
           </button>
           {% endif %}
           <a class="navbar-brand" href="/app/">
-            <img class="logo" src="{% static "app/img/sheldonize_header.png" %}" alt="sheldonize"/>
+            sheldonize
           </a>
         </div>
 
@@ -144,6 +144,13 @@
         {% block beforecontent %}{% endblock %}
       </div>
       <div class="row">
+        <div class="col-xs-12 text-center">
+          </br>
+          </br>
+          <div class="hlinetop"></div>
+        </div>
+      </div>
+      <div class="row">
         {% block filtercontent %}{% endblock %}
       </div>
       <div class="sheldonize-content">
@@ -152,7 +159,11 @@
       {% if user.is_authenticated %}
       <div class="row">
         <div class="col-xs-12 text-center">
-          <div class="love">Show us your <span class="glyphicon glyphicon-heart"></span> by <a href="/subscriptions/signup_donate">donating</a></div>
+          <br/>
+          <br/>
+          <br/>
+          <div class="hlinebottom"><span>v172</span></div>
+         <div class="love">Show us your <span class="glyphicon glyphicon-heart"></span> by <a href="/subscriptions/signup_donate">donating</a></div>
         </div>
       </div>
       {% endif %}
