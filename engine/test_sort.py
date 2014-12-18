@@ -72,7 +72,23 @@ class TestSort(unittest.TestCase):
         For 3 tasks where 2 are specified after another and a third one has priority A, we should schedule that last task first.
         """
         tasks = {626L: {'comes_after': 627L, 'when': 1}, 627L: {'when': 1}, 628L: {'priority': 0, 'when': 1}}
-        sorted_tasks = [628L, 627L, 626L]
+        sorted_tasks = [627L, 628L, 626L]
+        self.assertEqual(sort.sort_tasks(tasks), sorted_tasks)
+
+    def test_sort_20141217(self):
+        """
+        Do not just put an item without a priority at the back of the list. It might be that that items needs to come before something else.
+        """
+        tasks = {667L: {'when': 1}, 670L: {'priority': 0, 'when': 1}, 671L: {'priority': 1, 'comes_after': 667L, 'when': 1}}
+        sorted_tasks = [667L, 670L, 671L]
+        self.assertEqual(sort.sort_tasks(tasks), sorted_tasks)
+
+    def test_sort_20141217B(self):
+        """
+        A task 667L occurs in a comes_after however is not in the actual task list (because its due date is in the past).
+        """
+        tasks = {670L: {'priority': 0, 'when': 1}, 671L: {'priority': 1, 'comes_after': 667L, 'when': 1}}
+        sorted_tasks = [670L, 671L]
         self.assertEqual(sort.sort_tasks(tasks), sorted_tasks)
 
 

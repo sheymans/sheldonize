@@ -29,8 +29,12 @@ def smaller_task_than_due(tid1, tid2, tasks):
     """
     Smaller than based on due date.
     """
-    task1 = tasks[tid1]
-    task2 = tasks[tid2]
+    if tid1 in tasks and tid2 in tasks:
+        task1 = tasks[tid1]
+        task2 = tasks[tid2]
+    else:
+        # both ids need to be present in the tasks
+        return 0
     # Now on due dates
     if "due" in task1 and "due" in task2:
         return task1["due"] - task2["due"]
@@ -47,8 +51,12 @@ def smaller_task_than_due(tid1, tid2, tasks):
 # deprecated for now, we sorting the priorities already in the sort, and just
 # use smaller_task_than_due
 def smaller_task_than(tid1, tid2, tasks):
-    task1 = tasks[tid1]
-    task2 = tasks[tid2]
+
+    if tid1 in tasks and tid2 in tasks:
+        task1 = tasks[tid1]
+        task2 = tasks[tid2]
+    else:
+        return 0
 
     if "priority" in task1 and "priority" in task2:
         diff = task1["priority"] - task2["priority"]
@@ -78,6 +86,8 @@ def sort_tasks(tasks):
     # determine whether priorities exist (everything without priority will come
     # after those)
     exists_priorities = [t_id for t_id, it in tasks.iteritems() if 'priority' in it]
+    # ids that occurr in some comes_after
+    ids_in_comes_after = [it['comes_after'] for t_id, it in tasks.iteritems() if 'comes_after' in it]
 
     # data will be dict of { node: deps, node: deps}
     data = {}
@@ -100,8 +110,9 @@ def sort_tasks(tasks):
                 data[task_id] = set(deps)
 
         # this item does not have a priority but they do exist in general, so
-        # this item has to come after.
-        elif 'priority' not in item and exists_priorities:
+        # this item has to come after unless it is part of some comes after (in
+        # which case it was alraeady sorted aout by the earlier).
+        elif 'priority' not in item and exists_priorities and not task_id in ids_in_comes_after:
             if task_id in data: # if we already added something from comes_after above
                 data[task_id] |= set(exists_priorities)
             else:
