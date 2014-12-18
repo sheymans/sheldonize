@@ -6,6 +6,7 @@
 <!-- For bootstrap-datetimepicker -->
 <link rel="stylesheet" href="{% static "bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %}">
 <link rel="stylesheet" href="{% static "app/css/table.css" %}">
+<link rel="stylesheet" href="{% static "bootstrap-tour/css/boootstrap-tour-standalone.min.css" %}">
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -60,6 +61,11 @@ Preferences
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="{% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}"></script>
 <!-- end bootstrap-datetimepicker requirements -->
+<!-- bootstrap-tour -->
+<script src="{% static "bootstrap-tour/js/bootstrap-tour-standalone.min.js" %}"></script>
+<script src="{% static "app/js/sheldonize_tour.js" %}"></script>
+
+<!-- specific -->
 <script src="{% static "app/js/preferences.js" %}"></script>
 {% endblock morejs %}
 

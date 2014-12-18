@@ -3,6 +3,7 @@
 
 {% block customcss %}
 <link rel="stylesheet" href="{% static "app/css/table.css" %}">
+<link rel="stylesheet" href="{% static "bootstrap-tour/css/boootstrap-tour-standalone.min.css" %}">
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -188,11 +189,6 @@ Tasks
 
 {% endif %}
 
-{% if what_tasks.first %}
-<!-- First time sign-up stuff -->
-{% endif %}
-
-
 <!-- Stuff for django-fm. To attach in modals. Originally this is included
      fm/modal.html but we redo that. -->
 {% include "app/modals.html" %}
@@ -208,5 +204,21 @@ Tasks
 <script src="{% static "app/js/archive-tasks.js" %}"></script>
 {% endif %}
 
+<!-- bootstrap-tour -->
+<script src="{% static "bootstrap-tour/js/bootstrap-tour-standalone.min.js" %}"></script>
+<script src="{% static "app/js/sheldonize_tour.js" %}"></script>
+
+<!-- After everything is set up you are going to set up the tour if need be
+     when it is the first visit or when the user gets guided to the first visit page.
+-->
+{% if what_tasks.first %}
+<!-- in this case we restart the tour -->
+<script type="text/javascript">
+  $(function() {
+      tour.restart();
+      });
+</script>
+
+{% endif %}
 {% endblock %}
 

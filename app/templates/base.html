@@ -113,6 +113,7 @@
               <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="{% url 'userprofile' %}">Settings</a></li>
+              <li><a href="{% url 'tasks_firstvisit' %}">Take Tour</a></li>
               <li><a href="{% url 'support' %}">Get Help</a></li>
               {% if not user.userprofile.is_social %}
               <li><a href="{% url 'password_change' %}">Change Password</a></li>

@@ -715,3 +715,22 @@ fieldset[disabled] .btn-sheldonize-orange.active {
 .nav-pills-sheldonize .glyphicon {
   top: 0px;
 }
+
+
+/* styling the popovers */
+.popover {
+  font-family: 'Fira Sans', sans-serif;
+  color: #fff;
+  background-color: #000;
+}
+
+.popover .btn {
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.popover.right > .arrow:after {
+  border-right-color: #000;
+}
