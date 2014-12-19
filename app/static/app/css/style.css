@@ -732,5 +732,30 @@ fieldset[disabled] .btn-sheldonize-orange.active {
 }
 
 .popover.right > .arrow:after {
-  border-right-color: #000;
+  display:none;
 }
+
+.popover.top > .arrow:after {
+  display:none;
+}
+
+.popover.bottom > .arrow:after {
+  display:none;
+}
+
+.popover.left > .arrow:after {
+  display:none;
+}
+
+
+
+.popover.orphan > .arrow:after {
+  display: none;
+}
+.popover.orphan > .arrow {
+  display: none;
+}
+
+
+
+

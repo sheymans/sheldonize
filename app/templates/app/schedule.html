@@ -5,6 +5,7 @@
 {% block customcss %}
 <link rel='stylesheet' href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.css">
 <link rel="stylesheet" href="{% static "app/css/schedule.css" %}">
+<link rel="stylesheet" href="{% static "bootstrap-tour/css/boootstrap-tour-standalone.min.css" %}">
 {% endblock %}
 
 {% block title %}
@@ -137,6 +138,12 @@ Schedule
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+<!-- bootstrap-tour -->
+<script src="{% static "bootstrap-tour/js/bootstrap-tour-standalone.min.js" %}"></script>
+<script src="{% static "app/js/sheldonize_tour.js" %}"></script>
+
+
 <script src="{% static "app/js/schedule.js" %}"></script>
 <!-- now call the function in schedule.js that passes the right event feedurl
      to the function in schedule.js -->

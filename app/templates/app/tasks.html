@@ -27,8 +27,8 @@ Tasks
     <ul class="nav nav-pills nav-pills-sheldonize">
         {% if what_tasks.when = 'NoTNoW' %}
         <li class="active"><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
-        <li><a href="/app/tasks/incomplete/today/">Today</a></li>
-        <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
+        <li><a id="today_tab" href="/app/tasks/incomplete/today/">Today</a></li>
+        <li><a id="thisweek_tab" href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         <li><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
         {% elif what_tasks.when = 'T' %}
         <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
