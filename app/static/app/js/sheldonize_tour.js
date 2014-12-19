@@ -32,7 +32,7 @@ $( document ).ready(function() {
                  {
                      placement: 'left',
                      element: ".form-group",
-                     content: "We can quickly add tasks here. Click <i>next</i> and we'll add that we need to walk the dog.",
+                     content: "We can quickly add tasks. Click <i>next</i> and we'll add that we need to walk the dog.",
                      prev: 0,
                      path: "/app/tasks/",
                      onNext: function(tour) { 
