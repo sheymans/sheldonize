@@ -96,7 +96,7 @@ div.scheduleitem {
 
 /* Make sure the font of links in the schedule is again Fira Sans */
 a > .fc-content > .fc-title {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Fira Sans', Helvetica, Arial, sans-serif;
 }
 
 

@@ -13,7 +13,7 @@
 
 body {
   /* font-family: 'Lato', sans-serif; */
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Fira Sans', Helvetica, Arial, sans-serif;
   font-weight: 400;
 /*  background-color: #ececec; */
 }
@@ -33,7 +33,7 @@ a:hover, a:focus {
 
 a.navbar-brand {
   color: #444444;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Fira Sans', Helvetica, Arial, sans-serif;
   font-weight: 700;
   text-shadow: none;
 }
@@ -719,7 +719,7 @@ fieldset[disabled] .btn-sheldonize-orange.active {
 
 /* styling the popovers */
 .popover {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Fira Sans', Helvetica, Arial, sans-serif;
   color: #fff;
   background-color: #000;
 }
