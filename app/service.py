@@ -141,7 +141,7 @@ def project_2_dict(project, all_projects):
             all_projects.remove(p)
 
     # also add any tasks that are part of this project, to the children:
-    for t in Task.objects.filter(part_of_id=project.id):
+    for t in Task.objects.filter(part_of_id=project.id,done=False):
         children.append(t)
 
     jso = {}
