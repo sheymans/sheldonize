@@ -16,7 +16,7 @@ $( document ).ready(function() {
         //});
 
         // set up the markdown notes on the modal
-        //$.markdown_note("#habit-comment", "habit-id", "#habit-edit", "/app/habits/note/ajax/");
+        $.markdown_note("#task-comment", "task-id", "#task-edit", "/app/tasks/note/ajax/");
 
     });
 
