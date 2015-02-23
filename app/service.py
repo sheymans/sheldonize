@@ -1,4 +1,4 @@
-from models import Task, ScheduleItem, Preference, Meeting, Habit
+from models import Task, ScheduleItem, Preference, Meeting, Habit, Project
 from users.models import UserProfile
 import time
 import datetime
@@ -116,6 +116,55 @@ def meetings_2_dict(meetings, user_timezone):
         jso["eventStartEditable"] = True
         jso["eventDurationEditable"] = True
         result.append(jso.copy())
+    return result
+
+def find_root_projects(projects):
+    """
+    Find the projects that are not part of any project.
+    """
+    result = []
+    for project in projects:
+        if not project.part_of:
+            result.append(project)
+    return result
+
+def project_2_dict(project, all_projects):
+    """
+    Get the children of the project and create json.
+    """
+    children = []
+    for p in all_projects:
+        if p.part_of and p.part_of.id == project.id:
+            # then p is a child
+            children.append(p)
+            # and remove it from all_projects to avoid cycles
+            all_projects.remove(p)
+
+    # also add any tasks that are part of this project, to the children:
+    for t in Task.objects.filter(part_of_id=project.id):
+        children.append(t)
+
+    jso = {}
+    jso["id"] = project.id
+    text_link = "<a href='/app/projects/modal/update/" + str(project.id) +"/' class='fm-update' data-fm-callback='reload'>" + project.name + "</a>"
+    jso["text"] = text_link
+    jso["icon"] = "glyphicon glyphicon-folder-close"
+    if children:
+        jso["children"] = []
+        for c in children:
+            if isinstance(c, Project):
+                jso["children"].append(project_2_dict(c, all_projects))
+            else: # it's a task
+                text_link = "<a href='/app/tasks/modal/update/" + str(c.id) +"/' class='fm-update' data-fm-callback='reload'>" + c.name + "</a>"
+                jso["children"].append({"text": text_link , "icon": "glyphicon glyphicon-leaf" } )
+    return jso
+
+def projects_2_dict(projects):
+    result = []
+    all_projects = list(projects)
+    roots = find_root_projects(all_projects)
+    for project in roots:
+        result.append(project_2_dict(project, all_projects))
     return result
 
 

@@ -1177,4 +1177,14 @@ def projects(request):
     else:
         raise Http404
  
+# Return the projects in a format suitable for jsTree
+@login_required
+def projects_ajax(request):
+    if request.method == "GET":
+        projects = Project.objects.filter(user=request.user)
+        jprojects = service.projects_2_dict(projects)
+        return HttpResponse(json.dumps(jprojects), content_type="application/json")
+    else:
+        raise Http404
+
 

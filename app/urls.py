@@ -77,6 +77,7 @@ urlpatterns = patterns('',
     url(r'^projects/modal/delete/(?P<project_pk>\d+)/$', modal_views.ProjectDeleteView.as_view(), name="project_delete"),
     # projects
     url(r'^projects/$', views.projects, name='projects'),
+    url(r'^projects/ajax/$', views.projects_ajax, name='projects_ajax'),
 
 )
 

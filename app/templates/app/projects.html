@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block customcss %}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.0.9/themes/default/style.min.css" />
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -35,12 +36,7 @@ Projects
 
 {% if projects %}
 
-<ul>
-{% for p in projects %}
-<li><a href="/app/projects/modal/update/{{p.id}}/" id="{{p.id}}" class="fm-update" data-fm-callback="reload">{{p.name}}</a> which is part of {{p.part_of.name}}</li>
-
-{% endfor %}
-</ul>
+<div id="projecttree"></div>
 
 {% else %}
 
@@ -68,6 +64,7 @@ Projects
 {% endblock %}
 
 {% block morejs %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.0.9/jstree.min.js"></script>
 <script src="{% static "app/js/projects.js" %}"></script>
 {% endblock %}
 

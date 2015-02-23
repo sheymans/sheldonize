@@ -20,4 +20,13 @@ $( document ).ready(function() {
 
     });
 
+    // Initialize the project tree:
+    $('#projecttree').jstree({
+        'core' : {
+            'data' : {
+                "url" : "/app/projects/ajax/",
+            }
+        }
+    });
+
 });
