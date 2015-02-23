@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block customcss %}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Projects
+{% endblock %}
+
+{% block beforecontent %}
+{% if addprojectform %}
+<!-- Make sure that from tablets on (sm), the form is filling the full row -->
+<div class="col-sm-12">
+    {% crispy addprojectform %}
+</div>
+{% endif %}
+{% endblock beforecontent %}
+
+{% block filtercontent %}
+{% endblock filtercontent %}
+
+
+{% block header %}
+<h3>Projects</h3>
+
+{% endblock header %}
+
+
+{% block content %}
+
+
+
+{% if projects %}
+
+<ul>
+{% for p in projects %}
+<li><a href="/app/projects/modal/update/{{p.id}}/" id="{{p.id}}" class="fm-update" data-fm-callback="reload">{{p.name}}</a> which is part of {{p.part_of.name}}</li>
+
+{% endfor %}
+</ul>
+
+{% else %}
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 text-center">
+        (no projects)
+    </div>
+</div>
+
+
+{% endif %}
+
+<!-- Stuff for django-fm. To attach in modals. Originally this is included
+     fm/modal.html but we redo that. -->
+{% include "app/modals.html" %}
+<!-- end Stuff for django-fm -->
+
+
+
+{% endblock %}
+
+{% block morejs %}
+<script src="{% static "app/js/projects.js" %}"></script>
+{% endblock %}
+

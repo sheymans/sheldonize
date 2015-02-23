@@ -11,9 +11,9 @@ from django.conf import settings
 from users.models import UserProfile, Invite
 
 from django.contrib.auth.models import User
-from models import Task, ScheduleItem, Preference, Meeting, CredentialsModel, FlowModel, Habit
+from models import Task, ScheduleItem, Preference, Meeting, CredentialsModel, FlowModel, Habit, Project
 from tables import TaskTable, PreferenceTable, MeetingTable, HabitTable
-from forms import TaskForm, AddTaskForm, AddPreferenceForm, MeetingForm, AddMeetingForm, HabitForm, AddHabitForm
+from forms import TaskForm, AddTaskForm, AddPreferenceForm, MeetingForm, AddMeetingForm, HabitForm, AddHabitForm, ProjectForm, AddProjectForm
 import service
 import stats
 import json
@@ -1139,5 +1139,42 @@ def habit(request, habit_id):
         raise Http404
 
 
+# Projects
 
+@login_required
+@user_passes_test(lambda user: user.is_active, login_url="/subscriptions/signup/")
+def projects(request):
+    if request.method == "GET":
+        projs = Project.objects.filter(user=request.user)
+        form = AddProjectForm()
+        return render(request, "app/projects.html", {'projects': projs, 'addprojectform': form})
+
+    elif request.method == "POST":
+        success = ""
+        warning = ""
+        error = ""
+        if 'new_project' in request.POST:
+            warning = ""
+            form = AddProjectForm(request.POST)
+            if form.is_valid():
+                project_instance = form.save(commit=False)
+                project_instance.user=request.user
+                success = "Project added."
+                # don't forget to save then
+                project_instance.save()
+            else:
+                error = "Project could not be added."
+            
+        if success:
+            messages.add_message(request, messages.SUCCESS, success)
+        elif warning:
+            messages.add_message(request, messages.WARNING, warning)
+        elif error:
+            messages.add_message(request, messages.ERROR, error)
+
+        return redirect_to_current(request, projects)
+
+    else:
+        raise Http404
+ 
 

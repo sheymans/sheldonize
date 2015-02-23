@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, DateTimeField, TimeField, CharField, HiddenInput, DateField
 from django.core.urlresolvers import reverse
-from models import Task, Preference, Meeting, Habit
+from models import Task, Preference, Meeting, Habit, Project
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field, BaseInput 
@@ -49,6 +49,7 @@ class TaskForm(ModelForm):
             Field('when'), 
             Field('duration', placeholder='how long do you think your task will at most take (in minutes)'),
             Field('comes_after'),
+            Field('part_of'),
             )   
 
     def __init__(self, *args, **kwargs):
@@ -259,6 +260,50 @@ class AddHabitForm(ModelForm):
       )
     class Meta:
         model = Habit 
+        exclude = ('user',)
+
+class AddProjectForm(ModelForm):
+
+
+    helper = FormHelper()
+    helper.form_class = 'form-horizontal sheldonize-form'
+    helper.field_class = 'col-xs-12'
+    helper.form_method = 'POST'
+    helper.form_action = '.'
+
+    helper.layout = Layout(
+            FieldWithButtons(
+                Field('name', placeholder="Quick add projects (press Enter or the '+' sign)"),
+                StrictButton('<span class="glyphicon glyphicon-plus"></span>', type="submit", name="new_project", css_class='btn btn-sheldonize btn-sheldonize-orange'))
+      )
+    class Meta:
+        model = Project
+        exclude = ('user',)
+
+class ProjectForm(ModelForm):
+    helper = FormHelper()
+    helper.form_class='form-horizontal sheldonize-form'
+    helper.label_class = 'col-sm-2'
+    helper.field_class = 'col-sm-10'
+    helper.form_method = 'POST'
+    # the action is what we need to catch
+    helper.form_action = '.'
+    helper.add_input(SubmitButton('submit_save_project', 'Update', css_class='btn-sheldonize btn-sheldonize-primary'))
+    helper.add_input(SubmitButton('delete-project', 'Delete', css_class='btn-sheldonize btn-sheldonize-default details-delete-button'))
+
+    helper.layout = Layout(
+            Field('name', placeholder='a name for your project'),
+            Field('part_of'),
+            )   
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        # exclude self
+        self.fields['part_of'].queryset = Project.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id)
+
+
+    class Meta:
+        model = Project 
         exclude = ('user',)
 
 

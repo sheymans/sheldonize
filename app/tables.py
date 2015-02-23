@@ -44,6 +44,8 @@ def order_by(self, aliases):
                 self.queryset = self.queryset.extra(select={'null_due': 'app_task.due is null'}).order_by('null_due', *(translate(a) for a in accessors))
             elif 'comes_after' in accessors:
                 self.queryset = self.queryset.extra(select={'null_comes_after': 'app_task.comes_after_id is null'}).order_by('null_comes_after', *(translate(a) for a in accessors))
+            elif 'part_of' in accessors:
+                self.queryset = self.queryset.extra(select={'null_part_of': 'app_task.part_of_id is null'}).order_by('null_part_of', *(translate(a) for a in accessors))
             elif 'duration' in accessors:
                 self.queryset = self.queryset.extra(select={'null_duration': 'app_task.duration is null'}).order_by('null_duration', *(translate(a) for a in accessors))
             else:
@@ -76,6 +78,7 @@ class TaskTable(tables.Table):
     priority = tables.Column(empty_values=())
     duration = tables.Column(empty_values=())
     comes_after = tables.Column(empty_values=())
+    part_of = tables.Column(empty_values=())
     # the habit indication
     habit = tables.TemplateColumn('{% if record.habit %}<span class="glyphicon glyphicon-repeat"</span>{% endif %}')
 
@@ -136,10 +139,19 @@ class TaskTable(tables.Table):
         else:
             return ""
 
+    def render_part_of(self, value, record):
+        if value:
+            # value is of type Project (the part_of) 
+            shorter = (value.name[:15] + '..') if len(value.name) > 15 else value.name
+            return mark_safe("<i>" + shorter + "</i>")
+        else:
+            return ""
+
+
     class Meta:
         model = Task
-        fields = ('selection', 'name', 'priority', 'topic', 'due', 'when', 'duration', 'comes_after', 'created')
-        sequence = ('selection', 'name', 'priority', 'topic', 'duration',  'comes_after', 'due',  'created')
+        fields = ('selection', 'name', 'priority', 'topic', 'due', 'when', 'duration', 'comes_after', 'part_of', 'created')
+        sequence = ('selection', 'name', 'priority', 'topic', 'duration',  'comes_after', 'part_of', 'due',  'created')
         exclude = ('done', 'when', 'user', )
         # default ordering
         # we removed the ordering for Tasks as we are doing it via the raw SQL

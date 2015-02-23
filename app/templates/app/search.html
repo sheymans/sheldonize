@@ -18,7 +18,7 @@ Search Results
 <ol>
     {% for result in tasks_open_search_results %}
         <li>
-             <a href="/app/tasks/modal/update/{{result.object.id}}/" class="fm-update" data-fm-callbcack="reload">{{result.title}}</a>
+             <a href="/app/tasks/modal/update/{{result.object.id}}/" class="fm-update" data-fm-callback="reload">{{result.title}}</a>
         </li>
     {% endfor %}
 </ol>
@@ -32,7 +32,7 @@ Search Results
 <ol>
     {% for result in tasks_closed_search_results %}
         <li>
-             <a href="/app/tasks/modal/update/{{result.object.id}}/" class="fm-update" data-fm-callbcack="reload">{{result.title}}</a>
+             <a href="/app/tasks/modal/update/{{result.object.id}}/" class="fm-update" data-fm-callback="reload">{{result.title}}</a>
         </li>
     {% endfor %}
 </ol>
@@ -46,7 +46,7 @@ Search Results
 <ol>
     {% for result in meetings_search_results %}
         <li>
-             <a href="/app/meetings/modal/update/{{result.object.id}}/" class="fm-update" data-fm-callbcack="reload">{{result.title}}</a>
+             <a href="/app/meetings/modal/update/{{result.object.id}}/" class="fm-update" data-fm-callback="reload">{{result.title}}</a>
         </li>
     {% endfor %}
 </ol>

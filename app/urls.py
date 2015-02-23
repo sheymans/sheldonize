@@ -73,6 +73,10 @@ urlpatterns = patterns('',
     url(r'^tasks/modal/delete/(?P<task_pk>\d+)/$', modal_views.TaskDeleteView.as_view(), name="task_delete"),
     url(r'^habits/modal/update/(?P<habit_pk>\d+)/$', modal_views.HabitUpdateView.as_view(), name="habit_update"),
     url(r'^habits/modal/delete/(?P<habit_pk>\d+)/$', modal_views.HabitDeleteView.as_view(), name="habit_delete"),
+    url(r'^projects/modal/update/(?P<project_pk>\d+)/$', modal_views.ProjectUpdateView.as_view(), name="project_update"),
+    url(r'^projects/modal/delete/(?P<project_pk>\d+)/$', modal_views.ProjectDeleteView.as_view(), name="project_delete"),
+    # projects
+    url(r'^projects/$', views.projects, name='projects'),
 
 )
 

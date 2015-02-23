@@ -14,6 +14,23 @@ from oauth2client.django_orm import FlowField
 
 size = models.IntegerField()
 
+### Projects
+
+class Project(models.Model):
+    user = models.ForeignKey(User)
+    name = models.CharField(verbose_name='name', max_length=140)
+    part_of = models.ForeignKey('self', verbose_name="part of", null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __unicode__(self):
+        return self.name
+
+    # to be able to check for class name in django templates
+    def get_cname(self):
+        return 'project'
+
+
+## Tasks
+
 class Task(models.Model):
     WORK_ON_IT = (
             ('T', 'Today'),
@@ -44,7 +61,8 @@ class Task(models.Model):
     note = models.TextField(null=True, blank=True)
     # Is this a task that comes from a habit?
     habit = models.BooleanField(verbose_name='habit?', default=False)
-
+    # The Project this task is potentially part of:
+    part_of = models.ForeignKey(Project, verbose_name="part of", null=True, blank=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return self.name
@@ -193,6 +211,8 @@ class Habit(models.Model):
     # to be able to check for class name in django templates
     def get_cname(self):
         return 'habit'
+
+
 
 
 ### Searching/Registering which models we'll allow for search

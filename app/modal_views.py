@@ -2,8 +2,8 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from models import Meeting, Task, Habit
-from forms import MeetingForm, TaskForm, HabitForm
+from models import Meeting, Task, Habit, Project
+from forms import MeetingForm, TaskForm, HabitForm, ProjectForm
 from braces.views import LoginRequiredMixin
 
 # from django-fm
@@ -120,6 +120,29 @@ class HabitDeleteView(AjaxDeleteView, LoginRequiredMixin):
 
     def post_delete(self):
         messages.add_message(self.request, messages.SUCCESS, "Deleted habit.")
+        pass
+
+
+### Projects
+
+class ProjectUpdateView(AjaxUpdateView, LoginRequiredMixin):
+    # the default is app/modal_form which is for meetings.
+    template_name = "app/modal_form_project.html"
+    form_class = ProjectForm
+    model = Project
+    pk_url_kwarg = 'project_pk'
+
+    def post_save(self):
+        messages.add_message(self.request, messages.SUCCESS, "Updated Project.")
+        pass
+
+class ProjectDeleteView(AjaxDeleteView, LoginRequiredMixin):
+    template_name = "app/modal_form_project.html"
+    model = Project
+    pk_url_kwarg = 'project_pk'
+
+    def post_delete(self):
+        messages.add_message(self.request, messages.SUCCESS, "Deleted project.")
         pass
 
 
