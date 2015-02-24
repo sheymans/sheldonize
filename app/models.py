@@ -20,6 +20,7 @@ class Project(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(verbose_name='name', max_length=140)
     part_of = models.ForeignKey('self', verbose_name="part of", null=True, blank=True, on_delete=models.SET_NULL)
+    note = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return self.name

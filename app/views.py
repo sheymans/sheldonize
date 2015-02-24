@@ -1000,6 +1000,29 @@ def habit_note_ajax(request):
     else:
         raise Http404
 
+@login_required
+def project_note_ajax(request):
+    if request.method == "POST":
+        note = request.POST["note"]
+        id = request.POST["id"]
+
+        if id:
+            project = Project.objects.get(id=id)
+
+            # check whether this is indeed yours
+            if project.user != request.user:
+                raise PermissionDenied
+
+            project.note = note
+
+        project.save()
+
+        return HttpResponse(json.dumps({'id': id}), content_type="application/json")
+
+    else:
+        raise Http404
+
+
 
 # Search
 

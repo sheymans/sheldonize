@@ -136,6 +136,18 @@ class ProjectUpdateView(AjaxUpdateView, LoginRequiredMixin):
         messages.add_message(self.request, messages.SUCCESS, "Updated Project.")
         pass
 
+    def pre_save(self):
+        
+        # we pick up the original out of the database:
+        project = get_object_or_404(Project, pk=self.object.id)
+        original_note = Project.objects.get(id=project.id).note
+        
+        # now set those values in self.object (which is the object that is
+        # going to be saved):
+        self.object.note = original_note
+        pass
+
+
 class ProjectDeleteView(AjaxDeleteView, LoginRequiredMixin):
     template_name = "app/modal_form_project.html"
     model = Project
