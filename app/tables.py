@@ -93,7 +93,7 @@ class TaskTable(tables.Table):
 
     def render_name(self, value, record):
         if value:
-            shorter = (value[:65] + '..') if len(value) > 65 else value
+            shorter = (value[:60] + '..') if len(value) > 60 else value
             return shorter
         else:
             return ""
