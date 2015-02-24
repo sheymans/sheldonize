@@ -18,6 +18,9 @@ $( document ).ready(function() {
         // set up the markdown notes on the modal
         $.markdown_note("#task-comment", "task-id", "#task-edit", "/app/tasks/note/ajax/");
 
+        // Add data attributes to labels:
+        $(".sheldonize-form :checkbox").attr("data-labelauty","|");
+        $(".sheldonize-form :checkbox").labelauty({same_width: true });
     });
 
     // Initialize the project tree:
