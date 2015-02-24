@@ -128,7 +128,30 @@ def find_root_projects(projects):
             result.append(project)
     return result
 
-def project_2_dict(project, all_projects):
+def create_text_link_project(project):
+    return "<a href='/app/projects/modal/update/" + str(project.id) +"/' class='fm-update' data-fm-callback='reload'>" + project.name + "</a>"
+
+def create_text_link_task(task, user_timezone):
+    due_date = ""
+    too_late_class = ""
+    if task.due:
+        due_date = arrow.get(task.due).to(user_timezone)
+        now = arrow.utcnow().to(user_timezone)
+        in_past = now > due_date
+        if in_past:
+            too_late_class = "toolate"
+
+    base = ""
+    if task.when == 'T' or task.when == 'W':
+        base = "<a href='/app/tasks/modal/update/" + str(task.id) +"/' class='fm-update " + too_late_class + "'  data-fm-callback='reload'>" + task.name + "</a>"
+    else:
+        # not yet specifically determined time, so greyed out
+        base = "<a href='/app/tasks/modal/update/" + str(task.id) +"/' class='fm-update greylink " + too_late_class + "' data-fm-callback='reload'>" + task.name + "</a>"
+    if task.due:
+        base += "&nbsp;&nbsp;(<i>" + str(due_date.humanize()) + "</i>)"
+    return base
+
+def project_2_dict(project, all_projects, user_timezone):
     """
     Get the children of the project and create json.
     """
@@ -146,25 +169,25 @@ def project_2_dict(project, all_projects):
 
     jso = {}
     jso["id"] = project.id
-    text_link = "<a href='/app/projects/modal/update/" + str(project.id) +"/' class='fm-update' data-fm-callback='reload'>" + project.name + "</a>"
+    text_link = create_text_link_project(project)
     jso["text"] = text_link
     jso["icon"] = "glyphicon glyphicon-folder-close"
     if children:
         jso["children"] = []
         for c in children:
             if isinstance(c, Project):
-                jso["children"].append(project_2_dict(c, all_projects))
+                jso["children"].append(project_2_dict(c, all_projects, user_timezone))
             else: # it's a task
-                text_link = "<a href='/app/tasks/modal/update/" + str(c.id) +"/' class='fm-update' data-fm-callback='reload'>" + c.name + "</a>"
+                text_link = create_text_link_task(c, user_timezone)
                 jso["children"].append({"text": text_link , "icon": "glyphicon glyphicon-leaf" } )
     return jso
 
-def projects_2_dict(projects):
+def projects_2_dict(projects, user_timezone):
     result = []
     all_projects = list(projects)
     roots = find_root_projects(all_projects)
     for project in roots:
-        result.append(project_2_dict(project, all_projects))
+        result.append(project_2_dict(project, all_projects, user_timezone))
     return result
 
 

@@ -11,9 +11,9 @@ $( document ).ready(function() {
         // as markdown note taking.)
         //
         // Put a datetimepicker on the start and end field:
-        //$('#id_due').datetimepicker({
-        //    minuteStepping: 15,
-        //});
+        $('#id_due').datetimepicker({
+            minuteStepping: 15,
+        });
 
         // set up the markdown notes on the modal
         $.markdown_note("#task-comment", "task-id", "#task-edit", "/app/tasks/note/ajax/");

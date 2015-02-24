@@ -1182,7 +1182,8 @@ def projects(request):
 def projects_ajax(request):
     if request.method == "GET":
         projects = Project.objects.filter(user=request.user)
-        jprojects = service.projects_2_dict(projects)
+        user_timezone = service.get_timezone(request.user)
+        jprojects = service.projects_2_dict(projects, user_timezone)
         return HttpResponse(json.dumps(jprojects), content_type="application/json")
     else:
         raise Http404

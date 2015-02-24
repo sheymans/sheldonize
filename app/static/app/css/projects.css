@@ -1,0 +1,15 @@
+a.greylink {
+  color: #f6d0af;
+}
+
+a.greylink:hover, a.greylink:focus {
+  color: #f6d0af;
+}
+
+a.toolate {
+  color: red;
+}
+
+a.toolate:hover, a.toolate:focus {
+  color: red;
+}
