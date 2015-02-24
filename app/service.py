@@ -157,11 +157,12 @@ def project_2_dict(project, all_projects, user_timezone):
     """
     children = []
     for p in all_projects:
-        if p.part_of and p.part_of.id == project.id:
+        if p.id != project.id and p.part_of and p.part_of.id == project.id:
             # then p is a child
             children.append(p)
-            # and remove it from all_projects to avoid cycles
-            all_projects.remove(p)
+    # add this point you collected all project children of project so remove it
+    # from the list
+    all_projects.remove(project)
 
     # also add any tasks that are part of this project, to the children:
     for t in Task.objects.filter(part_of_id=project.id,done=False):

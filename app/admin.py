@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app.models import Task, ScheduleItem, Meeting, Preference, CredentialsModel, FlowModel, Habit
+from app.models import Task, ScheduleItem, Meeting, Preference, CredentialsModel, FlowModel, Habit, Project
 
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('name', 'done', 'done_date', 'due', 'comes_after', 'topic', 'when', 'duration', 'created', 'user', 'habit')
@@ -8,6 +8,8 @@ class TaskAdmin(admin.ModelAdmin):
 class HabitAdmin(admin.ModelAdmin):
     list_display = ('name', 'topic', 'when', 'duration', 'created', 'user')
 
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('name', 'part_of')
 
 class ScheduleItemAdmin(admin.ModelAdmin):
     list_display = ('task', 'from_date', 'to_date', 'status', 'user')
@@ -31,6 +33,7 @@ class StorageAdmin(admin.ModelAdmin):
 
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Habit, HabitAdmin)
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(ScheduleItem, ScheduleItemAdmin)
 admin.site.register(Meeting, MeetingAdmin)
 admin.site.register(Preference, PreferenceAdmin)
