@@ -114,8 +114,8 @@ class AddTaskForm(ModelForm):
 
 
 class AddPreferenceForm(ModelForm):
-    from_time = DateTimeField(required=False,input_formats = ['%I:%M %p'])
-    to_time = DateTimeField(required=False,input_formats = ['%I:%M %p'])
+    from_time = DateTimeField(input_formats = ['%I:%M %p'])
+    to_time = DateTimeField(input_formats = ['%I:%M %p'])
 
     helper = FormHelper()
     helper.form_class = 'form-horizontal sheldonize-form'

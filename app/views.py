@@ -488,6 +488,8 @@ def preferences(request):
                 success = "Preference added."
             else:
                 error = "Preference could not be added."
+                messages.add_message(request, messages.ERROR, error)
+                return render(request, 'app/preferences.html', {'addpreferenceform': form})
 
             
         if success:
