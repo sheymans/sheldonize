@@ -408,10 +408,10 @@ opacity: 1;
 }
 
 .alert-warning {
-  background: #3276b1;
+  color: #fff;
   padding: 15px 14px 15px;
   border-radius: 4px;
-  color: #e67e22;
+  background: #e67e22;
 }
 
 .alert {
