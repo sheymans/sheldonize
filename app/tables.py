@@ -55,6 +55,8 @@ def order_by(self, aliases):
                 self.queryset = self.queryset.extra(select={'null_topic': 'length(app_habit.topic) <= 0' }).order_by('null_topic', *(translate(a) for a in accessors))
             elif 'when' in accessors:
                 self.queryset = self.queryset.extra(select={'null_when': 'app_habit.when is null'}).order_by('null_when', *(translate(a) for a in accessors))
+            elif 'part_of' in accessors:
+                self.queryset = self.queryset.extra(select={'null_part_of': 'app_habit.part_of_id is null'}).order_by('null_part_of', *(translate(a) for a in accessors))
             elif 'duration' in accessors:
                 self.queryset = self.queryset.extra(select={'null_duration': 'app_habit.duration is null'}).order_by('null_duration', *(translate(a) for a in accessors))
             else:
@@ -166,6 +168,7 @@ class HabitTable(tables.Table):
     topic = tables.Column(empty_values=())
     when = tables.Column(empty_values=())
     duration = tables.Column(empty_values=())
+    part_of = tables.Column(empty_values=())
 
     def render_created(self, value, record):
         # value is utc record.timezone is something like America/Los_Angeles
@@ -188,6 +191,13 @@ class HabitTable(tables.Table):
             return "(" + value + ")"
         else:
             return ""
+    
+    def render_part_of(self, value, record):
+        if value:
+            return value 
+        else:
+            return ""
+
 
     def render_when(self, value, record):
         if value:
@@ -203,8 +213,8 @@ class HabitTable(tables.Table):
 
     class Meta:
         model = Habit 
-        fields = ('selection', 'name', 'topic', 'when', 'duration', 'created')
-        sequence = ('selection', 'name', 'topic', 'when', 'duration', 'created')
+        fields = ('selection', 'name', 'topic', 'part_of', 'when', 'duration', 'created')
+        sequence = ('selection', 'name', 'topic', 'part_of', 'when', 'duration', 'created')
         exclude = ('done', 'user', )
         # default ordering
         order_by = ('-created')

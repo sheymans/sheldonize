@@ -237,9 +237,15 @@ class HabitForm(ModelForm):
             # (http://stackoverflow.com/questions/22002861/booleanfield-checkbox-not-render-correctly-with-crispy-forms-using-bootstrap)
             Field('name', placeholder='a name for your habit'),
             Field('topic', placeholder='general area/topic/project this habit belongs to'),
+            Field('part_of'),
             Field('when'), 
             Field('duration', placeholder='how much time do you want to spend on this habit in each session (in minutes)'),
             )   
+
+    def __init__(self, *args, **kwargs):
+        super(HabitForm, self).__init__(*args, **kwargs)
+        self.fields['part_of'].queryset = Project.objects.filter(user=self.instance.user)
+
 
     class Meta:
         model = Habit 

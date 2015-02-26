@@ -131,6 +131,15 @@ def find_root_projects(projects):
 def create_text_link_project(project):
     return "<a href='/app/projects/modal/update/" + str(project.id) +"/' class='fm-update' data-fm-callback='reload'>" + project.name + "</a>"
 
+def create_text_link_habit(habit):
+    if habit.when == 'T' or habit.when == 'W':
+        base = "<a href='/app/habits/modal/update/" + str(habit.id) +"/' class='fm-update' data-fm-callback='reload'>" + habit.name + "</a>"
+    else:
+        # not yet specifically determined time, so greyed out
+        base = "<a href='/app/habits/modal/update/" + str(habit.id) +"/' class='fm-update greylink' data-fm-callback='reload'>" + habit.name + "</a>"
+ 
+    return base
+
 def create_text_link_task(task, user_timezone):
     due_date = ""
     too_late_class = ""
@@ -168,6 +177,10 @@ def project_2_dict(project, all_projects, user_timezone):
     for t in Task.objects.filter(part_of_id=project.id,done=False):
         children.append(t)
 
+    # and add habits
+    for h in Habit.objects.filter(part_of_id=project.id):
+        children.append(h)
+
     jso = {}
     jso["id"] = project.id
     text_link = create_text_link_project(project)
@@ -178,9 +191,12 @@ def project_2_dict(project, all_projects, user_timezone):
         for c in children:
             if isinstance(c, Project):
                 jso["children"].append(project_2_dict(c, all_projects, user_timezone))
-            else: # it's a task
+            elif isinstance(c, Task):
                 text_link = create_text_link_task(c, user_timezone)
                 jso["children"].append({"text": text_link , "icon": "glyphicon glyphicon-leaf" } )
+            elif isinstance(c, Habit):
+                text_link = create_text_link_habit(c)
+                jso["children"].append({"text": text_link , "icon": "glyphicon glyphicon-repeat" } )
     return jso
 
 def projects_2_dict(projects, user_timezone):
@@ -833,7 +849,7 @@ def spawn_tasks(user, user_timezone, when):
     else:
         for habit in habits:
             if habit.when:
-                task = Task.objects.create(user=user, name=habit.name, topic=habit.topic, when=habit.when, duration=habit.duration, note=habit.note, done=False, habit=True)
+                task = Task.objects.create(user=user, name=habit.name, topic=habit.topic, when=habit.when, duration=habit.duration, part_of=habit.part_of, note=habit.note, done=False, habit=True)
                 task.save()
         if when == 'T':
             success = "Tasks created and moved to Today."

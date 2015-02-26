@@ -3,10 +3,10 @@ from django.contrib import admin
 from app.models import Task, ScheduleItem, Meeting, Preference, CredentialsModel, FlowModel, Habit, Project
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('name', 'done', 'done_date', 'due', 'comes_after', 'topic', 'when', 'duration', 'created', 'user', 'habit')
+    list_display = ('name', 'done', 'done_date', 'due', 'comes_after', 'part_of', 'topic', 'when', 'duration', 'created', 'user', 'habit')
 
 class HabitAdmin(admin.ModelAdmin):
-    list_display = ('name', 'topic', 'when', 'duration', 'created', 'user')
+    list_display = ('name', 'topic', 'when', 'duration', 'part_of', 'created', 'user')
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'part_of')

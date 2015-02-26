@@ -204,6 +204,7 @@ class Habit(models.Model):
     when = models.CharField(verbose_name='when?', max_length=1, choices=WHEN, null=True, blank=True)
     duration = models.PositiveIntegerField(verbose_name='duration', null=True, blank=True, validators=[MinValueValidator(15), MaxValueValidator(10080)])
     created = models.DateTimeField(auto_now_add=True)
+    part_of = models.ForeignKey(Project, verbose_name="part of", null=True, blank=True, on_delete=models.SET_NULL)
     note = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
