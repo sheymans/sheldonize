@@ -128,16 +128,16 @@ def find_root_projects(projects):
             result.append(project)
     return result
 
-def create_text_link_project(project):
-    return "<a href='/app/projects/modal/update/" + str(project.id) +"/' class='fm-update' data-fm-callback='reload'>" + project.name + "</a>"
+def create_text_link_project(project, children):
+    if children:
+        base = "<a href='/app/projects/modal/update/" + str(project.id) +"/' class='fm-update' data-fm-callback='reload'>" + project.name + "</a>"
+    else: # if no children we grey it out:
+        base = "<a href='/app/projects/modal/update/" + str(project.id) +"/' class='fm-update greylink' data-fm-callback='reload'>" + project.name + "</a>"
+    return base
 
 def create_text_link_habit(habit):
-    if habit.when == 'T' or habit.when == 'W':
-        base = "<a href='/app/habits/modal/update/" + str(habit.id) +"/' class='fm-update' data-fm-callback='reload'>" + habit.name + "</a>"
-    else:
-        # not yet specifically determined time, so greyed out
-        base = "<a href='/app/habits/modal/update/" + str(habit.id) +"/' class='fm-update greylink' data-fm-callback='reload'>" + habit.name + "</a>"
- 
+    # always grey out habits
+    base = "<a href='/app/habits/modal/update/" + str(habit.id) +"/' class='fm-update greylink' data-fm-callback='reload'>" + habit.name + "</a>"
     return base
 
 def create_text_link_task(task, user_timezone):
@@ -183,7 +183,7 @@ def project_2_dict(project, all_projects, user_timezone):
 
     jso = {}
     jso["id"] = project.id
-    text_link = create_text_link_project(project)
+    text_link = create_text_link_project(project, children)
     jso["text"] = text_link
     jso["icon"] = "glyphicon glyphicon-folder-close"
     if children:
