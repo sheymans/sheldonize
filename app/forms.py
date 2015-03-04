@@ -91,7 +91,7 @@ class TaskForm(ModelForm):
         self.fields['comes_after'].queryset = Task.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id).exclude(done=True).exclude(when='Z')
         # For part_of we use the specific ProjectModelChoiceField as it
         # presents projects differently
-        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user))
+        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user), required=False)
 
 
 
@@ -261,7 +261,7 @@ class HabitForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HabitForm, self).__init__(*args, **kwargs)
-        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user))
+        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user), required=False)
 
 
     class Meta:
@@ -323,7 +323,7 @@ class ProjectForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
         # exclude self
-        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id))
+        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id), required=False)
 
 
     class Meta:
