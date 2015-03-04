@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm, DateTimeField, TimeField, CharField, HiddenInput, DateField
+from django.forms import ModelForm, DateTimeField, TimeField, CharField, HiddenInput, DateField, ModelChoiceField
 from django.core.urlresolvers import reverse
 from models import Task, Preference, Meeting, Habit, Project
 
@@ -22,7 +22,21 @@ class SubmitButton(BaseInput):
 
 ################################################################################################
 
+## We want to disply the projects as "superproject > project" in choices:
+# See here: https://github.com/maraujop/django-crispy-forms/issues/82
+# and here:
+# https://docs.djangoproject.com/en/dev/ref/forms/fields/#modelchoicefield
 
+class ProjectModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        if obj.part_of:
+            return "%s > %s" % (obj.part_of, obj.name)
+        else:
+            return obj.name
+
+        #return "%s" % (obj.get_full_name())
+
+## Task Forms
 class TaskForm(ModelForm):
     # From moment.js to django input formats; translation is in the code here:
     # https://github.com/nkunihiko/django-bootstrap3-datetimepicker/blob/master/bootstrap3_datetime/widgets.py
@@ -75,7 +89,10 @@ class TaskForm(ModelForm):
         # initial stuff needs to be done before as it sets the initial VALUES
         # (you could set the default comes after task there for example).
         self.fields['comes_after'].queryset = Task.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id).exclude(done=True).exclude(when='Z')
-        self.fields['part_of'].queryset = Project.objects.filter(user=self.instance.user)
+        # For part_of we use the specific ProjectModelChoiceField as it
+        # presents projects differently
+        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user))
+
 
 
     def clean_due(self):
@@ -244,7 +261,7 @@ class HabitForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(HabitForm, self).__init__(*args, **kwargs)
-        self.fields['part_of'].queryset = Project.objects.filter(user=self.instance.user)
+        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user))
 
 
     class Meta:
@@ -306,7 +323,7 @@ class ProjectForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
         # exclude self
-        self.fields['part_of'].queryset = Project.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id)
+        self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id))
 
 
     class Meta:
