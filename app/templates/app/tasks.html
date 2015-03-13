@@ -30,21 +30,31 @@ Tasks
         <li><a id="today_tab" href="/app/tasks/incomplete/today/">Today</a></li>
         <li><a id="thisweek_tab" href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         <li><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
+        <li><a href="/app/tasks/incomplete/waitingfor/">Waiting For</a></li>
         {% elif what_tasks.when = 'T' %}
         <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
         <li class="active"><a href="/app/tasks/incomplete/today/">Today</a></li>
         <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         <li><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
+        <li><a href="/app/tasks/incomplete/waitingfor/">Waiting For</a></li>
         {% elif what_tasks.when = 'W' %}
         <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
         <li><a href="/app/tasks/incomplete/today/">Today</a></li>
         <li class="active"><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         <li><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
+        <li><a href="/app/tasks/incomplete/waitingfor/">Waiting For</a></li>
         {% elif what_tasks.when = 'Z' %}
         <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
         <li><a href="/app/tasks/incomplete/today/">Today</a></li>
         <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
         <li class="active"><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
+        <li><a href="/app/tasks/incomplete/waitingfor/">Waiting For</a></li>
+        {% elif what_tasks.when = 'F' %}
+        <li><a href="/app/tasks/incomplete/inbox/">Inbox</a></li>
+        <li><a href="/app/tasks/incomplete/today/">Today</a></li>
+        <li><a href="/app/tasks/incomplete/thisweek/">This Week</a></li>
+        <li><a href="/app/tasks/incomplete/someday/">Someday/Maybe</a></li>
+        <li class="active"><a href="/app/tasks/incomplete/waitingfor/">Waiting For</a></li>
         {% endif %}
         {% if what_tasks.when = 'T' or what_tasks.when = 'W' %}
         <li class="pull-right"><form action="." method="post">
@@ -122,6 +132,7 @@ Tasks
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="someday-marked-tasks" name="someday-marked-tasks">To Do Someday/Maybe</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="waitingfor-marked-tasks" name="waitingfor-marked-tasks">Waiting For</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="create-habit" name="create-habit">Make it a Habit</button></li>
                     {% elif what_tasks.when = 'T' %}
@@ -130,6 +141,7 @@ Tasks
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="someday-marked-tasks" name="someday-marked-tasks">To Do Someday/Maybe</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="waitingfor-marked-tasks" name="waitingfor-marked-tasks">Waiting For</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks">Move to Inbox</button></li>
                     <li role="presentation" class="divider"></li>
@@ -140,6 +152,7 @@ Tasks
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="someday-marked-tasks" name="someday-marked-tasks">To Do Someday/Maybe</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="waitingfor-marked-tasks" name="waitingfor-marked-tasks">Waiting For</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks">Move to Inbox</button></li>
                     <li role="presentation" class="divider"></li>
@@ -150,10 +163,20 @@ Tasks
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="waitingfor-marked-tasks" name="waitingfor-marked-tasks">Waiting For</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="nowhen-marked-tasks" name="nowhen-marked-tasks">Move to Inbox</button></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="create-habit" name="create-habit">Make it a Habit</button></li>
+                    {% elif what_tasks.when = 'F' %}
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="complete-marked-tasks" name="complete-marked-tasks">Done</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="thisweek-marked-tasks" name="thisweek-marked-tasks">To Do This Week</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="today-marked-tasks" name="today-marked-tasks">To Do Today</button></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="someday-marked-tasks" name="someday-marked-tasks">To Do Someday/Maybe</button></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><button class="btn btn-sheldonize btn-link btn-sheldonize-link" type="submit" role="menuitem" id="create-habit" name="create-habit">Make it a Habit</button></li>
+ 
                     {% endif %}
                     {% else %}
                     <!-- Archive -->

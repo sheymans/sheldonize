@@ -88,7 +88,7 @@ class TaskForm(ModelForm):
         # we can only use this self.fields AFTER having called super. The
         # initial stuff needs to be done before as it sets the initial VALUES
         # (you could set the default comes after task there for example).
-        self.fields['comes_after'].queryset = Task.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id).exclude(done=True).exclude(when='Z')
+        self.fields['comes_after'].queryset = Task.objects.filter(user=self.instance.user).exclude(id__exact=self.instance.id).exclude(done=True).exclude(when='Z').exclude(when='F')
         # For part_of we use the specific ProjectModelChoiceField as it
         # presents projects differently
         self.fields['part_of'] = ProjectModelChoiceField(queryset=Project.objects.filter(user=self.instance.user), required=False)

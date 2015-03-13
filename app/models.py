@@ -37,6 +37,7 @@ class Task(models.Model):
             ('T', 'Today'),
             ('W', 'This Week'),
             ('Z', 'Someday/Maybe'),
+            ('F', 'Waiting For'),
             )
 
     ABCD = (

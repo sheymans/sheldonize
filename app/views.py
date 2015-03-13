@@ -146,6 +146,12 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 form = AddTaskForm()
                 RequestConfig(request, paginate={"per_page": 10}).configure(table)
                 return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks})
+            elif show_tasks['when'] and show_tasks['when'] == 'F':
+                table = TaskTable(Task.objects.filter(user=request.user, done=False, when='F'))
+                form = AddTaskForm()
+                RequestConfig(request, paginate={"per_page": 10}).configure(table)
+                return render(request, "app/tasks.html", {'table': table, 'pages': [i+1 for i in range(table.paginator.num_pages)], 'addtaskform': form, 'what_tasks' : show_tasks})
+ 
             #elif show_tasks['when'] and show_tasks['when'] == 'NoTNoW':
             else:
                 table = TaskTable(Task.objects.filter(user=request.user, done=False, when__isnull=True))
@@ -195,6 +201,11 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 task.when = 'Z'
                 task.save()
                 success = "Tasks moved to Someday/Maybe."
+        elif 'waitingfor-marked-tasks' in request.POST:
+            for task in selected_tasks:
+                task.when = 'F'
+                task.save()
+                success = "Tasks moved to Waiting For."
         elif 'nowhen-marked-tasks' in request.POST:
             for task in selected_tasks:
                 task.when = None
@@ -233,6 +244,9 @@ def tasks_generic(request, tasks_view, schedule_view, show_tasks):
                 elif 'when' in show_tasks and show_tasks['when'] == 'Z':
                     task_instance.when = 'Z'
                     success = "Task added to Someday/Maybe."
+                elif 'when' in show_tasks and show_tasks['when'] == 'F':
+                    task_instance.when = 'F'
+                    success = "Task added to Waiting For."
                 else:
                     success = "Task added."
                 # don't forget to save then
@@ -281,6 +295,12 @@ def tasks_incomplete_thisweek(request):
 def tasks_incomplete_someday(request):
     show_tasks = {'incomplete': True, 'done': False, 'when': 'Z' }
     return tasks_generic(request, tasks_incomplete_someday, schedule, show_tasks)
+
+@login_required
+def tasks_incomplete_waitingfor(request):
+    show_tasks = {'incomplete': True, 'done': False, 'when': 'F' }
+    return tasks_generic(request, tasks_incomplete_waitingfor, schedule, show_tasks)
+
 
 @login_required
 def tasks_done(request):

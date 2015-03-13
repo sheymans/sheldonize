@@ -30,7 +30,10 @@ def tasks_2_dict(tasks, user_timezone):
             # Construction of events as
             # http://arshaw.com/fullcalendar/docs2/event_data/Event_Object/
             jso["id"] = task.id
-            jso["title"] = task.name
+            if task.when and task.when == 'F':
+                jso["title"] = "<span class=\"glyphicon glyphicon-dashboard\"></span>&nbsp;&nbsp;" + task.name 
+            else:
+                jso["title"] = task.name
             jso["url"] = "/app/tasks/modal/update/" + str(task.id) + "/"
             # send ISO08601 back to front-end
             jso["start"] = start.datetime.isoformat()
@@ -193,7 +196,10 @@ def project_2_dict(project, all_projects, user_timezone):
                 jso["children"].append(project_2_dict(c, all_projects, user_timezone))
             elif isinstance(c, Task):
                 text_link = create_text_link_task(c, user_timezone)
-                jso["children"].append({"text": text_link , "icon": "glyphicon glyphicon-leaf" } )
+                if c.when and c.when == 'F': # waiting for
+                    jso["children"].append({"text": text_link , "icon": "glyphicon glyphicon-dashboard" } )
+                else:
+                    jso["children"].append({"text": text_link , "icon": "glyphicon glyphicon-leaf" } )
             elif isinstance(c, Habit):
                 text_link = create_text_link_habit(c)
                 jso["children"].append({"text": text_link , "icon": "glyphicon glyphicon-repeat" } )
