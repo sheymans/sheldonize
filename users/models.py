@@ -97,6 +97,9 @@ class UserProfile(models.Model):
     def is_trial_user(self):
         return self.usertype == 1
 
+    def is_beta_user(self):
+        return self.usertype == 0
+
     def is_undecided_user(self):
         return self.usertype == 3
 

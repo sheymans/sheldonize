@@ -80,6 +80,9 @@ urlpatterns = patterns('',
     # projects
     url(r'^projects/$', views.projects, name='projects'),
     url(r'^projects/ajax/$', views.projects_ajax, name='projects_ajax'),
+    # csv
+    url(r'^tasks/csv/$', views.csv_tasks, name='csv_tasks'),
+    url(r'^meetings/csv/$', views.csv_meetings, name='csv_meetings'),
 
 )
 

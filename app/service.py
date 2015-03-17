@@ -15,6 +15,12 @@ import arrow
 # for unicode imports from google calendar
 from django.utils.encoding import smart_str
 
+# For CSV Export
+import csv
+from django.db.models.loading import get_model
+
+
+
 logger = logging.getLogger(__name__)
 
 def tasks_2_dict(tasks, user_timezone):
@@ -864,4 +870,24 @@ def spawn_tasks(user, user_timezone, when):
 
     return (error, warning, success)
 
+## Creating a CSV File from a CSV Writer and a Queryset
+## Similar as here: http://palewi.re/posts/2009/03/03/django-recipe-dump-your-queryset-out-as-a-csv-file/
+
+def csv_dump(qs, writer):
+    model = qs.model
+    
+    headers = []
+    for field in model._meta.fields:
+        if field.name != "id" and field.name != "user":
+            headers.append(field.name)
+    writer.writerow(headers)
+    
+    for obj in qs:
+        row = []
+        for field in headers:
+            val = getattr(obj, field)
+            row.append(smart_str(val))
+        writer.writerow(row)
+
+    return writer
 

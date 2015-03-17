@@ -38,7 +38,8 @@ from oauth2client import xsrfutil
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.django_orm import Storage
 
-
+# for csv
+import csv
 
 logger = logging.getLogger(__name__)
 
@@ -1232,5 +1233,42 @@ def projects_ajax(request):
         return HttpResponse(json.dumps(jprojects), content_type="application/json")
     else:
         raise Http404
+
+# Return a CSV File from a Queryset:
+@login_required
+def csv_any(request, qs):
+    user = request.user
+    user_profile = user.userprofile
+    if not user_profile.is_beta_user() and not user_profile.is_donor_user():
+        return render(request, "only_for_donors.html")
+    else:
+        # los geht's! (beta and donor users only)
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="sheldonize-archive.csv"'
+        writer = csv.writer(response)
+
+        writer = service.csv_dump(qs, writer)
+        return response
+
+
+# Return a CSV File of All tasks
+@login_required
+@user_passes_test(lambda user: user.is_active, login_url="/subscriptions/signup/")
+def csv_tasks(request):
+    user = request.user
+    qs = Task.objects.filter(user=user)
+    return csv_any(request, qs)
+
+# Return a CSV File of All meetings
+@login_required
+@user_passes_test(lambda user: user.is_active, login_url="/subscriptions/signup/")
+def csv_meetings(request):
+    user = request.user
+    qs = Meeting.objects.filter(user=user)
+    return csv_any(request, qs)
+
+   
+
+
 
 
