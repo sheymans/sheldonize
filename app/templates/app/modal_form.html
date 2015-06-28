@@ -41,8 +41,6 @@ Note that you can also create meetings in Sheldonize (and those can of course be
         <div id="meeting-comment" data-provide="markdown" meeting-id={{ form.instance.id }}>
             {% if form.instance.note %}
             {{ form.instance.note }}
-            {% else %}
-            _Try editing this note (you can format it using [Markdown](http://daringfireball.net/projects/markdown/))._
             {% endif %}
         </div>
         <br/>
