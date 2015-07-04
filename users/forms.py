@@ -6,10 +6,11 @@ from crispy_forms.bootstrap import FieldWithButtons, StrictButton, FormActions
 from timezone_field import TimeZoneFormField
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.forms import ChoiceField
 
 from django.conf import settings
 
-from models import Invite
+from models import Invite, UserProfile
 
 import app.service
 
@@ -80,6 +81,7 @@ class UserProfileForm(forms.Form):
     # Currently we only allow to change your timezone; all the rest we do not
     # care about.
     timezone = TimeZoneFormField()
+    #thisweek = ChoiceField(choices=UserProfile.THIS_WEEK, label="Your Week")
 
     helper = FormHelper()
     helper.form_class='form-horizontal sheldonize-form'
@@ -89,6 +91,7 @@ class UserProfileForm(forms.Form):
 
     helper.layout = Layout(
                 Field('timezone'),
+                # Field('thisweek'),
             FormActions(
                 SubmitButton('submit', 'Update', css_class='btn-sheldonize btn-sheldonize-primary'),
                 ),

@@ -8,7 +8,7 @@ from users.models import UserProfile, Wait, Invite
 
 class UserProfileAdmin(admin.ModelAdmin):
     actions = ['reset_to_trial', 'send_me_betas', 'send_me_trials', 'send_me_free', 'send_me_undecided', 'evaluate_trial', 'convert_trial_to_free']
-    list_display = ('user', 'usertype', 'daysleft', 'endperiod', 'timezone')
+    list_display = ('user', 'usertype', 'daysleft', 'endperiod', 'timezone', 'thisweek')
 
     def reset_to_trial(self, request, queryset):
         trial_userprofiles = UserProfile.objects.filter(usertype=1)

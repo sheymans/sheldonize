@@ -24,6 +24,15 @@ class UserProfile(models.Model):
             (3, 'google'),
             )
 
+    THIS_WEEK = (
+            (0, 'Mon-Sun'),
+            (1, 'Tue-Mon'),
+            (2, 'Wed-Tue'),
+            (3, 'Thu-Wed'),
+            (4, 'Fri-Thu'),
+            (5, 'Sat-Fri'),
+            (6, 'Sun-Sat'),
+            )
 
     user = models.OneToOneField(User)
     timezone = TimeZoneField(default='America/Los_Angeles')
@@ -40,6 +49,8 @@ class UserProfile(models.Model):
     # so you need to check on that whenever you need email.
     social = models.BooleanField(verbose_name='social?', default=False)
     socialtype = models.PositiveIntegerField(choices=SOCIAL_TYPE, max_length=1, default=0)
+    # what constitues a week for a user (this will be his scheduling time)
+    thisweek = models.PositiveIntegerField(choices=THIS_WEEK, max_length=1, default=0)
 
     def go_pro(self):
         self.user.is_active = True
