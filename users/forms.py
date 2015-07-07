@@ -81,7 +81,7 @@ class UserProfileForm(forms.Form):
     # Currently we only allow to change your timezone; all the rest we do not
     # care about.
     timezone = TimeZoneFormField()
-    #thisweek = ChoiceField(choices=UserProfile.THIS_WEEK, label="Your Week")
+    thisweek = ChoiceField(choices=UserProfile.THIS_WEEK, label="Your Week")
 
     helper = FormHelper()
     helper.form_class='form-horizontal sheldonize-form'
@@ -91,7 +91,7 @@ class UserProfileForm(forms.Form):
 
     helper.layout = Layout(
                 Field('timezone'),
-                # Field('thisweek'),
+                Field('thisweek'),
             FormActions(
                 SubmitButton('submit', 'Update', css_class='btn-sheldonize btn-sheldonize-primary'),
                 ),

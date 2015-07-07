@@ -142,7 +142,7 @@ class UserProfileView(LoginRequiredMixin, FormView):
 
         return {
                 'timezone': userprofile.timezone,
-                # 'thisweek': userprofile.thisweek,
+                'thisweek': userprofile.thisweek,
                 }
 
     def form_valid(self, form):
@@ -157,7 +157,7 @@ class UserProfileView(LoginRequiredMixin, FormView):
         if form.is_valid():
             user = self.request.user
             user.userprofile.timezone = form.cleaned_data['timezone']
-            # user.userprofile.thisweek = form.cleaned_data['thisweek']
+            user.userprofile.thisweek = form.cleaned_data['thisweek']
             user.userprofile.save()
 
             return self.form_valid(form)

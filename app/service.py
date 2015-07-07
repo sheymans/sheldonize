@@ -563,25 +563,32 @@ def clear_externalitems(user):
 
 
 
-def get_arrow_datetime(weekday, t, start_arrow, user_timezone, workweek_done):
+def get_arrow_datetime(weekday, t, start_arrow, user_timezone, workweek_done, thisweek):
     """
     t is a datetime.time instance, weekday is 0..6 (0  is Monday)
     start_arrow is an arrow datetime object in UTC (usually indicating 'now')
     Note that day_string will be in reference to the user's timezone unfortunately. We are picking that timezone up from when the user presses the refresh schedule button.
     user_timezone is something like Americas/Los_Angeles
     workweek_done is a boolean indicating whether we should plan this week or the next
+    thisweek is 0...6 where 0 is Mon-Sun week, 1 is Tue-Mon week, etc
     """
+    print "weekday and t: ", weekday, t
     local_start_arrow = start_arrow.to(user_timezone)
     weekday_now = local_start_arrow.weekday()
     diff_days = weekday_now - weekday
     # same time as local_start_arrow but on weekday
-    if not workweek_done:
+    # Note that the weekday >= thisweek makes sure that for example a
+    # preference on Monday gets scheduled as its actual date if Mo falls still
+    # in this week or otherwise (the "else") it is in 7 days (eg, if the week
+    # is Tue-Mon, a monday means the next monday)
+    if (not workweek_done) and (weekday >= thisweek): 
         local_start_arrow_on_weekday = local_start_arrow.replace(days=-diff_days)
     else:
         # work week is done and we actually mean the next ones (so
         # +7)
         local_start_arrow_on_weekday = local_start_arrow.replace(days=+(7-diff_days))
     result = local_start_arrow_on_weekday.replace(hour=t.hour, minute=t.minute, second=t.second)
+    print "result get_arrow_datetime: ", result
     return result
 
 def work_week_over(start_arrow, preferences, user_timezone):
@@ -624,9 +631,11 @@ def preferences_to_engine(user, start_arrow, engine_meetings, user_timezone):
     # week)
     workweek_done = work_week_over(start_arrow, preferences, user_timezone)
     start_user_timezone = start_arrow.to(user_timezone)
+    thisweek = get_thisweek(user)
+    print "thisweek: ", thisweek
     for pref in preferences:
-        actual_day_from = get_arrow_datetime(pref.day, pref.from_time, start_arrow, user_timezone, workweek_done)
-        actual_day_to = get_arrow_datetime(pref.day, pref.to_time, start_arrow, user_timezone, workweek_done)
+        actual_day_from = get_arrow_datetime(pref.day, pref.from_time, start_arrow, user_timezone, workweek_done, thisweek)
+        actual_day_to = get_arrow_datetime(pref.day, pref.to_time, start_arrow, user_timezone, workweek_done, thisweek)
         quarters_from = get_quarters_for_date_with_start(actual_day_from.datetime, start_arrow)
         quarters_to = get_quarters_for_date_with_start(actual_day_to.datetime, start_arrow)
         # normalize:
@@ -704,6 +713,13 @@ def schedule(user, user_timezone):
 def get_timezone(user):
     profile = user.userprofile
     return profile.timezone.zone
+
+def get_thisweek(user):
+    """
+    What is the users week, 0 is Mo-Sun, 1 is Tue-Mon, etc
+    """
+    profile = user.userprofile
+    return profile.thisweek
 
 def create_default_preferences(user):
     """
