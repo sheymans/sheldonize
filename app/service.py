@@ -23,10 +23,10 @@ from django.db.models.loading import get_model
 
 logger = logging.getLogger(__name__)
 
-def tasks_2_dict(tasks, user_timezone):
+def tasks_2_dict(tasks, user_timezone, showdeadlines):
     result  = []
     for task in tasks:
-        if task.due:
+        if task.due and showdeadlines:
             start = arrow.get(task.due).to(user_timezone)
             # calculate whether due is in past
             now = arrow.utcnow().to(user_timezone)
@@ -720,6 +720,10 @@ def get_thisweek(user):
     """
     profile = user.userprofile
     return profile.thisweek
+
+def get_showdeadlines(user):
+    profile = user.userprofile
+    return profile.showdeadlines
 
 def create_default_preferences(user):
     """

@@ -453,6 +453,7 @@ def schedule(request):
 def eventfeed(request):
     if request.method == "GET":
         user_timezone = service.get_timezone(request.user)
+        showdeadlines = service.get_showdeadlines(request.user)
         fr = arrow.get(request.GET.get('start')).to(user_timezone)
         to = arrow.get(request.GET.get('end')).to(user_timezone)
 
@@ -460,7 +461,7 @@ def eventfeed(request):
         meetings = service.get_meetings_between_from_and_to(request.user, fr, to)
         scheduleis = service.get_scheduleitems_between_from_and_to(request.user, fr, to)
 
-        deadlines = service.tasks_2_dict(tasks, user_timezone)
+        deadlines = service.tasks_2_dict(tasks, user_timezone, showdeadlines)
         meeting_items = service.meetings_2_dict(meetings, user_timezone)
         scheduleitems = service.scheduleitems_2_dict(scheduleis, user_timezone)
 

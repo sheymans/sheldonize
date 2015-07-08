@@ -2,11 +2,11 @@ from django import forms
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field, Fieldset, BaseInput
-from crispy_forms.bootstrap import FieldWithButtons, StrictButton, FormActions
+from crispy_forms.bootstrap import FieldWithButtons, StrictButton, FormActions, PrependedText
 from timezone_field import TimeZoneFormField
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.forms import ChoiceField
+from django.forms import ChoiceField, BooleanField
 
 from django.conf import settings
 
@@ -82,6 +82,7 @@ class UserProfileForm(forms.Form):
     # care about.
     timezone = TimeZoneFormField()
     thisweek = ChoiceField(choices=UserProfile.THIS_WEEK, label="Your Week")
+    showdeadlines = BooleanField(required=False, label="Show deadlines on your schedule")
 
     helper = FormHelper()
     helper.form_class='form-horizontal sheldonize-form'
@@ -92,6 +93,7 @@ class UserProfileForm(forms.Form):
     helper.layout = Layout(
                 Field('timezone'),
                 Field('thisweek'),
+                PrependedText('showdeadlines', ''),
             FormActions(
                 SubmitButton('submit', 'Update', css_class='btn-sheldonize btn-sheldonize-primary'),
                 ),

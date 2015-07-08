@@ -102,7 +102,7 @@ class ServiceTest(TestCase):
 
     def test_tasks_2_dict(self):
         all_tasks = Task.objects.all()
-        tasks_dict = app.service.tasks_2_dict(all_tasks, "America/Los_Angeles")
+        tasks_dict = app.service.tasks_2_dict(all_tasks, "America/Los_Angeles", True)
         self.assertTrue(tasks_dict is not None)
 
     def test_meetings_2_dict(self):

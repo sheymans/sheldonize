@@ -51,6 +51,8 @@ class UserProfile(models.Model):
     socialtype = models.PositiveIntegerField(choices=SOCIAL_TYPE, max_length=1, default=0)
     # what constitues a week for a user (this will be his scheduling time)
     thisweek = models.PositiveIntegerField(choices=THIS_WEEK, max_length=1, default=0)
+    # show deadlines on schedule or not (default is yes)
+    showdeadlines = models.BooleanField(verbose_name='show deadlines on schedule?', default=True)
 
     def go_pro(self):
         self.user.is_active = True
