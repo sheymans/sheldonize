@@ -31,7 +31,9 @@ $( document ).ready(function() {
             'data' : {
                 "url" : "/app/projects/ajax/",
             }
-        }
+        },
+        "state" : { "key" : "sheldonize_projects" },
+        "plugins" : ["state"]
     });
 
 });
