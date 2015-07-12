@@ -350,7 +350,7 @@ class TestEngine(unittest.TestCase):
     def test_due_date_in_combination_with_comes_after(self):
         tasks =  {533L: {'when': 1, 'due': 5}, 534L: {'comes_after': 535L, 'when': 1, 'due': 409}, 535L: {'when': 1}}
         preferences =  {'thisweek': [[0, 32], [93, 128], [189, 224], [285, 320], [381, 416]]}
-        schedule = {533L: [[2, 5]], 534L: [[5, 32], [93, 128], [189, 224], [285, 320], [381, 409]], 535L: [[0, 2]]}
+        schedule = {533L: [[0, 5]], 534L: [[207, 224], [285, 320], [381, 409]] , 535L: [[5, 32], [93, 128], [189, 207]]}
 
         self.assertEqual(engine.plan(tasks, preferences), schedule)
         with self.ti:

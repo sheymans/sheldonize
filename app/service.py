@@ -572,7 +572,6 @@ def get_arrow_datetime(weekday, t, start_arrow, user_timezone, workweek_done, th
     workweek_done is a boolean indicating whether we should plan this week or the next
     thisweek is 0...6 where 0 is Mon-Sun week, 1 is Tue-Mon week, etc
     """
-    print "weekday and t: ", weekday, t
     local_start_arrow = start_arrow.to(user_timezone)
     weekday_now = local_start_arrow.weekday()
     diff_days = weekday_now - weekday
@@ -588,7 +587,6 @@ def get_arrow_datetime(weekday, t, start_arrow, user_timezone, workweek_done, th
         # +7)
         local_start_arrow_on_weekday = local_start_arrow.replace(days=+(7-diff_days))
     result = local_start_arrow_on_weekday.replace(hour=t.hour, minute=t.minute, second=t.second)
-    print "result get_arrow_datetime: ", result
     return result
 
 def work_week_over(start_arrow, preferences, user_timezone):
@@ -632,7 +630,6 @@ def preferences_to_engine(user, start_arrow, engine_meetings, user_timezone):
     workweek_done = work_week_over(start_arrow, preferences, user_timezone)
     start_user_timezone = start_arrow.to(user_timezone)
     thisweek = get_thisweek(user)
-    print "thisweek: ", thisweek
     for pref in preferences:
         actual_day_from = get_arrow_datetime(pref.day, pref.from_time, start_arrow, user_timezone, workweek_done, thisweek)
         actual_day_to = get_arrow_datetime(pref.day, pref.to_time, start_arrow, user_timezone, workweek_done, thisweek)

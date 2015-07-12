@@ -11,7 +11,7 @@ class TestSort(unittest.TestCase):
 
     def test_sort_tasks_20140623A(self):
         tasks = {2: {'due': 7}, 35L: {'duration': 12, 'comes_after': 36L, 'when': 0, 'due': 6}, 36L: {'when': 0, 'due': 4}}
-        self.assertEqual(sort.sort_tasks(tasks), [36L, 35L, 2])
+        self.assertEqual(sort.sort_tasks(tasks), [36L, 2, 35L])
 
     def test_sort_tasks_20140624A(self):
         tasks = {45L: {'when': 0, 'due': 29}, 47L: {'when': 0, 'due': 5}}
@@ -90,6 +90,15 @@ class TestSort(unittest.TestCase):
         tasks = {670L: {'priority': 0, 'when': 1}, 671L: {'priority': 1, 'comes_after': 667L, 'when': 1}}
         sorted_tasks = [670L, 671L]
         self.assertEqual(sort.sort_tasks(tasks), sorted_tasks)
+
+    def test_sort_20150712(self):
+        """
+        Make sure tasks with due dates are sorted in the first comes_after group
+        """
+        tasks = {32L: {'when': 1}, 35L: {'comes_after': 32L, 'when': 1}, 36L: {'when': 1, 'due': 93}}
+        sorted_tasks =  [36L, 32L, 35L]
+        self.assertEqual(sort.sort_tasks(tasks), sorted_tasks)
+
 
 
 

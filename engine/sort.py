@@ -79,6 +79,29 @@ def cyclic(data):
     except ValueError:
         return False
 
+def insert_no_comes_after_in_sorted(tasks, no_comes_after, sorted_data):
+    # no comes after is a list of items that have no relation to the
+    # comes-after (however they might have due dates). sorted-data is a list of
+    # sets of separated partitions.
+    # eg: tasks:  {32L: {'when': 1}, 35L: {'comes_after': 32L, 'when': 1}, 36L:
+    # {'when': 1, 'due': 93}}
+    # data to be sorted:  {35L: set([32L])}
+    # sorted data:  [set([32L]), set([35L])]
+    # no_comes_after:  set([36L])
+    if sorted_data:
+        # add items without a due to last group, and with a due date to first
+        # group
+        for i in no_comes_after:
+            task = tasks[i]
+            if 'due' in task:
+                sorted_data[0].add(i)
+            else:
+                sorted_data[-1].add(i)
+    else:
+        sorted_data.append(no_comes_after)
+ 
+
+
 def sort_tasks(tasks):
 
     task_ids = tasks.keys()
@@ -136,11 +159,8 @@ def sort_tasks(tasks):
         # difference update
         no_comes_after -= group
     # Now add the no_comes_after to the last group:
-    if sorted_data:
-        sorted_data[-1].update(no_comes_after)
-    else:
-        sorted_data.append(no_comes_after)
-        
+    insert_no_comes_after_in_sorted(tasks, no_comes_after, sorted_data)
+       
 
     # then sort each group on due date and priority
     result = []
