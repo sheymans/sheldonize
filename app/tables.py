@@ -136,7 +136,7 @@ class TaskTable(tables.Table):
     def render_comes_after(self, value, record):
         if value:
             # value is of type Task (the comes_after)
-            shorter = (value.name[:15] + '..') if len(value.name) > 15 else value.name
+            shorter = (value.name[:5] + '..') if len(value.name) > 5 else value.name
             return mark_safe("<i>" + shorter + "</i>")
         else:
             return ""
@@ -144,7 +144,7 @@ class TaskTable(tables.Table):
     def render_part_of(self, value, record):
         if value:
             # value is of type Project (the part_of) 
-            shorter = (value.name[:15] + '..') if len(value.name) > 15 else value.name
+            shorter = (value.name[:5] + '..') if len(value.name) > 5 else value.name
             return mark_safe("<i>" + shorter + "</i>")
         else:
             return ""
