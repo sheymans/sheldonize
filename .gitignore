@@ -1,3 +1,5 @@
 ./fabfile/
 *.pyc
 app.log
+*.idea
+*.iml
