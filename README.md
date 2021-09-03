@@ -1,3 +1,3 @@
 # Sheldonize
 
-Used to run on sheldonize.com. Not Maintained.
+Used to run on sheldonize.com. **Not Maintained**.
